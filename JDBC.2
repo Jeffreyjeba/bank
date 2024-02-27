@@ -1,0 +1,112 @@
+Feb 26, 2024 2:01:14 PM bankrunner.BankRunner employee
+WARNING: account already exist with accouny number : 1
+Feb 26, 2024 2:01:38 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`rey_bank`.`accounts`, CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`Id`) REFERENCES `customers` (`Id`))
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at bank/database.JDBC.add(JDBC.java:37)
+	at bank/operations.Employee.generalAdd(Employee.java:58)
+	at bank/operations.Employee.createAccount(Employee.java:30)
+	at bank/bankrunner.EmployeeRunner.createAccount(EmployeeRunner.java:56)
+	at bank/bankrunner.BankRunner.employee(BankRunner.java:228)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:56)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 26, 2024 2:10:54 PM bankrunner.BankRunner employee
+WARNING: No user id found as : 4567890
+Feb 26, 2024 2:11:01 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException
+	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+	at java.base/java.util.Scanner.next(Scanner.java:1594)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:377)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:407)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:64)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 26, 2024 3:02:33 PM bankrunner.BankRunner run
+WARNING: Wrong combination
+Feb 26, 2024 3:02:57 PM bankrunner.BankRunner run
+WARNING: Wrong combination
+Feb 26, 2024 3:03:17 PM bankrunner.BankRunner run
+WARNING: Wrong combination
+Feb 26, 2024 3:11:25 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLSyntaxErrorException: Table 'rey_bank.brench' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1208)
+	at bank/database.JDBC.select(JDBC.java:52)
+	at bank/operations.Customer.selectwhere(Customer.java:163)
+	at bank/operations.Admin.checkForBranchAbsence(Admin.java:38)
+	at bank/operations.Admin.createBranch(Admin.java:14)
+	at bank/bankrunner.AdminRunner.createBranch(AdminRunner.java:22)
+	at bank/bankrunner.BankRunner.admin(BankRunner.java:341)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:59)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:71)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:71)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:71)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 26, 2024 3:12:43 PM bankrunner.BankRunner run
+WARNING: Wrong combination
+Feb 26, 2024 5:27:18 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=1' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1208)
+	at bank/database.JDBC.bulkSelect(JDBC.java:67)
+	at bank/operations.Customer.transactionHistory(Customer.java:134)
+	at bank/bankrunner.CustomerRunner.transactionHistory(CustomerRunner.java:124)
+	at bank/bankrunner.BankRunner.customer(BankRunner.java:152)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:53)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 26, 2024 5:29:21 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=1' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1208)
+	at bank/database.JDBC.bulkSelect(JDBC.java:67)
+	at bank/operations.Customer.transactionHistory(Customer.java:134)
+	at bank/bankrunner.CustomerRunner.transactionHistory(CustomerRunner.java:124)
+	at bank/bankrunner.BankRunner.customer(BankRunner.java:152)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:53)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 26, 2024 5:30:00 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=1' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1208)
+	at bank/database.JDBC.bulkSelect(JDBC.java:68)
+	at bank/operations.Customer.transactionHistory(Customer.java:134)
+	at bank/bankrunner.CustomerRunner.transactionHistory(CustomerRunner.java:124)
+	at bank/bankrunner.BankRunner.customer(BankRunner.java:152)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:53)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 26, 2024 7:34:50 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException
+	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+	at java.base/java.util.Scanner.next(Scanner.java:1594)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:439)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:469)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:64)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 27, 2024 2:42:38 PM bankrunner.BankRunner run
+WARNING: Wrong combination
+Feb 27, 2024 2:43:24 PM bankrunner.BankRunner customer
+WARNING: The required index 6 is greater than the available index 1

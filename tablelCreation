@@ -1,0 +1,26 @@
+-----creating user table --- created --edit
+
+create table users (Id bigint not null auto_increment,Name varchar(50) not null,EmailId varchar(100) not null unique,PhoneNumber bigint not null unique ,UserType enum('customer','employee','admin') not null,Password varchar(255) not null,primary key(Id));
+
+-----creating branch table ---createtd
+
+create table branch (BranchId int not null auto_increment,IfscCode varchar(20) not null ,BranchName varchar(40) not null,Address varchar(100) not null,primary key(BranchId));
+
+-----creating customers table  ---created
+
+create table customers (CustomerId bigint auto_increment,Id bigint not null unique,AadharNumber bigint(12) not null unique,PanNumber varchar(10) not null unique,Address varchar(100) not null,primary key(CustomerId),foreign key(Id) references users(Id));
+
+-----creating accounts table ---created
+
+create table accounts (AccountNumber bigint auto_increment,Id bigint not null unique,BranchId int not null unique,Balance bigint not null ,Status enum('active','inactive','deleted') not null,primary key(AccountNumber),foreign key(Id) references customers(Id),foreign key(BranchId) references branch(BranchId));
+
+-----creating employees table ---created
+
+create table employees(Id bigint not null unique,BranchId int not null ,Type enum('admin','employee') not null,foreign key(Id) references users(Id),primary key(Id),foreign key(BranchId) references branch(BranchId));
+
+-----creating transactionHistory table
+
+create table transactionHistory (TransactionId bigint not null ,AccountNumber bigint not null ,TransactionAccountNumber bigint not null,TransactionType enum('credit','debit','moneyTransfer','OBMoneyTransfer') not null,TransactionAmont bigint not null,Balance bigint not null,Description varchar(200),dateTime timeStamp not null default current_timestamp,foreign key(AccountNumber) references accounts(AccountNumber),primary key(TransactionId,AccountNumber));
+
+
+

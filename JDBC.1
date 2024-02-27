@@ -1,0 +1,243 @@
+Feb 26, 2024 11:06:51 AM bankrunner.BankRunner customer
+WARNING: Insuffecient balance
+Feb 26, 2024 11:07:22 AM bankrunner.BankRunner getLong
+WARNING: Please eneter an integer
+Feb 26, 2024 12:31:35 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '1234567890' for key 'PhoneNumber'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at bank/database.JDBC.add(JDBC.java:38)
+	at bank/operations.Employee.generalAdd(Employee.java:47)
+	at bank/operations.Employee.addUsers(Employee.java:11)
+	at bank/bankrunner.EmployeeRunner.createUser(EmployeeRunner.java:26)
+	at bank/bankrunner.BankRunner.employee(BankRunner.java:217)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:57)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
+
+Feb 26, 2024 12:32:28 PM bankrunner.BankRunner run
+WARNING: Wrong combination
+Feb 26, 2024 12:34:13 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '1' for key 'BranchId'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at bank/database.JDBC.add(JDBC.java:38)
+	at bank/operations.Employee.generalAdd(Employee.java:47)
+	at bank/operations.Employee.createAccount(Employee.java:19)
+	at bank/bankrunner.EmployeeRunner.createAccount(EmployeeRunner.java:56)
+	at bank/bankrunner.BankRunner.employee(BankRunner.java:223)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:57)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:72)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
+
+Feb 26, 2024 1:23:45 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`rey_bank`.`customers`, CONSTRAINT `customers_ibfk_1` FOREIGN KEY (`Id`) REFERENCES `users` (`Id`))
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at bank/database.JDBC.add(JDBC.java:36)
+	at bank/operations.Employee.generalAdd(Employee.java:52)
+	at bank/operations.Employee.addCustomers(Employee.java:20)
+	at bank/bankrunner.EmployeeRunner.addCustomers(EmployeeRunner.java:41)
+	at bank/bankrunner.BankRunner.employee(BankRunner.java:220)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:56)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 26, 2024 1:26:25 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`rey_bank`.`customers`, CONSTRAINT `customers_ibfk_1` FOREIGN KEY (`Id`) REFERENCES `users` (`Id`))
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at bank/database.JDBC.add(JDBC.java:37)
+	at bank/operations.Employee.generalAdd(Employee.java:52)
+	at bank/operations.Employee.addCustomers(Employee.java:20)
+	at bank/bankrunner.EmployeeRunner.addCustomers(EmployeeRunner.java:41)
+	at bank/bankrunner.BankRunner.employee(BankRunner.java:220)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:56)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 26, 2024 1:27:56 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`rey_bank`.`customers`, CONSTRAINT `customers_ibfk_1` FOREIGN KEY (`Id`) REFERENCES `users` (`Id`))
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at bank/database.JDBC.add(JDBC.java:37)
+	at bank/operations.Employee.generalAdd(Employee.java:52)
+	at bank/operations.Employee.addCustomers(Employee.java:20)
+	at bank/bankrunner.EmployeeRunner.addCustomers(EmployeeRunner.java:41)
+	at bank/bankrunner.BankRunner.employee(BankRunner.java:220)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:56)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 26, 2024 1:50:32 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`rey_bank`.`customers`, CONSTRAINT `customers_ibfk_1` FOREIGN KEY (`Id`) REFERENCES `users` (`Id`))
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at bank/database.JDBC.add(JDBC.java:37)
+	at bank/operations.Employee.generalAdd(Employee.java:54)
+	at bank/operations.Employee.addCustomers(Employee.java:22)
+	at bank/bankrunner.EmployeeRunner.addCustomers(EmployeeRunner.java:41)
+	at bank/bankrunner.BankRunner.employee(BankRunner.java:220)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:56)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 26, 2024 1:51:13 PM bankrunner.BankRunner run
+WARNING: Wrong combination
+Feb 26, 2024 1:51:33 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`rey_bank`.`customers`, CONSTRAINT `customers_ibfk_1` FOREIGN KEY (`Id`) REFERENCES `users` (`Id`))
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at bank/database.JDBC.add(JDBC.java:37)
+	at bank/operations.Employee.generalAdd(Employee.java:55)
+	at bank/operations.Employee.addCustomers(Employee.java:23)
+	at bank/bankrunner.EmployeeRunner.addCustomers(EmployeeRunner.java:41)
+	at bank/bankrunner.BankRunner.employee(BankRunner.java:220)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:56)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:71)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 26, 2024 1:55:44 PM bankrunner.BankRunner employee
+WARNING: No user id found as 843
+Feb 26, 2024 2:24:18 PM bankrunner.BankRunner run
+WARNING: Wrong combination
+Feb 26, 2024 2:24:57 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLSyntaxErrorException: Unknown column 'active' in 'field list'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at bank/database.JDBC.update(JDBC.java:84)
+	at bank/operations.Employee.deleteAccount(Employee.java:32)
+	at bank/bankrunner.EmployeeRunner.activateAccount(EmployeeRunner.java:75)
+	at bank/bankrunner.BankRunner.employee(BankRunner.java:252)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:56)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:71)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 26, 2024 2:27:02 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLException: Data truncated for column 'Status' at row 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at bank/database.JDBC.add(JDBC.java:37)
+	at bank/operations.Employee.generalAdd(Employee.java:54)
+	at bank/operations.Employee.createAccount(Employee.java:23)
+	at bank/bankrunner.EmployeeRunner.createAccount(EmployeeRunner.java:54)
+	at bank/bankrunner.BankRunner.employee(BankRunner.java:228)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:56)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 26, 2024 4:43:14 PM bankrunner.BankRunner admin
+WARNING: Employee already exist with id : 2
+Feb 26, 2024 4:43:49 PM bankrunner.BankRunner admin
+WARNING: No user id found as : 179
+Feb 26, 2024 7:34:50 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException
+	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+	at java.base/java.util.Scanner.next(Scanner.java:1594)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:431)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:461)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:64)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 27, 2024 8:21:31 AM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException: No line found
+	at java.base/java.util.Scanner.nextLine(Scanner.java:1651)
+	at bank/bankrunner.BankRunner.getString(BankRunner.java:478)
+	at bank/bankrunner.BankRunner.getString(BankRunner.java:482)
+	at bank/bankrunner.BankRunner.getPassword(BankRunner.java:422)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:41)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 27, 2024 10:03:57 AM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException
+	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+	at java.base/java.util.Scanner.next(Scanner.java:1594)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:444)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:474)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:64)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 27, 2024 10:29:36 AM bankrunner.BankRunner customer
+WARNING: This account is inactive 
+Feb 27, 2024 10:30:12 AM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException
+	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+	at java.base/java.util.Scanner.next(Scanner.java:1594)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:461)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:491)
+	at bank/bankrunner.BankRunner.customer(BankRunner.java:110)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:55)
+	at bank/bankrunner.BankRunner.customer(BankRunner.java:103)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:55)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:35)
+
+Feb 27, 2024 10:33:01 AM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '6' for key 'Id'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at bank/database.JDBC.add(JDBC.java:37)
+	at bank/operations.Employee.generalAdd(Employee.java:62)
+	at bank/operations.Employee.createAccount(Employee.java:27)
+	at bank/bankrunner.EmployeeRunner.createAccount(EmployeeRunner.java:54)
+	at bank/bankrunner.BankRunner.employee(BankRunner.java:246)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:58)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:35)
+
+Feb 27, 2024 10:39:23 AM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException
+	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+	at java.base/java.util.Scanner.next(Scanner.java:1594)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:461)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:491)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:66)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:35)
+
+Feb 27, 2024 12:02:15 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException
+	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+	at java.base/java.util.Scanner.next(Scanner.java:1594)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:471)
+	at bank/bankrunner.BankRunner.admin(BankRunner.java:294)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:58)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:32)
+

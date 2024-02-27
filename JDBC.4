@@ -1,0 +1,72 @@
+Feb 26, 2024 11:40:35 AM bankrunner.BankRunner getNumber
+WARNING: Please eneter an integer
+Feb 26, 2024 3:39:34 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLSyntaxErrorException: Table 'rey_bank.Employee' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1208)
+	at bank/database.JDBC.select(JDBC.java:52)
+	at bank/operations.Customer.selectwhere(Customer.java:163)
+	at bank/operations.Admin.checkForWorkersAbsence(Admin.java:49)
+	at bank/operations.Admin.addAdmin(Admin.java:20)
+	at bank/bankrunner.AdminRunner.addAdmin(AdminRunner.java:40)
+	at bank/bankrunner.BankRunner.admin(BankRunner.java:374)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:59)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 26, 2024 3:40:56 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLSyntaxErrorException: Table 'rey_bank.employee' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1208)
+	at bank/database.JDBC.select(JDBC.java:52)
+	at bank/operations.Customer.selectwhere(Customer.java:163)
+	at bank/operations.Admin.checkForWorkersAbsence(Admin.java:49)
+	at bank/operations.Admin.addEmployee(Admin.java:26)
+	at bank/bankrunner.AdminRunner.addemployee(AdminRunner.java:31)
+	at bank/bankrunner.BankRunner.admin(BankRunner.java:377)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:59)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 26, 2024 3:41:15 PM bankrunner.BankRunner run
+WARNING: Wrong combination
+Feb 26, 2024 3:44:56 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException
+	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+	at java.base/java.util.Scanner.next(Scanner.java:1594)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:421)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:451)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:64)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:71)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 26, 2024 7:34:50 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException
+	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+	at java.base/java.util.Scanner.next(Scanner.java:1594)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:439)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:469)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:64)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 27, 2024 2:57:20 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException
+	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+	at java.base/java.util.Scanner.next(Scanner.java:1594)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:470)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:500)
+	at bank/bankrunner.BankRunner.customer(BankRunner.java:110)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:53)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
