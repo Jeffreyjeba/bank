@@ -131,7 +131,7 @@ public class CustomerRunner extends BankRunner {
 		JSONArray jArray= customer.transactionHistory(json);
 		printJarray(jArray);
 	}
-	
+	// support method
 	protected void printJarray(JSONArray jArray) throws JSONException {
 		int length=jArray.length();
 		int index=0;
@@ -140,7 +140,7 @@ public class CustomerRunner extends BankRunner {
 			index++;
 		}	
 	}
-	
+	//methods to be over ridden for employee compatibility
 	protected long getId() {
 		return Authenticator.id.get();
 	}

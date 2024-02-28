@@ -1067,3 +1067,56 @@ java.util.NoSuchElementException
 
 Feb 27, 2024 11:58:28 AM bankrunner.BankRunner run
 WARNING: Wrong combination
+Feb 27, 2024 5:48:50 PM bankrunner.BankRunner run
+WARNING: Wrong combination
+Feb 27, 2024 5:49:06 PM bankrunner.BankRunner run
+WARNING: Wrong combination
+Feb 27, 2024 5:49:15 PM bankrunner.BankRunner run
+WARNING: Wrong combination
+Feb 27, 2024 5:49:56 PM bankrunner.BankRunner run
+WARNING: Wrong combination
+Feb 27, 2024 5:50:02 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException
+	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+	at java.base/java.util.Scanner.next(Scanner.java:1594)
+	at java.base/java.util.Scanner.nextLong(Scanner.java:2373)
+	at java.base/java.util.Scanner.nextLong(Scanner.java:2328)
+	at bank/bankrunner.BankRunner.getLong(BankRunner.java:497)
+	at bank/bankrunner.BankRunner.getLong(BankRunner.java:512)
+	at bank/bankrunner.BankRunner.getUserId(BankRunner.java:467)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:40)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:66)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:66)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:66)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:66)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 27, 2024 5:50:14 PM bankrunner.BankRunner run
+WARNING: Wrong combination
+Feb 27, 2024 5:53:02 PM bankrunner.BankRunner admin
+WARNING: No user id found as : 7
+Feb 27, 2024 5:53:46 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '6' for key 'PRIMARY'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at bank/database.JDBC.add(JDBC.java:35)
+	at bank/operations.Employee.generalAdd(Employee.java:62)
+	at bank/operations.Employee.addUsers(Employee.java:14)
+	at bank/bankrunner.EmployeeRunner.createUser(EmployeeRunner.java:25)
+	at bank/bankrunner.BankRunner.admin(BankRunner.java:355)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:57)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:66)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+
+Feb 27, 2024 5:57:05 PM bankrunner.BankRunner run
+WARNING: Wrong combination
+Feb 27, 2024 5:57:11 PM bankrunner.BankRunner getLong
+WARNING: Please eneter an integer
+Feb 27, 2024 5:57:58 PM bankrunner.BankRunner getLong
+WARNING: Please eneter an integer
+Feb 27, 2024 5:58:03 PM bankrunner.BankRunner run
+WARNING: Wrong combination

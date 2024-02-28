@@ -1,5 +1,6 @@
 package bankrunner;
 
+//import java.io.Console;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -174,6 +175,7 @@ public class BankRunner {
 		System.out.println("----------------------------");
 		System.out.println("------welcome Employee------");
 		System.out.println("----------------------------");
+		
 		EmployeeRunner employee = new EmployeeRunner();
 		boolean cont = true;
 		while (cont) {
@@ -352,7 +354,12 @@ public class BankRunner {
 				admin.resetPassword();
 				break;
 			case 8:
+				try {
 				admin.createUser();
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 9:
 				try {
@@ -451,7 +458,10 @@ public class BankRunner {
 	// input validation methods
 
 	protected String getPassword() {
-		String password = getString("Please enter the password :");
+		//Console console=System.console();
+		//char[] pass=console.readPassword("Please enter the password :");
+		//String password = pass.toString();
+		String password=getString("Please enter the password :");
 		if (!Validation.validatePassword(password)) {
 			System.out.println("Enter a valid password");
 			System.out.println("Password must must atleast \n * A special "

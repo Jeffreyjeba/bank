@@ -10,6 +10,7 @@ import utility.UtilityHelper;
 public class Employee extends Customer{
 	public void addUsers(JSONObject customer) throws Exception{
 		UtilityHelper.nullCheck(customer);
+		checkuserabsence(customer);
 		String tableName="users";
 		generalAdd(tableName, customer);	
 	}
@@ -83,6 +84,14 @@ public class Employee extends Customer{
 		JSONObject json2=selectwhere("accounts","AccountNumber="+accountNumber,"AccountNumber");
 		if(json2==null) { 
 			throw new BankException("account already exist with accouny number : "+accountNumber);
+		}
+	}
+	protected void checkuserabsence(JSONObject json) throws Exception {
+		UtilityHelper.nullCheck(json);
+		int id=json.getInt("Id");
+		JSONObject json2=selectwhere("users","Id="+id,"Id");
+		if(json2!=null) { 
+			throw new BankException("user id already exist : "+id);
 		}
 	}
 }
