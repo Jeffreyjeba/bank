@@ -3,7 +3,6 @@ package operations;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import database.QueryBuilder;
-import utility.BankException;
 import utility.UtilityHelper;
 
 
@@ -19,7 +18,7 @@ public class Admin extends Employee{
 	}
 	public void addAdmin(JSONObject admin) throws Exception {
 		UtilityHelper.nullCheck(admin);
-		checkIdForPresence(admin);
+		checkIdUserPresence(admin);
 		checkForWorkersAbsence(admin);
 		checkForBranchPresence(admin);
 		String tableName="employees";
@@ -27,7 +26,7 @@ public class Admin extends Employee{
 	}
 	public void addEmployee(JSONObject employee) throws Exception {
 		UtilityHelper.nullCheck(employee);
-		checkIdForPresence(employee);
+		checkIdUserPresence(employee);
 		checkForWorkersAbsence(employee);
 		checkForBranchPresence(employee);
 		String tableName="employees";
@@ -35,6 +34,7 @@ public class Admin extends Employee{
 	}
 	public void removeEmployee(JSONObject employee) throws Exception {
 		UtilityHelper.nullCheck(employee);
+		checkForWorkersPresence(employee);
 		String tableName="employees";
 		StringBuilder query=new StringBuilder();
 		QueryBuilder builder =new QueryBuilder(query);
@@ -44,28 +44,17 @@ public class Admin extends Employee{
 	public JSONArray getAllBranchId() throws Exception {
 		return selectOne("branch","BranchId");
 	}
+	// checkers methods
 	protected void checkForBranchAbsence(JSONObject json) throws Exception {
-		UtilityHelper.nullCheck(json);
-		long branchId=json.getLong("BranchId");
-		JSONObject json2=selectwhere("branch","BranchId="+branchId,"BranchId");
-		if(json2!=null) { 
-			throw new BankException("Branch already exist with BranchId : "+branchId);
-		}
+		checkLongAbsence(json, "branch", "BranchId", "BranchId");
 	}
 	protected void checkForBranchPresence(JSONObject json) throws Exception {
-		UtilityHelper.nullCheck(json);
-		long branchId=json.getLong("BranchId");
-		JSONObject json2=selectwhere("branch","BranchId="+branchId,"BranchId");
-		if(json2==null) { 
-			throw new BankException("Branch already exist with BranchId : "+branchId);
-		}
+		checkLongPresence(json, "branch", "BranchId", "BranchId");
 	}
 	protected void checkForWorkersAbsence(JSONObject json) throws Exception {
-		UtilityHelper.nullCheck(json);
-		long id=json.getLong("Id");
-		JSONObject json2=selectwhere("employees","Id="+id,"Id");
-		if(json2!=null) { 
-			throw new BankException("Employee already exist with id : "+id);
-		}
+		checkLongAbsence(json,"employees","Id","Id");
+	}
+	protected void checkForWorkersPresence(JSONObject json) throws Exception {
+		checkLongPresence(json,"employees","Id","Id");
 	}
 }

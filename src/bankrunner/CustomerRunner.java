@@ -65,7 +65,7 @@ public class CustomerRunner extends BankRunner {
 
 	public void debit() throws Exception {
 		String password=getPassword();
-		boolean pass=auth.checkPassword(getId(), password);
+		boolean pass=auth.checkPassword(Authenticator.id.get(), password);
 		if(!pass) {
 			logger.warning("Wrong pass word\nTry again");
 			debit();
@@ -83,7 +83,7 @@ public class CustomerRunner extends BankRunner {
 	
 	public void credit() throws Exception {
 		String password=getPassword();
-		boolean pass=auth.checkPassword(getId(), password);
+		boolean pass=auth.checkPassword(Authenticator.id.get(), password);
 		if(!pass) {
 			System.out.println("Wrong pass word\nTry again");
 			credit();
@@ -101,21 +101,22 @@ public class CustomerRunner extends BankRunner {
 
 	public void moneyTransfer() throws Exception {
 		String password=getPassword();
-		boolean pass=auth.checkPassword(getId(), password);
+		boolean pass=auth.checkPassword(Authenticator.id.get(), password);
 		if(!pass) {
 			System.out.println("Wrong pass word\nTry again");
 			moneyTransfer();
 		}
 		else {
+			JSONObject json=new JSONObject();
+			json.put("AccountNumber",getAccountNumber());
 			long amount=getLong("Enter the amount you want to transfer : ");
 			String description=getString("Enter the description : ");
 			Long toaccoun=getLong("Enter the account number you want to credit : ");
-			// TODO String ifscCode=getString("Enter the ifsc code : ");
-			JSONObject json=new JSONObject();
-			json.put("AccountNumber",getAccountNumber());
+			String ifscCode=getString("Enter the ifsc code : ");
 			json.put("Description", description);
 			json.put("Amount",amount);
 			json.put("TransactionAccountNumber",toaccoun);
+			json.put("IfscCode",ifscCode);
 			customer.moneyTransfer(json);
 		}
 	}

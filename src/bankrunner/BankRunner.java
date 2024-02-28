@@ -82,7 +82,8 @@ public class BankRunner {
 			if (length == 1) {
 				auth.accountTag(accountArray[0]);
 				statusCheck(accountArray[0]);
-			} else {
+			}
+			else {
 				for (int loop = 0; loop < length; loop++) {
 					System.out.println((loop + 1) + " Account Number --  " + accountArray[loop]);
 				}
@@ -289,7 +290,7 @@ public class BankRunner {
 			cont = (num == 1);
 		}
 	}
-	// admin runner calling method
+	// ADMIN runner calling method
 
 	private void admin(long userId) throws Exception {
 		System.out.println("----------------------------");
