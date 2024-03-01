@@ -1,100 +1,32 @@
-Feb 26, 2024 11:40:35 AM bankrunner.BankRunner getNumber
-WARNING: Please eneter an integer
-Feb 26, 2024 3:39:34 PM bankrunner.BankRunner run
+Feb 28, 2024 5:16:53 PM bankrunner.BankRunner admin
+WARNING: Id or accounts for this Id dosent exist
+Feb 28, 2024 5:17:05 PM bankrunner.BankRunner run
 WARNING: Something went wrong
-java.sql.SQLSyntaxErrorException: Table 'rey_bank.Employee' doesn't exist
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
-	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1208)
-	at bank/database.JDBC.select(JDBC.java:52)
-	at bank/operations.Customer.selectwhere(Customer.java:163)
-	at bank/operations.Admin.checkForWorkersAbsence(Admin.java:49)
-	at bank/operations.Admin.addAdmin(Admin.java:20)
-	at bank/bankrunner.AdminRunner.addAdmin(AdminRunner.java:40)
-	at bank/bankrunner.BankRunner.admin(BankRunner.java:374)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:59)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
-
-Feb 26, 2024 3:40:56 PM bankrunner.BankRunner run
-WARNING: Something went wrong
-java.sql.SQLSyntaxErrorException: Table 'rey_bank.employee' doesn't exist
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
-	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1208)
-	at bank/database.JDBC.select(JDBC.java:52)
-	at bank/operations.Customer.selectwhere(Customer.java:163)
-	at bank/operations.Admin.checkForWorkersAbsence(Admin.java:49)
-	at bank/operations.Admin.addEmployee(Admin.java:26)
-	at bank/bankrunner.AdminRunner.addemployee(AdminRunner.java:31)
-	at bank/bankrunner.BankRunner.admin(BankRunner.java:377)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:59)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
-
-Feb 26, 2024 3:41:15 PM bankrunner.BankRunner run
-WARNING: Wrong combination
-Feb 26, 2024 3:44:56 PM bankrunner.BankRunner run
-WARNING: Something went wrong
-java.util.NoSuchElementException
-	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
-	at java.base/java.util.Scanner.next(Scanner.java:1594)
-	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
-	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
-	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:421)
-	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:451)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:64)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:71)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
-
-Feb 26, 2024 7:34:50 PM bankrunner.BankRunner run
-WARNING: Something went wrong
-java.util.NoSuchElementException
-	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
-	at java.base/java.util.Scanner.next(Scanner.java:1594)
-	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
-	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
-	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:439)
-	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:469)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:64)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
-
-Feb 27, 2024 2:57:20 PM bankrunner.BankRunner run
-WARNING: Something went wrong
-java.util.NoSuchElementException
-	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
-	at java.base/java.util.Scanner.next(Scanner.java:1594)
-	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
-	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
-	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:470)
-	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:500)
-	at bank/bankrunner.BankRunner.customer(BankRunner.java:110)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:53)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
-
-Feb 27, 2024 7:13:46 PM bankrunner.BankRunner run
-WARNING: Wrong combination
-Feb 27, 2024 7:14:15 PM bankrunner.BankRunner run
-WARNING: Something went wrong
-java.lang.NullPointerException
-	at bank/bankrunner.EmployeeRunner.createAccount(EmployeeRunner.java:50)
-	at bank/bankrunner.BankRunner.employee(BankRunner.java:247)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:55)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:67)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
-
-Feb 27, 2024 7:26:52 PM bankrunner.BankRunner run
-WARNING: Something went wrong
-java.util.NoSuchElementException
-	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
-	at java.base/java.util.Scanner.next(Scanner.java:1594)
-	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
-	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
-	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:491)
-	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:529)
-	at bank/bankrunner.BankRunner.admin(BankRunner.java:443)
+utility.InputDefectException: The required index 5 is greater than the available index 1
+	at bank/utility.UtilityHelper.lengthIndexCheck(UtilityHelper.java:23)
+	at bank/bankrunner.CustomerRunner.switchAccount(CustomerRunner.java:57)
+	at bank/bankrunner.BankRunner.admin(BankRunner.java:328)
 	at bank/bankrunner.BankRunner.run(BankRunner.java:58)
 	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
 
-Feb 28, 2024 10:27:27 AM bankrunner.BankRunner employee
-WARNING: Id : 9 is absent
-Feb 28, 2024 10:28:12 AM bankrunner.BankRunner employee
-WARNING: Id  : 6 is alreday present
+Feb 28, 2024 5:22:59 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+utility.InputDefectException: The required index 6 is greater than the available index 1
+	at bank/utility.UtilityHelper.lengthIndexCheck(UtilityHelper.java:23)
+	at bank/bankrunner.CustomerRunner.switchAccount(CustomerRunner.java:57)
+	at bank/bankrunner.BankRunner.admin(BankRunner.java:333)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:58)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
+
+Feb 28, 2024 5:24:41 PM bankrunner.BankRunner admin
+WARNING: Id or accounts for this Id dosent exist
+Feb 28, 2024 5:24:51 PM bankrunner.BankRunner admin
+WARNING: The required index 87 is greater than the available index 1
+Feb 28, 2024 5:26:43 PM bankrunner.BankRunner admin
+WARNING: AccountNumber : 100 is not available
+Feb 28, 2024 5:29:25 PM bankrunner.BankRunner admin
+WARNING: AccountNumber : 8 is not available
+Feb 28, 2024 5:30:42 PM bankrunner.BankRunner admin
+WARNING: your reciptant account is blocked
+Feb 28, 2024 5:31:30 PM bankrunner.BankRunner admin
+WARNING: Insuffecient balance

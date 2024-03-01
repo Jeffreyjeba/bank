@@ -1,7 +1,7 @@
 package bankrunner;
 
 //import java.io.Console;
-import java.io.IOException;
+
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.InputMismatchException;
@@ -17,11 +17,11 @@ import utility.Validation;
 
 public class BankRunner {
 
-	protected static Logger logger = Logger.getLogger("JDBC");
+	protected static Logger logger = Logger.getLogger("Bank");
 	static {
 		try {
 			UtilityHelper.logSetter("JDBC", true, logger);
-		} catch (SecurityException | IOException e) {
+		} catch (BankException e) {
 			logger.log(Level.WARNING, "An error occured at log setting", e);
 		}
 	}
@@ -92,9 +92,11 @@ public class BankRunner {
 				auth.accountTag(accountArray[option - 1]);
 				statusCheck(accountArray[option - 1]);
 			}
-		} catch (InputDefectException e) {
+		} 
+		catch (InputDefectException e) {
 			logger.warning(e.getMessage());
-		} catch (BankException e) {
+		}
+		catch (BankException e) {
 			logger.warning(e.getMessage());
 			run();
 		}
@@ -124,6 +126,9 @@ public class BankRunner {
 					customer.switchAccount();
 				} 
 				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
 				break;
@@ -210,6 +215,9 @@ public class BankRunner {
 					employee.debit();
 				}
 				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
 					logger.warning(e.getMessage());
 				}
 				break;
@@ -321,11 +329,18 @@ public class BankRunner {
 				} 
 				catch (BankException e) {
 					logger.warning(e.getMessage());
-					;
 				}
 				break;
 			case 3:
+				try {
 				admin.switchAccount();
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 4:
 				try {
@@ -457,11 +472,14 @@ public class BankRunner {
 		}
 	}
 	// input validation methods
-
 	protected String getPassword() {
 		//Console console=System.console();
 		//char[] pass=console.readPassword("Please enter the password :");
-		//String password = pass.toString();
+		//StringBuilder passBuilder=new StringBuilder();
+		//for(char p:pass) {
+			//passBuilder.append(p);
+		//}
+		//String password =passBuilder.toString();
 		String password=getString("Please enter the password :");
 		if (!Validation.validatePassword(password)) {
 			System.out.println("Enter a valid password");
@@ -472,8 +490,6 @@ public class BankRunner {
 		}
 		return password;
 	}
-	
-
 	protected long getUserId() {
 		long userId = getLong("Enter the user Id :");
 		if (!Validation.validateUserId(Long.toString(userId))) {
@@ -482,7 +498,46 @@ public class BankRunner {
 		}
 		return userId;
 	}
-	
+	protected String getMailId() {
+		String mailId = getString("Enter the MailId :");
+		if (!Validation.validateEmail(mailId)) {
+			System.out.println("Enter the valid MailId");
+			getMailId();
+		}
+		return mailId;
+	}
+	protected long getPhoneNumber() {
+		long phoneNumber = getLong("Enter the PhoneNumber :");
+		if (!Validation.validatePhoenNo(Long.toString(phoneNumber))){
+			System.out.println("Enter the valid PhoenNumber");
+			getPhoneNumber();
+		}
+		return phoneNumber;
+	}
+	protected long getAadharNumber() {
+		long aadharNumber=getLong("Enter your aaddhar number : ");
+		if (!Validation.validateAdharNumber(Long.toString(aadharNumber))){
+			System.out.println("Enter the valid aadhar Number");
+			getAadharNumber();
+		}
+		return aadharNumber;
+	}
+	protected String getPanId() {
+		String panId = getString("Enter the PanId :");
+		if (!Validation.validatePanNumber(panId)) {
+			System.out.println("Enter the valid PanId");
+			getPanId();
+		}
+		return panId;
+	}
+	protected long getAccountNum() {
+		long accountNumber =getLong("Enter The Account Number");
+		if (!Validation.validateAccountNumber(Long.toString(accountNumber))){ 
+			System.out.println("Enter the valid Account Number");
+			getAccountNum();
+		}
+		return accountNumber;
+	}
 
 	Scanner scan = new Scanner(System.in);
 	// input methods
@@ -500,8 +555,6 @@ public class BankRunner {
 			return getNumber();
 		}
 	}
-	
-
 	protected long getLong() {
 		try {
 
@@ -516,27 +569,19 @@ public class BankRunner {
 			return getLong();
 		}
 	}
-	
-
 	protected long getLong(String str) {
 		System.out.print(str);
 		Long temp = getLong();
 		return temp;
 	}
-	
-
 	protected int getNumber(String str) {
 		System.out.print(str);
 		int temp = getNumber();
 		return temp;
 	}
-	
-
 	protected String getString() {
 		return scan.nextLine();
 	}
-	
-
 	protected String getString(String str) {
 		System.out.print(str);
 		return getString();

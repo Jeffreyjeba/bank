@@ -2,10 +2,12 @@ package bank;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import database.DataStorage;
 import database.JDBC;
 import database.QueryBuilder;
-import database.DataStorage;
 import utility.BankException;
+import utility.InputDefectException;
 import utility.UtilityHelper;
 
 public class Authenticator {
@@ -19,14 +21,14 @@ public class Authenticator {
 		return json.getString("UserType");
 	}
 
-	public boolean checkPassword(long userId, String password) throws Exception {
+	public boolean checkPassword(long userId, String password) throws BankException,InputDefectException {
 		password = UtilityHelper.passHasher(password);
 		String originalPassword = getPassword(userId);
 		return password.equals(originalPassword);
 	}
 
 	@SuppressWarnings("unused")
-	private boolean attemptCheck(long id) throws Exception {
+	private boolean attemptCheck(long id) throws BankException {
 		int attempt = getAttempts(id);
 		if (attempt >= 3) {
 			throw new BankException("You cannot access this account \n contact bank");
@@ -44,14 +46,20 @@ public class Authenticator {
 		dtabase.add(query, new JSONObject().put("Attempts", attempt));
 	}
 
-	private int getAttempts(long id) throws Exception {
+	private int getAttempts(long id) throws BankException {
+		try {
 		StringBuilder query = new StringBuilder();
 		QueryBuilder builder = new QueryBuilder(query);
 		builder.selectFromWhere("users", "Id=" + id, "Attempts");
 		return dtabase.select(query).getInt("Attempts");
+		}
+		catch (JSONException e) {
+			throw new BankException("Error 2 conatct bank");
+		}
 	}
 
-	private String getPassword(long userId) throws Exception { // w
+	private String getPassword(long userId) throws BankException { // w
+		try {
 		StringBuilder query = new StringBuilder();
 		QueryBuilder builder = new QueryBuilder(query);
 		builder.selectFromWhere("users", "Id=" + userId, "Password");
@@ -60,6 +68,10 @@ public class Authenticator {
 			throw new BankException("wrong combination");
 		}
 		return json.getString("Password");
+		}
+		catch (JSONException e) {
+			throw new BankException("Error 2 contact bank");
+		}
 	}
 
 	public static ThreadLocal<Long> id = new ThreadLocal<Long>();

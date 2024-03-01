@@ -14,11 +14,20 @@ public class Validation {
 	public static boolean validatePhoenNo(CharSequence phoneNumber) {
 		return comparator("^[7-9]{1}[0-9]{9}$",phoneNumber);
 	}
-	public static boolean ValidateAlphaNume(CharSequence input) {
+	public static boolean validateAlphaNume(CharSequence input) {
 		return comparator("\\P{Alnum}", input);
 	}
 	public static boolean validateUserId(CharSequence userId) {
 		return comparator("[0-9]{1,20}", userId);
+	}
+	public static boolean validateAccountNumber(CharSequence accountNumber) {
+		return validateUserId(accountNumber);
+	}
+	public  static boolean validateAdharNumber(CharSequence aadharNumber) {
+		return comparator("[0-9]{12}", aadharNumber);
+	}
+	public  static boolean validatePanNumber(CharSequence panNumber) {
+		return comparator("^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$", panNumber);
 	}
 		
 	

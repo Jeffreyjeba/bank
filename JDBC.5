@@ -1,131 +1,49 @@
-Feb 26, 2024 11:42:31 AM bankrunner.BankRunner run
-WARNING: Something went wrong
-java.sql.SQLSyntaxErrorException: Table 'rey_bank.user' doesn't exist
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
-	at bank/database.JDBC.update(JDBC.java:87)
-	at bank/operations.Customer.resetPassword(Customer.java:54)
-	at bank/bankrunner.CustomerRunner.resetPassword(CustomerRunner.java:43)
-	at bank/bankrunner.BankRunner.customer(BankRunner.java:149)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:54)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
-
-Feb 26, 2024 11:43:55 AM bankrunner.BankRunner run
-WARNING: Something went wrong
-java.sql.SQLSyntaxErrorException: Table 'rey_bank.user' doesn't exist
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
-	at bank/database.JDBC.update(JDBC.java:87)
-	at bank/operations.Customer.resetPassword(Customer.java:54)
-	at bank/bankrunner.CustomerRunner.resetPassword(CustomerRunner.java:43)
-	at bank/bankrunner.BankRunner.customer(BankRunner.java:149)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:54)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
-
-Feb 26, 2024 11:49:08 AM bankrunner.BankRunner run
-WARNING: Something went wrong
-org.json.JSONException: JSONObject["AccountNumber"] not found.
-	at java.json/org.json.JSONObject.get(JSONObject.java:454)
-	at java.json/org.json.JSONObject.getString(JSONObject.java:635)
-	at bank/operations.Customer.resetPassword(Customer.java:53)
-	at bank/bankrunner.CustomerRunner.resetPassword(CustomerRunner.java:43)
-	at bank/bankrunner.CustomerRunner.resetPassword(CustomerRunner.java:38)
-	at bank/bankrunner.BankRunner.customer(BankRunner.java:149)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:54)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
-
-Feb 26, 2024 11:50:46 AM bankrunner.BankRunner run
-WARNING: Something went wrong
-org.json.JSONException: JSONObject["Id"] not a string.
-	at java.json/org.json.JSONObject.getString(JSONObject.java:639)
-	at bank/operations.Customer.resetPassword(Customer.java:53)
-	at bank/bankrunner.CustomerRunner.resetPassword(CustomerRunner.java:43)
-	at bank/bankrunner.BankRunner.customer(BankRunner.java:149)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:54)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
-
-Feb 26, 2024 12:16:11 PM bankrunner.BankRunner run
-WARNING: Wrong combination
-Feb 26, 2024 12:16:52 PM bankrunner.BankRunner run
-WARNING: Something went wrong
-org.json.JSONException: JSONObject["Id"] not a string.
-	at java.json/org.json.JSONObject.getString(JSONObject.java:639)
-	at bank/operations.Customer.resetPassword(Customer.java:53)
-	at bank/bankrunner.CustomerRunner.resetPassword(CustomerRunner.java:43)
-	at bank/bankrunner.BankRunner.customer(BankRunner.java:149)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:54)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:72)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
-
-Feb 26, 2024 12:19:18 PM bankrunner.BankRunner run
-WARNING: Wrong combination
-Feb 26, 2024 12:19:52 PM bankrunner.BankRunner run
-WARNING: Something went wrong
-java.sql.SQLSyntaxErrorException: Table 'rey_bank.user' doesn't exist
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
-	at bank/database.JDBC.update(JDBC.java:87)
-	at bank/operations.Customer.resetPassword(Customer.java:56)
-	at bank/bankrunner.CustomerRunner.resetPassword(CustomerRunner.java:43)
-	at bank/bankrunner.BankRunner.customer(BankRunner.java:149)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:54)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:72)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
-
-Feb 26, 2024 12:23:14 PM bankrunner.BankRunner run
+Feb 28, 2024 5:46:30 PM bankrunner.BankRunner admin
+WARNING: your account is blocked
+Feb 28, 2024 6:24:11 PM bankrunner.BankRunner run
 WARNING: Something went wrong
 java.util.NoSuchElementException
 	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
 	at java.base/java.util.Scanner.next(Scanner.java:1594)
 	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
 	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
-	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:372)
-	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:402)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:65)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:547)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:579)
+	at bank/bankrunner.BankRunner.admin(BankRunner.java:459)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:58)
 	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
 
-Feb 26, 2024 7:34:50 PM bankrunner.BankRunner run
+Feb 28, 2024 6:36:01 PM bankrunner.BankRunner admin
+WARNING: AccountNumber : 0 is not available
+Feb 28, 2024 6:37:23 PM bankrunner.BankRunner run
 WARNING: Something went wrong
-java.util.NoSuchElementException
-	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
-	at java.base/java.util.Scanner.next(Scanner.java:1594)
-	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
-	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
-	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:439)
-	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:469)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:64)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
+java.util.NoSuchElementException: No line found
+	at java.base/java.util.Scanner.nextLine(Scanner.java:1651)
+	at bank/bankrunner.BankRunner.getString(BankRunner.java:583)
+	at bank/bankrunner.BankRunner.getString(BankRunner.java:587)
+	at bank/bankrunner.BankRunner.getPassword(BankRunner.java:483)
+	at bank/bankrunner.CustomerRunner.moneyTransfer(CustomerRunner.java:105)
+	at bank/bankrunner.BankRunner.admin(BankRunner.java:363)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:58)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
 
-Feb 27, 2024 2:48:29 PM bankrunner.BankRunner customer
-WARNING: Index value cannot be negative
-Feb 27, 2024 2:49:02 PM bankrunner.BankRunner customer
-WARNING: The required index 6 is greater than the available index 1
-Feb 27, 2024 2:49:28 PM bankrunner.BankRunner customer
-WARNING: The required index 7 is greater than the available index 1
-Feb 27, 2024 2:57:19 PM bankrunner.BankRunner run
-WARNING: Something went wrong
-java.util.NoSuchElementException
-	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
-	at java.base/java.util.Scanner.next(Scanner.java:1594)
-	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
-	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
-	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:470)
-	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:500)
-	at bank/bankrunner.BankRunner.customer(BankRunner.java:110)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:53)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:33)
-
-Feb 27, 2024 7:24:54 PM bankrunner.BankRunner run
-WARNING: Wrong combination
-Feb 27, 2024 7:26:15 PM bankrunner.BankRunner employee
-WARNING: No such account exist
-Feb 28, 2024 10:53:03 AM bankrunner.BankRunner run
-WARNING: Wrong combination
-Feb 28, 2024 10:53:32 AM bankrunner.BankRunner admin
-WARNING: wrong combination
+Feb 28, 2024 7:13:30 PM bankrunner.BankRunner admin
+WARNING: your reciptant account is blocked
+Feb 28, 2024 7:16:14 PM bankrunner.BankRunner admin
+WARNING: AccountNumber : 100 is not available
+Feb 28, 2024 7:17:15 PM bankrunner.BankRunner admin
+WARNING: money cannot be transfered withiin the same account
+Feb 28, 2024 7:17:40 PM bankrunner.BankRunner admin
+WARNING: AccountNumber : 100 is not available
+Feb 28, 2024 7:21:54 PM bankrunner.CustomerRunner debit
+WARNING: Wrong pass word
+Try again
+Feb 28, 2024 7:22:09 PM bankrunner.CustomerRunner debit
+WARNING: Wrong pass word
+Try again
+Feb 28, 2024 7:22:22 PM bankrunner.CustomerRunner debit
+WARNING: Wrong pass word
+Try again
+Feb 28, 2024 7:22:31 PM bankrunner.CustomerRunner debit
+WARNING: Wrong pass word
+Try again

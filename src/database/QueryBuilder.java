@@ -3,6 +3,8 @@ package database;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import utility.BankException;
+
 public class QueryBuilder {
 
 	private StringBuilder stringBuilder;
@@ -120,14 +122,7 @@ public class QueryBuilder {
 		stringBuilder.append(input);
 		stringBuilder.append(condition);
 	}	
-@Deprecated
-	public void singleSetWhereJson(String tableName,JSONObject json) {
-		update(tableName);
-		String[] field =JSONObject.getNames(json);
-		set(field[0],"?");
-		where(field[1],"=?");
-		close();
-	}
+
 	public void singleSetWhere(String tableName,String field,String conditionField) {
 		update(tableName);
 		set(field,"?");
@@ -141,13 +136,18 @@ public class QueryBuilder {
 		stringBuilder.append(coditionValue);
 		close();
 	}
-	public void setAccountStatus(String tableName,JSONObject json) throws JSONException {
+	public void setAccountStatus(String tableName,JSONObject json) throws BankException {
+		try {
 		update(tableName);
 		set("Status",json.getString("Status"));
 		json.remove("Status");
 		String[] field =JSONObject.getNames(json);
 		where(field[0],"=?");
 		close();
+		}
+		catch (JSONException e) {
+			throw new BankException("Error 2 contact bank");
+		}
 	}
 
 
@@ -200,7 +200,12 @@ public class QueryBuilder {
 		stringBuilder.deleteCharAt(stringBuilder.length()-1);
 	}
 
-
+	
+	/*
+	 * public void singleSetWhereJson(String tableName,JSONObject json) {
+	 * update(tableName); String[] field =JSONObject.getNames(json);
+	 * set(field[0],"?"); where(field[1],"=?"); close(); }
+	 */
 
 
 
