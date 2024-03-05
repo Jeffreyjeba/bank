@@ -49,8 +49,10 @@ public class CustomerService extends JDBC implements CustomerServiceInterface {
 	}
 
 	public JSONArray getTransactionHistory(JSONObject json) throws BankException {
+		
+		long timeInMillis=System.currentTimeMillis()- UtilityHelper.getLong(json,"Days")*60*60*24*1000;
 		StringBuilder query = queryBuilder.selectAllFromWherePrep("transactionHistory",
-				"AccountNumber=" + UtilityHelper.getLong(json, "AccountNumber"));
+				"AccountNumber=" + UtilityHelper.getLong(json, "AccountNumber")+" and TransactionId > "+timeInMillis);
 		return bulkSelect(query);
 	}
 

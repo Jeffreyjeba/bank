@@ -56,11 +56,11 @@ public class Authenticator {
 	public static ThreadLocal<Long> id = new ThreadLocal<Long>();
 	public static ThreadLocal<Long> accountNumber = new ThreadLocal<Long>();
 
-	public void idTag(long userId) {
+	public static void idTag(long userId) {
 		id.set(userId);
 	}
 
-	public void accountTag(long accountNum) {
+	public static void accountTag(long accountNum) {
 		accountNumber.set(accountNum);
 	}
 

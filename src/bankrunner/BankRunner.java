@@ -1,7 +1,5 @@
 package bankrunner;
 
-//import java.io.Console;
-
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.InputMismatchException;
@@ -44,7 +42,7 @@ public class BankRunner {
 			if (access == false) {
 				throw new BankException("wrong combination");
 			}
-			auth.idTag(userId);
+			Authenticator.idTag(userId);
 			UserHirarchy level = UserHirarchy.valueOf(auth.getAuthority(userId));
 
 			switch (level) {
@@ -80,7 +78,7 @@ public class BankRunner {
 			long[] accountArray = customer.getAccounts();
 			int length = accountArray.length;
 			if (length == 1) {
-				auth.accountTag(accountArray[0]);
+				Authenticator.accountTag(accountArray[0]);
 				statusCheck(accountArray[0]);
 			}
 			else {
@@ -89,7 +87,7 @@ public class BankRunner {
 				}
 				int option = getNumber("Please enter the account you need to select");
 				UtilityHelper.lengthIndexCheck(length, option - 1);
-				auth.accountTag(accountArray[option - 1]);
+				Authenticator.accountTag(accountArray[option - 1]);
 				statusCheck(accountArray[option - 1]);
 			}
 		} 
@@ -103,12 +101,13 @@ public class BankRunner {
 		boolean cont = true;
 		while (cont) {
 			int option = getNumber(" \n 1-GetBalance\n 2-GetAccounts\n 3-SwitchAccounts\n" + " 4-debit\n"
-					+ " 5-credit\n 6-Transfer\n 7-ResetPassword \n 8-Get History\n Enter your option : ");
+					+ " 5-credit\n 6-Transfer\n 7-ResetPassword \n 8-Get History\n 50-logout \n Enter your option : ");
 			switch (option) {
 			case 1:
 				try {
 					customer.getBalance();
-				} catch (BankException e) {
+				} 
+				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
 				break;
@@ -167,6 +166,11 @@ public class BankRunner {
 					logger.warning(e.getMessage());
 				}
 				break;
+			case 50:
+				customer.logout();
+				run();
+				break;
+				
 			default:
 				System.out.println("Enter a valid option");
 
@@ -188,7 +192,7 @@ public class BankRunner {
 			int option = getNumber(
 					" \n 1-Get Balance\n 2-Get Accounts\n 3-Switch Accounts\n 4-debit\n 5-credit\n 6-Transfer\n 7-Reset Password\n"
 							+ " 8-Create user\n 9-Add Customers\n 10-Create Account\n 11-Deactivate Account\n 12-Delete Account\n "
-							+ "13-Activate account\n 14-Transaction History\n Enter any option : ");
+							+ "13-Activate account\n 14-Transaction History\n 50-logout\n Enter any option : ");
 			switch (option) {
 			case 1:
 				try {
@@ -291,6 +295,10 @@ public class BankRunner {
 					logger.warning(e.getMessage());
 				}
 				break;
+			case 50:
+				employee.logout();
+				run();
+				break;
 			default:
 				System.out.println("Enter a valid option");
 			}
@@ -311,7 +319,7 @@ public class BankRunner {
 					"\n 1-Get Balance\n 2-Get Accounts\n 3-Switch Accounts\n 4-debit\n 5-credit\n 6-Transfer\n "
 							+ "7-Reset Password\n 8-Create user\n 9-Add Customers\n 10-Create Account\n 11-Deactivate Account\n "
 							+ "12-Delete Account\n 13-Activate account\n 14-Create Branch \n 15-Add Admin \n 16-Add Employee \n "
-							+ "17-Remove Employee \n 18-Transaction History\n Enter your option : ");
+							+ "17-Remove Employee \n 18-Transaction History\n 50-logout\n Enter your option : ");
 
 			switch (option) {
 			case 1:
@@ -452,6 +460,10 @@ public class BankRunner {
 					logger.warning(e.getMessage());
 				}
 				break;
+			case 50:
+				admin.logout();
+				run();
+				break;
 			default:
 				System.out.println("Enter a valid option");
 
@@ -472,24 +484,21 @@ public class BankRunner {
 		}
 	}
 	// input validation methods
+	
 	protected String getPassword() {
-		//Console console=System.console();
-		//char[] pass=console.readPassword("Please enter the password :");
-		//StringBuilder passBuilder=new StringBuilder();
-		//for(char p:pass) {
-			//passBuilder.append(p);
-		//}
-		//String password =passBuilder.toString();
-		String password=getString("Please enter the password :");
-		if (!Validation.validatePassword(password)) {
-			System.out.println("Enter a valid password");
-			System.out.println("Password must must atleast \n * A special "
-					+ "character\n * A capital letter\n * A number\n * A small leter\n * "
-					+ "Atleast it must have 8 characters");
-			getPassword();
-		}
+		String password;
+		do {
+			password=getString("Please enter the password :");
+			if (!Validation.validatePassword(password)) {
+				System.out.println("Enter a valid password");
+				System.out.println("Password must must atleast \n * A special "
+						+ "character\n * A capital letter\n * A number\n * A small leter\n * "
+						+ "Atleast it must have 8 characters");
+			}		
+		}while(!Validation.validatePassword(password));
 		return password;
 	}
+	
 	protected long getUserId() {
 		long userId = getLong("Enter the user Id :");
 		if (!Validation.validateUserId(Long.toString(userId))) {

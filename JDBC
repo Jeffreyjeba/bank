@@ -135,3 +135,33 @@ java.util.NoSuchElementException
 	at bank/bankrunner.BankRunner.run(BankRunner.java:58)
 	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
 
+Mar 05, 2024 10:02:47 AM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException
+	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+	at java.base/java.util.Scanner.next(Scanner.java:1594)
+	at java.base/java.util.Scanner.nextLong(Scanner.java:2373)
+	at java.base/java.util.Scanner.nextLong(Scanner.java:2328)
+	at bank/bankrunner.BankRunner.getLong(BankRunner.java:561)
+	at bank/bankrunner.BankRunner.getLong(BankRunner.java:574)
+	at bank/bankrunner.BankRunner.getUserId(BankRunner.java:494)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:41)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
+
+Mar 05, 2024 10:08:25 AM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException: No line found
+	at java.base/java.util.Scanner.nextLine(Scanner.java:1651)
+	at bank/bankrunner.BankRunner.getString(BankRunner.java:583)
+	at bank/bankrunner.BankRunner.getString(BankRunner.java:587)
+	at bank/bankrunner.BankRunner.getPassword(BankRunner.java:483)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:42)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
+
+Mar 05, 2024 10:09:32 AM bankrunner.CustomerRunner debit
+WARNING: Wrong pass word
+Try again
+Mar 05, 2024 10:48:27 AM bankrunner.BankRunner run
+WARNING: Wrong combination
+Mar 05, 2024 12:02:25 PM bankrunner.BankRunner run
+WARNING: Wrong combination

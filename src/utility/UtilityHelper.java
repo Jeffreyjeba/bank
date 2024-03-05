@@ -90,7 +90,8 @@ public class UtilityHelper {
 			MessageDigest digest = MessageDigest.getInstance("MD5");
 			byte[] pass = digest.digest(password.getBytes());
 			return byteToString(pass);
-		} catch (NoSuchAlgorithmException e) {
+		}
+		catch (NoSuchAlgorithmException e) {
 			throw new InputDefectException("error 3 contact bank");
 		}
 	}
@@ -103,7 +104,7 @@ public class UtilityHelper {
 		return stringBuilder.toString();
 	}
 
-	public static JSONObject put(JSONObject json, String key, long value) throws BankException {
+	public static JSONObject put(JSONObject json, String key, Long value) throws BankException {
 		try {
 			json.put(key, value);
 			return json;

@@ -44,7 +44,7 @@ public class CustomerRunner extends BankRunner {
 		}
 		JSONObject json = new JSONObject();
 		UtilityHelper.put(json,"Id", Authenticator.id.get());
-		UtilityHelper.put(json,"Password", UtilityHelper.passHasher(confoPassword));
+		UtilityHelper.put(json,"Password",confoPassword);
 		customer.resetPassword(json);
 	}
 
@@ -89,7 +89,8 @@ public class CustomerRunner extends BankRunner {
 		if (!pass) {
 			System.out.println("Wrong pass word\nTry again");
 			credit();
-		} else {
+		} 
+		else {
 			long accountNumber = getAccountNumber();
 			long amount = getLong("Enter the amount you want to credit : ");
 			String description = getString("Enter the description : ");
@@ -130,9 +131,16 @@ public class CustomerRunner extends BankRunner {
 			long accountNumber = getAccountNumber();
 			JSONObject json = new JSONObject();
 			UtilityHelper.put(json,"AccountNumber", accountNumber);
+			int days= getNumber("Enter specified days of history viewed : ");
+			UtilityHelper.put(json,"Days", days);
 			JSONArray jArray = customer.transactionHistory(json);
 			printJarray(jArray);
 	}
+	
+	public void logout() {
+		customer.logout();
+	}
+	
 	
 	// support method
 	protected void printJarray(JSONArray jArray) throws BankException {

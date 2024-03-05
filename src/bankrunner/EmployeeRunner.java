@@ -32,9 +32,10 @@ public class EmployeeRunner extends CustomerRunner {
 		JSONObject json=new JSONObject();
 		long id=getUserId();
 		long aadharNumber=getAadharNumber();
+		Long customerId=null;
 		String panNumber=getPanId();
 		String address=getString("Enter the address : ");
-		UtilityHelper.put(json,"CustomerId",null);
+		UtilityHelper.put(json,"CustomerId",customerId);
 		UtilityHelper.put(json,"Id",id);
 		UtilityHelper.put(json,"AadharNumber",aadharNumber);
 		UtilityHelper.put(json,"PanNumber",panNumber);

@@ -23,7 +23,7 @@ public class Customer {
 		UtilityHelper.nullCheck(json);
 		checkAccNoForPrecence(json);
 		long accountNumber = UtilityHelper.getLong(json, "AccountNumber");
-		new Authenticator().accountTag(accountNumber);
+		Authenticator.accountTag(accountNumber);
 	}
 
 	public long[] getAccounts(JSONObject json) throws BankException, InputDefectException {
@@ -39,7 +39,9 @@ public class Customer {
 		UtilityHelper.nullCheck(json);
 		checkIdUserPresence(json);
 		String password = UtilityHelper.getString(json, "Password");
+		System.out.println(password);
 		String newPasswordHash = UtilityHelper.passHasher(password);
+		System.out.println(newPasswordHash);
 		UtilityHelper.put(json, "Password", newPasswordHash);
 		customer.resetPassword(json);
 	}
@@ -123,6 +125,11 @@ public class Customer {
 		}
 		return jArray;
 	}
+	
+	public void logout() {
+		Authenticator.idTag(0);
+		Authenticator.accountTag(0);
+	}
 
 
 	// support methods
@@ -191,20 +198,16 @@ public class Customer {
 		long tId = System.currentTimeMillis();
 		switch (status) {
 		case "active":
-			// getting balance
 			long balanceAmount = getBalance(accountNumber);
 			long tBalanceAmount = getBalance(trasactionAccountNumber);
-			// updating money
 			modifyMoney(accountNumber, balanceAmount - amount);
 			modifyMoney(accountNumber, tBalanceAmount + amount);
-			// updating History
 			JSONObject hisJson = historyJson("moneyTransfer", -amount, tId, accountNumber, description,
 					balanceAmount - amount, trasactionAccountNumber);
 			putHistory(hisJson);
 			hisJson = historyJson("moneyTransfer", amount, tId, trasactionAccountNumber, description,
 					tBalanceAmount + amount, accountNumber);
 			putHistory(hisJson);
-
 			break;
 		case "inactive":
 			throw new BankException("your reciptant account is blocked");

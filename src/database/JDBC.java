@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import utility.BankException;
 import utility.InputDefectException;
 
-public class JDBC implements DataStorage {
+abstract public class JDBC implements DataStorage {
 
 	private String url;
 	private String userName;

@@ -35,6 +35,6 @@ public interface CustomerServiceInterface {
 
 	public void checkAccountPrecence(JSONObject json, String field) throws BankException, InputDefectException;
 	
-	public JSONObject selectwhere(String tableName, String condition, String target) throws BankException;
+	//public JSONObject selectwhere(String tableName, String condition, String target) throws BankException;
 
 }

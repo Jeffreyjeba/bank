@@ -33,3 +33,45 @@ Feb 28, 2024 5:02:13 PM bankrunner.BankRunner admin
 WARNING: Id or accounts for this Id dosent exist
 Feb 28, 2024 6:30:34 PM bankrunner.BankRunner admin
 WARNING: your account is blocked
+Mar 05, 2024 10:16:37 AM bankrunner.BankRunner run
+WARNING: Wrong combination
+Mar 05, 2024 10:17:51 AM bankrunner.BankRunner admin
+WARNING: AccountNumber : 9 is not available
+Mar 05, 2024 10:40:56 AM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException
+	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+	at java.base/java.util.Scanner.next(Scanner.java:1594)
+	at java.base/java.util.Scanner.nextLong(Scanner.java:2373)
+	at java.base/java.util.Scanner.nextLong(Scanner.java:2328)
+	at bank/bankrunner.BankRunner.getLong(BankRunner.java:563)
+	at bank/bankrunner.BankRunner.getLong(BankRunner.java:576)
+	at bank/bankrunner.BankRunner.getUserId(BankRunner.java:496)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:41)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
+
+Mar 05, 2024 11:53:27 AM bankrunner.BankRunner admin
+WARNING: Id : 4 is not available
+Mar 05, 2024 11:54:07 AM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.lang.NullPointerException
+	at bank/operations.Customer.historyJson(Customer.java:141)
+	at bank/operations.Customer.debit(Customer.java:72)
+	at bank/bankrunner.CustomerRunner.debit(CustomerRunner.java:82)
+	at bank/bankrunner.BankRunner.admin(BankRunner.java:346)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:56)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:32)
+
+Mar 05, 2024 11:57:42 AM bankrunner.BankRunner run
+WARNING: Wrong combination
+Mar 05, 2024 11:58:12 AM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.lang.NullPointerException
+	at bank/operations.Customer.historyJson(Customer.java:141)
+	at bank/operations.Customer.debit(Customer.java:72)
+	at bank/bankrunner.CustomerRunner.debit(CustomerRunner.java:82)
+	at bank/bankrunner.BankRunner.admin(BankRunner.java:346)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:56)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:65)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:32)
+
