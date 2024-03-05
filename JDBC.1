@@ -18,3 +18,23 @@ Feb 28, 2024 6:27:12 PM bankrunner.BankRunner run
 WARNING: Wrong combination
 Feb 28, 2024 6:27:55 PM bankrunner.BankRunner admin
 WARNING: AccountNumber  : 3 is alreday present
+Mar 04, 2024 6:46:41 PM bankrunner.BankRunner run
+WARNING: Wrong combination
+Mar 04, 2024 6:52:37 PM bankrunner.BankRunner admin
+WARNING: Id : 9 is not available
+Mar 04, 2024 6:52:47 PM bankrunner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException
+	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+	at java.base/java.util.Scanner.next(Scanner.java:1594)
+	at java.base/java.util.Scanner.nextLong(Scanner.java:2373)
+	at java.base/java.util.Scanner.nextLong(Scanner.java:2328)
+	at bank/bankrunner.BankRunner.getLong(BankRunner.java:561)
+	at bank/bankrunner.BankRunner.getLong(BankRunner.java:574)
+	at bank/bankrunner.BankRunner.getUserId(BankRunner.java:494)
+	at bank/bankrunner.EmployeeRunner.addCustomers(EmployeeRunner.java:33)
+	at bank/bankrunner.BankRunner.admin(BankRunner.java:382)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:58)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:67)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
+

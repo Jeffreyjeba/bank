@@ -1,24 +1,19 @@
 package bank;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import database.DataStorage;
-import database.JDBC;
-import database.QueryBuilder;
+import database.AuthendicatorService;
+import database.AuthendicatorServiceInterface;
 import utility.BankException;
 import utility.InputDefectException;
 import utility.UtilityHelper;
 
 public class Authenticator {
-	DataStorage dtabase = new JDBC("jdbc:mysql://localhost:3306/rey_bank", "root", "0000");
+	
+	AuthendicatorServiceInterface auth=new AuthendicatorService("jdbc:mysql://localhost:3306/rey_bank", "root", "0000");
 
-	public String getAuthority(long id) throws Exception { // w
-		StringBuilder query = new StringBuilder();
-		QueryBuilder builder = new QueryBuilder(query);
-		builder.selectFromWhere("users", "Id=" + id, "UserType");
-		JSONObject json = dtabase.select(query);
-		return json.getString("UserType");
+	public String getAuthority(long id) throws BankException   { // w
+		return auth.getAuthority(id);
 	}
 
 	public boolean checkPassword(long userId, String password) throws BankException,InputDefectException {
@@ -37,41 +32,25 @@ public class Authenticator {
 	}
 
 	@SuppressWarnings("unused")
-	private void attemptUpdate(long id) throws JSONException, Exception {
-		StringBuilder query = new StringBuilder();
-		QueryBuilder builder = new QueryBuilder(query);
+	private void attemptUpdate(long id) throws BankException  {
 		int attempt = getAttempts(id);
 		attempt++;
-		builder.singleSetWhere("users", "Attempts", "Id", Long.toString(id));
-		dtabase.add(query, new JSONObject().put("Attempts", attempt));
+		JSONObject json= new JSONObject();
+		UtilityHelper.put(json, "Attempts", attempt);
+		auth.attemptUpdate(json, id);
 	}
 
 	private int getAttempts(long id) throws BankException {
-		try {
-		StringBuilder query = new StringBuilder();
-		QueryBuilder builder = new QueryBuilder(query);
-		builder.selectFromWhere("users", "Id=" + id, "Attempts");
-		return dtabase.select(query).getInt("Attempts");
-		}
-		catch (JSONException e) {
-			throw new BankException("Error 2 conatct bank");
-		}
+		JSONObject json = auth.getAttempts(id);
+		return UtilityHelper.getInt(json, "Attempts");
 	}
 
 	private String getPassword(long userId) throws BankException { // w
-		try {
-		StringBuilder query = new StringBuilder();
-		QueryBuilder builder = new QueryBuilder(query);
-		builder.selectFromWhere("users", "Id=" + userId, "Password");
-		JSONObject json = dtabase.select(query);
+		JSONObject json= auth.getPassword(userId);
 		if (json == null) {
 			throw new BankException("wrong combination");
 		}
-		return json.getString("Password");
-		}
-		catch (JSONException e) {
-			throw new BankException("Error 2 contact bank");
-		}
+		return UtilityHelper.getString(json,"Password");
 	}
 
 	public static ThreadLocal<Long> id = new ThreadLocal<Long>();

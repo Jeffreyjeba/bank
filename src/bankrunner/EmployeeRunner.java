@@ -90,16 +90,18 @@ public class EmployeeRunner extends CustomerRunner {
 		long accountNumber= getLong("Enter the customers Account Number : ");
 		accountStatus(accountNumber);
 		return accountNumber;
-	}	
+	}
+	
 	//to be over ridden
 	protected int getBranchId() throws BankException,InputDefectException {
 		long empId=Authenticator.id.get();
-		JSONObject json= employee.selectwhere("employees","Id="+empId,"BranchId");
+		JSONObject json= employee.getBranchId(empId);
 		if(json==null) {
 			throw new BankException("Please register employee");
 		}
 		return UtilityHelper.getInt(json,"BranchId");
 	}
+	
 	protected String getType() {
 		return "customer";
 	}

@@ -26,7 +26,9 @@ public class CustomerRunner extends BankRunner {
 	}
 
 	public long[] getAccounts() throws BankException, InputDefectException {
-		return customer.getAccounts(getId());
+		JSONObject json = new JSONObject();
+		UtilityHelper.put(json,"Id", getId());
+		return customer.getAccounts(json);
 	}
 
 	public void resetPassword() throws BankException, InputDefectException {
@@ -138,7 +140,7 @@ public class CustomerRunner extends BankRunner {
 			int length = jArray.length();
 			int index = 0;
 			while (length > index) {
-				System.out.println(jArray.getJSONObject(index));
+				System.out.println(jArray.getJSONObject(index).toString(4));
 				index++;
 			}
 		} catch (JSONException e) {

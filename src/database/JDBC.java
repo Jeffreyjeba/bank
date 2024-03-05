@@ -8,12 +8,11 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import utility.BankException;
+import utility.InputDefectException;
 
 public class JDBC implements DataStorage {
 
@@ -21,10 +20,27 @@ public class JDBC implements DataStorage {
 	private String userName;
 	private String password;
 
+	Query queryBuilder = new QueryBuilderMySql();
+
 	public JDBC(String url, String userName, String password) {
 		this.url = url;
 		this.userName = userName;
 		this.password = password;
+	}
+
+	public JSONArray selectOne(String tableName, String fieldName) throws BankException {
+		StringBuilder query = queryBuilder.selectFrom(tableName, fieldName); // to be removed
+		return bulkSelect(query);
+	}
+
+	public void generalAdd(String tableName, JSONObject employee) throws BankException, InputDefectException {
+		StringBuilder query = queryBuilder.addJsonPrepStatement(tableName, employee);
+		add(query, employee);
+	}
+	
+	public JSONObject selectwhere(String tableName, String condition, String target) throws BankException {
+		StringBuilder query =queryBuilder.selectFromWhere(tableName, condition, target);
+		return select(query);
 	}
 
 	@Override
@@ -34,8 +50,7 @@ public class JDBC implements DataStorage {
 				setParameter(preparedStatement, json);
 				return preparedStatement.execute();
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new BankException("technical error accured contact bank or technical support");
 		}
 	}
@@ -47,18 +62,17 @@ public class JDBC implements DataStorage {
 	}
 
 	@Override
-	public JSONObject select(CharSequence seq) throws BankException{
+	public JSONObject select(CharSequence seq) throws BankException {
 		try (Connection connection = getConnection();) {
 			try (Statement statement = connection.createStatement();) {
 				try (ResultSet set = statement.executeQuery(seq.toString());) {
-					if(set.next()) {
-					return jsonMaker(set);
+					if (set.next()) {
+						return jsonMaker(set);
 					}
 					return null;
 				}
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new BankException("technical error accured contact bank or technical support");
 		}
 	}
@@ -76,8 +90,7 @@ public class JDBC implements DataStorage {
 					return jArray;
 				}
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new BankException("technical error accured contact bank or technical support");
 		}
 	}
@@ -89,8 +102,7 @@ public class JDBC implements DataStorage {
 				setParameter(preparedStatement, json);
 				return preparedStatement.execute();
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new BankException("technical error accured contact bank or technical support");
 		}
 	}
@@ -108,35 +120,32 @@ public class JDBC implements DataStorage {
 				setParameter(preparedStatement, json);
 				return preparedStatement.execute();
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new BankException("technical error accured contact bank or technical support");
 		}
 	}
 
 	private JSONObject jsonMaker(ResultSet set) throws BankException {
 		try {
-		JSONObject json = new JSONObject();
-		ResultSetMetaData metaData = set.getMetaData();
-		int columnCount = metaData.getColumnCount();
-		for (int loop = 1; columnCount >= loop; loop++) {
-			String columnName = metaData.getColumnName(loop);
-			Object value = set.getObject(loop);
-			json.put(columnName, value);
-		}
-		return json;
-		}
-		catch (SQLException | JSONException e) {
+			JSONObject json = new JSONObject();
+			ResultSetMetaData metaData = set.getMetaData();
+			int columnCount = metaData.getColumnCount();
+			for (int loop = 1; columnCount >= loop; loop++) {
+				String columnName = metaData.getColumnName(loop);
+				Object value = set.getObject(loop);
+				json.put(columnName, value);
+			}
+			return json;
+		} catch (SQLException | JSONException e) {
 			throw new BankException("technical error accured contact bank or technical support");
 		}
 	}
 
-	private Connection getConnection() throws BankException{
+	private Connection getConnection() throws BankException {
 		try {
-		Connection connection = DriverManager.getConnection(url, userName, password);
-		return connection;
-		}
-		catch (SQLException e) {
+			Connection connection = DriverManager.getConnection(url, userName, password);
+			return connection;
+		} catch (SQLException e) {
 			throw new BankException("technical error accured contact bank or technical support");
 		}
 	}
@@ -165,10 +174,9 @@ public class JDBC implements DataStorage {
 				}
 				index++;
 			}
-		}
-		catch (SQLException | JSONException e) {
+		} catch (SQLException | JSONException e) {
 			throw new BankException("technical error accured contact bank or technical support");
 		}
-		
+
 	}
 }
