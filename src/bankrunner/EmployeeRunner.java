@@ -82,6 +82,7 @@ public class EmployeeRunner extends CustomerRunner {
 		employee.deleteAccount(json);
 	}
 	
+	//over ridden
 	@Override
 	protected long getId() {
 		return getUserId();
@@ -102,7 +103,6 @@ public class EmployeeRunner extends CustomerRunner {
 		}
 		return UtilityHelper.getInt(json,"BranchId");
 	}
-	
 	protected String getType() {
 		return "customer";
 	}

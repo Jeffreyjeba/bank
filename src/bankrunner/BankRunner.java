@@ -86,7 +86,7 @@ public class BankRunner {
 					System.out.println((loop + 1) + " Account Number --  " + accountArray[loop]);
 				}
 				int option = getNumber("Please enter the account you need to select");
-				UtilityHelper.lengthIndexCheck(length, option - 1);
+				UtilityHelper.lengthIndexCheck(length, option );
 				Authenticator.accountTag(accountArray[option - 1]);
 				statusCheck(accountArray[option - 1]);
 			}
@@ -96,18 +96,22 @@ public class BankRunner {
 		}
 		catch (BankException e) {
 			logger.warning(e.getMessage());
+			e.printStackTrace();
 			run();
 		}
 		boolean cont = true;
 		while (cont) {
 			int option = getNumber(" \n 1-GetBalance\n 2-GetAccounts\n 3-SwitchAccounts\n" + " 4-debit\n"
-					+ " 5-credit\n 6-Transfer\n 7-ResetPassword \n 8-Get History\n 50-logout \n Enter your option : ");
+					+ " 5-credit\n 6-Transfer\n 7-ResetPassword \n 8-Get History\n 9-view profile \n 50-logout \n Enter your option : ");
 			switch (option) {
 			case 1:
 				try {
 					customer.getBalance();
 				} 
 				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
 					logger.warning(e.getMessage());
 				}
 				break;
@@ -117,6 +121,9 @@ public class BankRunner {
 					System.out.println(Arrays.toString(accounts));
 				} 
 				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
 					logger.warning(e.getMessage());
 				}
 				break;
@@ -129,6 +136,7 @@ public class BankRunner {
 				}
 				catch (BankException e) {
 					logger.warning(e.getMessage());
+					e.printStackTrace();
 				}
 				break;
 			case 4:
@@ -136,6 +144,9 @@ public class BankRunner {
 					customer.debit();
 				}
 				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
 					logger.warning(e.getMessage());
 				}
 				break;
@@ -146,6 +157,9 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 6:
 				try {
@@ -154,9 +168,20 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 7:
+				try {
 				customer.resetPassword();
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 8:
 				try {
@@ -164,6 +189,22 @@ public class BankRunner {
 				}
 				catch (BankException e) {
 					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
+				break;
+			case 9:
+				try {
+					customer.viewProfile();;
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
+					e.printStackTrace();
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+					e.printStackTrace();
 				}
 				break;
 			case 50:
@@ -210,9 +251,20 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 3:
+				try {
 				employee.switchAccount();
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 4:
 				try {
@@ -232,6 +284,9 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 6:
 				try {
@@ -240,18 +295,40 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 7:
+				try {
 				employee.resetPassword();
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 8:
+				try {
 				employee.createUser();
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 9:
 				try {
 					employee.addCustomers();
 				}
 				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
 					logger.warning(e.getMessage());
 				}
 				break;
@@ -262,12 +339,18 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 11:
 				try {
 					employee.deactivateAccount();
 				}
 				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
 					logger.warning(e.getMessage());
 				}
 				break;
@@ -278,6 +361,9 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 13:
 				try {
@@ -286,12 +372,29 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 14:
 				try {
 					employee.transactionHistory();
 				}
 				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
+				break;
+			case 15:
+				try {
+					employee.viewProfile();;
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
 					logger.warning(e.getMessage());
 				}
 				break;
@@ -329,6 +432,9 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 2:
 				try {
@@ -336,6 +442,9 @@ public class BankRunner {
 					System.out.println(Arrays.toString(accounts));
 				} 
 				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
 					logger.warning(e.getMessage());
 				}
 				break;
@@ -357,6 +466,9 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 5:
 				try {
@@ -365,12 +477,18 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 6:
 				try {
 					admin.moneyTransfer();
 				}
 				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
 					logger.warning(e.getMessage());
 				}
 				break;
@@ -384,12 +502,18 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 9:
 				try {
 					admin.addCustomers();
 				}
 				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
 					logger.warning(e.getMessage());
 				}
 				break;
@@ -400,12 +524,18 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 11:
 				try {
 					admin.deactivateAccount();
 				}
 				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
 					logger.warning(e.getMessage());
 				}
 				break;
@@ -416,12 +546,18 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 13:
 				try {
 					admin.activateAccount();
 				}
 				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
 					logger.warning(e.getMessage());
 				}
 				break;
@@ -440,6 +576,9 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 16:
 				try {
@@ -448,15 +587,40 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 17:
+				try {
 				admin.removeEmployee();
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
 				break;
 			case 18:
 				try {
 					admin.transactionHistory();
 				}
 				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
+				break;
+			case 19:
+				try {
+					admin.viewProfile();;
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
 					logger.warning(e.getMessage());
 				}
 				break;

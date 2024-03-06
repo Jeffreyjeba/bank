@@ -21,7 +21,7 @@ public interface CustomerServiceInterface {
 
 	public void putHistory(JSONObject json) throws BankException;
 
-	public JSONArray getTransactionHistory(JSONObject json) throws BankException;
+	public JSONArray getTransactionHistory(JSONObject json,int quantity ,int page,long searchMilli) throws BankException;
 
 	public void checkUserPresence(JSONObject json, String field) throws BankException, InputDefectException;
 
@@ -35,6 +35,9 @@ public interface CustomerServiceInterface {
 
 	public void checkAccountPrecence(JSONObject json, String field) throws BankException, InputDefectException;
 	
-	//public JSONObject selectwhere(String tableName, String condition, String target) throws BankException;
+	public int pageCount(JSONObject json,int quantity,long searchMilli) throws BankException ;
+	
+	public JSONObject viewProfile(JSONObject json) throws BankException;
+	
 
 }

@@ -71,6 +71,25 @@ public class QueryBuilderMySql implements Query {
 		close(stringBuilder);
 		return stringBuilder;
 	}
+	public StringBuilder selectAllCountFromWherePrep(String tableName, String conditionField) { // use pass
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("select count(*) ");
+		from(stringBuilder, tableName);
+		stringBuilder.append("where ");
+		stringBuilder.append(conditionField);
+		close(stringBuilder);
+		return stringBuilder;
+	}
+	@Override
+	public StringBuilder viewCustomerProfile(long id) {
+		return new StringBuilder("select users.Id,users.Name,users.EmailId,users.PhoneNumber,"
+														+ "customers.Address from users left join c"
+														+ "ustomers on users.Id=customers.Id where users.Id="+id+";");
+	}
+	
+	
+	
+	
 
 	// add
 	private void insert(StringBuilder stringBuilder, String tableName) {

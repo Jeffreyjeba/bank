@@ -2,21 +2,23 @@ package operations;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import bank.Authenticator;
-import database.CustomerService;
+import bank.ServiceFactory;
 import database.CustomerServiceInterface;
 import utility.BankException;
 import utility.InputDefectException;
 import utility.UtilityHelper;
 
 public class Customer {
-	private CustomerServiceInterface customer = new CustomerService("jdbc:mysql://localhost:3306/rey_bank", "root", "0000");
+	
+	private CustomerServiceInterface customer = ServiceFactory.getCustomerService();
 
 	// operation methods
-	public JSONObject getBalance(JSONObject json) throws BankException, InputDefectException {
+	public long getBalance(JSONObject json) throws BankException, InputDefectException {
 		UtilityHelper.nullCheck(json);
 		checkAccNoForPrecence(json);
-		return customer.getBalance(json);
+		return UtilityHelper.getLong(customer.getBalance(json),"Balance");
 	}
 
 	public void switchAccount(JSONObject json) throws BankException, InputDefectException {
@@ -39,9 +41,7 @@ public class Customer {
 		UtilityHelper.nullCheck(json);
 		checkIdUserPresence(json);
 		String password = UtilityHelper.getString(json, "Password");
-		System.out.println(password);
 		String newPasswordHash = UtilityHelper.passHasher(password);
-		System.out.println(newPasswordHash);
 		UtilityHelper.put(json, "Password", newPasswordHash);
 		customer.resetPassword(json);
 	}
@@ -50,9 +50,6 @@ public class Customer {
 		JSONObject json=UtilityHelper.put(new JSONObject(), "AccountNumber", accountNumber);
 		checkAccNoForPrecence(json);
 		JSONObject resultJson = customer.accountStatus(json);
-		if (resultJson == null) {
-			return null;
-		}
 		return UtilityHelper.getString(resultJson, "Status");
 	}
 
@@ -61,12 +58,10 @@ public class Customer {
 		checkAccNoForPrecence(json);
 		long accountNumber = UtilityHelper.getLong(json, "AccountNumber");
 		resolveAccountStatus(accountNumber);
-		long balanceAmount = getBalance(accountNumber);
+		long balanceAmount = getBalance(json);
 		long amount = UtilityHelper.getLong(json, "Amount");
 		String description = UtilityHelper.getString(json, "Description");
-		if (balanceAmount < amount) {
-			throw new BankException("Insuffecient balance");
-		}
+		balanceCheck(balanceAmount, amount);
 		modifyMoney(accountNumber, balanceAmount - amount);
 		long tId = System.currentTimeMillis();
 		JSONObject hisJson = historyJson("debit", -amount, tId, accountNumber, description, balanceAmount - amount,null);
@@ -78,7 +73,7 @@ public class Customer {
 		checkAccNoForPrecence(json);
 		long accountNumber = UtilityHelper.getLong(json, "AccountNumber");
 		resolveAccountStatus(accountNumber);
-		long balanceAmount = getBalance(accountNumber);
+		long balanceAmount = getBalance(json);
 		long amount = UtilityHelper.getLong(json, "Amount");
 		String description = UtilityHelper.getString(json, "Description");
 		modifyMoney(accountNumber, balanceAmount + amount);
@@ -92,38 +87,53 @@ public class Customer {
 		checkAccNoForPrecence(json);
 		long accountNumber = UtilityHelper.getLong(json, "AccountNumber");
 		resolveAccountStatus(accountNumber);
-		long balanceAmount = getBalance(accountNumber);
+		long balanceAmount = getBalance(json);
 		long amount = UtilityHelper.getLong(json, "Amount");
-		if (balanceAmount < amount) {
-			throw new BankException("Insuffecient balance");
-		}
+		balanceCheck(balanceAmount, amount);
 		long trasactionAccountNumber = UtilityHelper.getLong(json, "TransactionAccountNumber");
-		if (accountNumber == trasactionAccountNumber) {
-			throw new BankException("money cannot be transfered withiin the same account");
-		}
 		String description = UtilityHelper.getString(json, "Description");
 		String ifscCode = UtilityHelper.getString(json, "IfscCode");
-		boolean inBank = checkInBank(ifscCode);
+		boolean inBank = resolveTransaction(accountNumber, trasactionAccountNumber, ifscCode);
 		if (!inBank) {
 			long tId = System.currentTimeMillis();
 			modifyMoney(accountNumber, balanceAmount - amount);
 			JSONObject hisJson = historyJson("OBMoneyTransfer", -amount, tId, accountNumber, description,
 					balanceAmount - amount, null);
 			putHistory(hisJson);
-		} else {
+		} 
+		else {
 			checkAccNoForPrecence(UtilityHelper.put(new JSONObject(), "AccountNumber", trasactionAccountNumber));
 			inBankTransfer(accountNumber, trasactionAccountNumber, amount, description);
 		}
 	}	
 
-	public JSONArray transactionHistory(JSONObject json) throws BankException, InputDefectException {
+	public JSONArray transactionHistory(JSONObject json,int quantity,int page,long searchMilli) throws BankException, InputDefectException {
 		UtilityHelper.nullCheck(json);
 		checkAccNoForPrecence(json);
-		JSONArray jArray=customer.getTransactionHistory(json);
+		JSONArray jArray=customer.getTransactionHistory(json,quantity ,page,searchMilli);
 		if (jArray.length() == 0) {
 			throw new BankException("NO transacations made");
 		}
 		return jArray;
+	}
+	
+	public JSONObject viewProfile(JSONObject json) throws BankException, InputDefectException {
+		UtilityHelper.nullCheck(json);
+		checkIdCustomerPresence(json);
+		return customer.viewProfile(json);
+	}
+	
+	public int getPages(JSONObject json,int quantity,long searchMilli) throws BankException {
+		return customer.pageCount(json, quantity,searchMilli);
+	}
+	
+	public long daystomilly(int day) {
+		return (day*86400000l);
+		
+	}
+	
+	public long searchRegion(long day) {
+		return (System.currentTimeMillis()-day);
 	}
 	
 	public void logout() {
@@ -133,6 +143,12 @@ public class Customer {
 
 
 	// support methods
+	protected void balanceCheck(long balanceAmount,long amount) throws BankException {
+		if (balanceAmount < amount) {
+			throw new BankException("Insuffecient balance");
+		}
+	}
+		
 	protected void putHistory(JSONObject json) throws BankException, InputDefectException {
 		UtilityHelper.nullCheck(json);
 		customer.putHistory(json);
@@ -164,11 +180,18 @@ public class Customer {
 		return ifscCode.substring(0, 3).equals("rey");
 	}
 
+	
 	protected long getBalance(long accountNumber) throws BankException, InputDefectException {
 		JSONObject json = new JSONObject();
 		UtilityHelper.put(json, "AccountNumber", accountNumber);
-		JSONObject json2 = getBalance(json);
-		return UtilityHelper.getLong(json2, "Balance");
+		return getBalance(json); 
+	}
+	 
+	protected boolean resolveTransaction(long accountNumber,long trasactionAccountNumber ,String ifscCode) throws BankException {
+		if (accountNumber == trasactionAccountNumber) {
+			throw new BankException("money cannot be transfered withiin the same account");
+		}
+		return checkInBank(ifscCode);
 	}
 
 	protected void resolveAccountStatus(long accountNumber) throws BankException, InputDefectException {

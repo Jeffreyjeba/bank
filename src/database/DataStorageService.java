@@ -12,35 +12,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import utility.BankException;
-import utility.InputDefectException;
 
-abstract public class JDBC implements DataStorage {
+abstract public class DataStorageService implements DataStorage {
 
 	private String url;
 	private String userName;
 	private String password;
 
-	Query queryBuilder = new QueryBuilderMySql();
+	Query builder = new QueryBuilderMySql();
 
-	public JDBC(String url, String userName, String password) {
+	public DataStorageService(String url, String userName, String password) {
 		this.url = url;
 		this.userName = userName;
 		this.password = password;
-	}
-
-	public JSONArray selectOne(String tableName, String fieldName) throws BankException {
-		StringBuilder query = queryBuilder.selectFrom(tableName, fieldName); // to be removed
-		return bulkSelect(query);
-	}
-
-	public void generalAdd(String tableName, JSONObject employee) throws BankException, InputDefectException {
-		StringBuilder query = queryBuilder.addJsonPrepStatement(tableName, employee);
-		add(query, employee);
-	}
-	
-	public JSONObject selectwhere(String tableName, String condition, String target) throws BankException {
-		StringBuilder query =queryBuilder.selectFromWhere(tableName, condition, target);
-		return select(query);
 	}
 
 	@Override
@@ -50,7 +34,8 @@ abstract public class JDBC implements DataStorage {
 				setParameter(preparedStatement, json);
 				return preparedStatement.execute();
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw new BankException("technical error accured contact bank or technical support");
 		}
 	}
@@ -72,7 +57,8 @@ abstract public class JDBC implements DataStorage {
 					return null;
 				}
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw new BankException("technical error accured contact bank or technical support");
 		}
 	}
@@ -81,7 +67,6 @@ abstract public class JDBC implements DataStorage {
 	public JSONArray bulkSelect(CharSequence seq) throws BankException {
 		try (Connection connection = getConnection();) {
 			try (PreparedStatement statement = connection.prepareStatement(seq.toString());) {
-				System.out.println(seq);
 				try (ResultSet set = statement.executeQuery(seq.toString());) {
 					JSONArray jArray = new JSONArray();
 					while (set.next()) {
@@ -90,7 +75,8 @@ abstract public class JDBC implements DataStorage {
 					return jArray;
 				}
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw new BankException("technical error accured contact bank or technical support");
 		}
 	}
@@ -102,7 +88,8 @@ abstract public class JDBC implements DataStorage {
 				setParameter(preparedStatement, json);
 				return preparedStatement.execute();
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw new BankException("technical error accured contact bank or technical support");
 		}
 	}
@@ -120,7 +107,8 @@ abstract public class JDBC implements DataStorage {
 				setParameter(preparedStatement, json);
 				return preparedStatement.execute();
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw new BankException("technical error accured contact bank or technical support");
 		}
 	}

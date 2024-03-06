@@ -14,6 +14,7 @@ public class AdminRunner extends EmployeeRunner {
 	private Admin admin=new Admin();
 	
 	public void createBranch() throws BankException,InputDefectException {
+		
 		JSONObject json=new JSONObject();
 		int branchId=getNumber("Enter the branch id : ");
 		String ifscCode="rey"+String.format("%05d",branchId);

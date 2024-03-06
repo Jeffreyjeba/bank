@@ -3,7 +3,7 @@ package operations;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.AdminService;
+import bank.ServiceFactory;
 import database.AdminServiceInterface;
 import utility.BankException;
 import utility.InputDefectException;
@@ -13,7 +13,7 @@ import utility.UtilityHelper;
 
 public class Admin extends Employee{
 	
-	AdminServiceInterface admin=new AdminService("jdbc:mysql://localhost:3306/rey_bank", "root", "0000");
+	AdminServiceInterface admin=ServiceFactory.getAdminService();
 
 	public void createBranch(JSONObject branch) throws BankException,InputDefectException  {
 		UtilityHelper.nullCheck(branch);

@@ -22,7 +22,7 @@ public interface EmployeeServiceInterface {
 
 	public void putHistory(JSONObject json) throws BankException;
 
-	public JSONArray getTransactionHistory(JSONObject json) throws BankException;
+	public JSONArray getTransactionHistory(JSONObject json,int quantity ,int page,long searchMilli) throws BankException;
 
 	public void checkUserPresence(JSONObject json, String field) throws BankException, InputDefectException;
 
@@ -36,7 +36,6 @@ public interface EmployeeServiceInterface {
 
 	public void checkAccountPrecence(JSONObject json, String field) throws BankException, InputDefectException;
 
-	
 	// employee operations
 	
 	public void addUsers(JSONObject customer) throws BankException, InputDefectException;
@@ -52,4 +51,6 @@ public interface EmployeeServiceInterface {
 	public void activateAccount(JSONObject account) throws BankException, InputDefectException;
 
 	public JSONObject getBranch(long empId) throws BankException ;
+	
+	// public JSONObject viewProfile(JSONObject json) throws BankException;
 }

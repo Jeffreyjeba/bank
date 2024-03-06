@@ -3,16 +3,15 @@ package operations;
 
 import org.json.JSONObject;
 
-import database.EmployeeService;
+import bank.ServiceFactory;
 import database.EmployeeServiceInterface;
 import utility.BankException;
 import utility.InputDefectException;
-//import utility.BankException;
 import utility.UtilityHelper;
 
 public class Employee extends Customer{
 	//operations methods
-	EmployeeServiceInterface employee=new EmployeeService("jdbc:mysql://localhost:3306/rey_bank", "root", "0000");
+	EmployeeServiceInterface employee=ServiceFactory.getEmployeeService();
 	
 	public void addUsers(JSONObject customer) throws BankException,InputDefectException{
 		UtilityHelper.nullCheck(customer);
@@ -50,4 +49,5 @@ public class Employee extends Customer{
 	public JSONObject getBranchId(long id) throws BankException {
 		return employee.getBranch(id);
 	}
+
 }

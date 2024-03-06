@@ -13,6 +13,8 @@ public interface Query {
 	public StringBuilder selectFromWherePrep(String tableName, String conditionField, String... fields);
 	public StringBuilder selectItem(String tableName, String itemName);
 	public StringBuilder selectAllFromWherePrep(String tableName, String conditionField);
+	public StringBuilder selectAllCountFromWherePrep(String tableName, String conditionField);
+	public StringBuilder viewCustomerProfile(long id);
 	// Add query builder
 	public StringBuilder addJsonPrepStatement(String tableName, JSONObject json);
 	// Update query builder

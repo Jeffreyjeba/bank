@@ -17,11 +17,7 @@ public class CustomerRunner extends BankRunner {
 	public void getBalance() throws BankException, InputDefectException {
 		JSONObject json = new JSONObject();
 		UtilityHelper.put(json, "AccountNumber", getAccountNumber());
-		JSONObject resultJson = customer.getBalance(json);
-		if (resultJson == null) {
-			throw new BankException("No such account exist");
-		}
-		long balance = UtilityHelper.getLong(resultJson, "Balance");
+		long balance = customer.getBalance(json);
 		System.out.println("Your balance is : " + balance);
 	}
 
@@ -59,7 +55,7 @@ public class CustomerRunner extends BankRunner {
 			UtilityHelper.lengthIndexCheck(account.length, index);
 			long accountNumber = account[index];
 			JSONObject json = new JSONObject();
-			UtilityHelper.put(json,"AccountNumeber", accountNumber);
+			UtilityHelper.put(json,"AccountNumber", accountNumber);
 			customer.switchAccount(json);
 			System.out.println("Account switched to " + accountNumber);
 		}
@@ -108,16 +104,17 @@ public class CustomerRunner extends BankRunner {
 		if (!pass) {
 			System.out.println("Wrong pass word\nTry again");
 			moneyTransfer();
-		} else {
+		}
+		else {
 				JSONObject json = new JSONObject();
 				UtilityHelper.put(json,"AccountNumber", getAccountNumber());
 				long amount = getLong("Enter the amount you want to transfer : ");
 				String description = getString("Enter the description : ");
-				Long toaccoun = getLong("Enter the account number you want to credit : ");
+				Long toAccount = getLong("Enter the account number you want to credit : ");
 				String ifscCode = getString("Enter the ifsc code : ");
 				UtilityHelper.put(json,"Description", description);
 				UtilityHelper.put(json,"Amount", amount);
-				UtilityHelper.put(json,"TransactionAccountNumber", toaccoun);
+				UtilityHelper.put(json,"TransactionAccountNumber", toAccount);
 				UtilityHelper.put(json,"IfscCode", ifscCode);
 				customer.moneyTransfer(json);
 		}
@@ -127,19 +124,47 @@ public class CustomerRunner extends BankRunner {
 		return customer.accountStatus(accountNumber);
 	}
 
-	public void transactionHistory() throws BankException, InputDefectException {
+	public void transactionHistory() throws BankException, InputDefectException { 
 			long accountNumber = getAccountNumber();
 			JSONObject json = new JSONObject();
 			UtilityHelper.put(json,"AccountNumber", accountNumber);
 			int days= getNumber("Enter specified days of history viewed : ");
-			UtilityHelper.put(json,"Days", days);
-			JSONArray jArray = customer.transactionHistory(json);
+			long searchMilli=customer.searchRegion(customer.daystomilly(days));
+			int totalPage=customer.getPages(json,2,searchMilli);
+			if(totalPage<=0) {
+				throw new BankException("no transactions made");
+			}
+			else if(totalPage==1) {
+				JSONArray jArray= customer.transactionHistory(json, 2,1, searchMilli);
+				printJarray(jArray);
+				throw new BankException("One page availabele");
+			}
+			boolean iterator=true;
+			do {
+			int currentPage=getNumber("Enter a page between 1 to "+totalPage+" : ");
+			UtilityHelper.lengthIndexCheck(totalPage,currentPage);
+			JSONArray jArray= customer.transactionHistory(json, 2, currentPage, searchMilli);
 			printJarray(jArray);
+			iterator=getNumber("Enter 2 to continue ")==2;
+			}while(iterator);
 	}
 	
 	public void logout() {
 		customer.logout();
 	}
+	
+	public void viewProfile() throws BankException, InputDefectException{
+		try {
+		JSONObject json= new JSONObject();
+		UtilityHelper.put(json,"Id",getId());
+		JSONObject resultJson= customer.viewProfile(json);
+		System.out.println(resultJson.toString(4));
+		}
+		catch (JSONException e) {
+			throw new BankException("Error 2 contact bank");
+		}
+	}
+	
 	
 	
 	// support method

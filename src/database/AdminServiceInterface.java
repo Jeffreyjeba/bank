@@ -22,7 +22,7 @@ public interface AdminServiceInterface {
 
 	public void putHistory(JSONObject json) throws BankException;
 
-	public JSONArray getTransactionHistory(JSONObject json) throws BankException;
+	public JSONArray getTransactionHistory(JSONObject json,int quantity ,int page,long searchMilli) throws BankException;
 
 	public void checkUserPresence(JSONObject json, String field) throws BankException, InputDefectException;
 

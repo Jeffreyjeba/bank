@@ -7,7 +7,7 @@ import utility.BankException;
 import utility.InputDefectException;
 import utility.UtilityHelper;
 
-public class CustomerService extends JDBC implements CustomerServiceInterface {
+public class CustomerService extends DataStorageService implements CustomerServiceInterface {
 
 	public CustomerService(String url, String userName, String password) {
 		super(url, userName, password);
@@ -35,7 +35,7 @@ public class CustomerService extends JDBC implements CustomerServiceInterface {
 
 	public JSONObject accountStatus(JSONObject json) throws BankException {
 		long accountNumber = UtilityHelper.getLong(json, "AccountNumber");
-		return selectwhere("accounts", "AccountNumber=" + accountNumber, "Status");
+		return selectWhere("accounts", "AccountNumber=" + accountNumber, "Status");
 	}
 
 	public void modifyMoney(JSONObject json) throws BankException {
@@ -48,33 +48,34 @@ public class CustomerService extends JDBC implements CustomerServiceInterface {
 		add(query, json);
 	}
 
-	public JSONArray getTransactionHistory(JSONObject json) throws BankException {
+	public JSONArray getTransactionHistory(JSONObject json,int quantity ,int page,long searchMilli) throws BankException {
 		
-		long timeInMillis=System.currentTimeMillis()- UtilityHelper.getLong(json,"Days")*60*60*24*1000;
 		StringBuilder query = queryBuilder.selectAllFromWherePrep("transactionHistory",
-				"AccountNumber=" + UtilityHelper.getLong(json, "AccountNumber")+" and TransactionId > "+timeInMillis);
+								"AccountNumber=" + UtilityHelper.getLong(json, "AccountNumber")+" "
+								+ "and TransactionId > "+searchMilli+" order by TransactionId asc limit "
+								+quantity+" offset "+(page-1)*quantity);
 		return bulkSelect(query);
 	}
-
-	protected void checkLongAbsence(JSONObject json, String tableName, String fieldName, String selectionField)
-			throws BankException, InputDefectException {
-		UtilityHelper.nullCheck(json);
-		long id = UtilityHelper.getLong(json, fieldName);
-		JSONObject json2 = selectwhere(tableName, fieldName + "=" + id, selectionField);
-		if (json2 != null) {
-			throw new BankException(selectionField + "  : " + id + " is alreday present");
-		}
+	
+	public int pageCount(JSONObject json,int quantity,long searchMilli) throws BankException {
+		StringBuilder countQuery = queryBuilder.selectAllCountFromWherePrep("transactionHistory",
+									"AccountNumber=" + UtilityHelper.getLong(json, "AccountNumber")+""
+									+ " and TransactionId > "+searchMilli);
+		float count= UtilityHelper.getInt(select(countQuery),"count(*)");
+		return (int) Math.ceil(count/quantity); 
 	}
+	
 
-	protected void checkLongPresence(JSONObject json, String tableName, String fieldName, String selectionField)
-			throws BankException, InputDefectException {
-		UtilityHelper.nullCheck(json);
-		long id = UtilityHelper.getLong(json, fieldName);
-		JSONObject json2 = selectwhere(tableName, fieldName + "=" + id, selectionField);
-		if (json2 == null) {
-			throw new BankException(selectionField + " : " + id + " is not available");
-		}
+	
+	public JSONObject viewProfile(JSONObject json) throws BankException {
+		long id= UtilityHelper.getLong(json,"Id");
+		StringBuilder query=builder.viewCustomerProfile(id);
+		JSONObject jsonResult= select(query);
+		JSONArray jsonArray=getAccounts(json);
+		return UtilityHelper.put(jsonResult,"AccountNumber", jsonArray);
 	}
+	
+	
 
 	public void checkUserPresence(JSONObject json, String field) throws BankException, InputDefectException {
 		checkLongPresence(json, "users", field, field);
@@ -99,5 +100,45 @@ public class CustomerService extends JDBC implements CustomerServiceInterface {
 	public void checkAccountPrecence(JSONObject json, String field) throws BankException, InputDefectException {
 		checkLongPresence(json, "accounts", field, field);
 	}
+	
+	
+	
+	// support methods
+	protected void checkLongAbsence(JSONObject json, String tableName, String fieldName, String selectionField)
+			throws BankException, InputDefectException {
+		UtilityHelper.nullCheck(json);
+		long id = UtilityHelper.getLong(json, fieldName);
+		JSONObject json2 = selectWhere(tableName, fieldName + "=" + id, selectionField);
+		if (json2 != null) {
+			throw new BankException(selectionField + "  : " + id + " is alreday present");
+		}
+	}
+
+	protected void checkLongPresence(JSONObject json, String tableName, String fieldName, String selectionField)
+			throws BankException, InputDefectException {
+		UtilityHelper.nullCheck(json);
+		long id = UtilityHelper.getLong(json, fieldName);
+		JSONObject json2 = selectWhere(tableName, fieldName + "=" + id, selectionField);
+		if (json2 == null) {
+			throw new BankException(selectionField + " : " + id + " is not available");
+		}
+	}
+	
+	
+	protected JSONArray selectOne(String tableName, String fieldName) throws BankException {
+		StringBuilder query = builder.selectFrom(tableName, fieldName);
+		return bulkSelect(query);
+	}
+
+	protected void generalAdd(String tableName, JSONObject employee) throws BankException, InputDefectException {
+		StringBuilder query = builder.addJsonPrepStatement(tableName, employee);
+		add(query, employee);
+	}
+	
+	protected JSONObject selectWhere(String tableName, String condition, String target) throws BankException {
+		StringBuilder query =builder.selectFromWhere(tableName, condition, target);
+		return select(query);
+	}
+	
 
 }

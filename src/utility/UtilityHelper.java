@@ -130,6 +130,15 @@ public class UtilityHelper {
 			throw new BankException(" Error level 2 conatct bank");
 		}
 	}
+	
+	public static JSONObject put(JSONObject json, String key, JSONArray value) throws BankException {
+		try {
+			json.put(key, value);
+			return json;
+		} catch (JSONException e) {
+			throw new BankException(" Error level 2 conatct bank");
+		}
+	}
 
 	public static long getLong(JSONObject json, String key) throws BankException {
 		try {
