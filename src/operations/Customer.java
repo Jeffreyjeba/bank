@@ -140,6 +140,16 @@ public class Customer {
 		Authenticator.idTag(0);
 		Authenticator.accountTag(0);
 	}
+	
+	public JSONObject getPrimaryAccount(JSONObject json) throws BankException, InputDefectException {
+		checkIdCustomerPresence(json);
+		return customer.getPrimaryAccount(json);
+	}
+	
+	public void setPrimaryAccount(JSONObject json) throws BankException, InputDefectException {
+		checkAccNoForPrecence(json);
+		customer.setPrimaryAccount(json);
+	}
 
 
 	// support methods

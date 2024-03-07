@@ -165,7 +165,17 @@ public class CustomerRunner extends BankRunner {
 		}
 	}
 	
+	public JSONObject getPrimaryAccount(long userId) throws BankException, InputDefectException {
+		JSONObject json = new JSONObject();
+		UtilityHelper.put(json,"Id",userId);
+		return customer.getPrimaryAccount(json);
+	}
 	
+	public void setPrimaryAccount(long accountNumber) throws BankException, InputDefectException {
+		JSONObject json = new JSONObject();
+		UtilityHelper.put(json,"AccountNumber",accountNumber);
+		customer.setPrimaryAccount(json);
+	}
 	
 	// support method
 	protected void printJarray(JSONArray jArray) throws BankException {
@@ -179,8 +189,8 @@ public class CustomerRunner extends BankRunner {
 		} catch (JSONException e) {
 			throw new BankException("Error 2 contact bank");
 		}
-
 	}
+	
 
 	// methods to be over ridden for employee compatibility
 	protected long getId() {

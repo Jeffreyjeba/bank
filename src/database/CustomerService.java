@@ -49,24 +49,23 @@ public class CustomerService extends DataStorageService implements CustomerServi
 	}
 
 	public JSONArray getTransactionHistory(JSONObject json,int quantity ,int page,long searchMilli) throws BankException {
-		
+		long accountNumber= UtilityHelper.getLong(json, "AccountNumber");
 		StringBuilder query = queryBuilder.selectAllFromWherePrep("transactionHistory",
-								"AccountNumber=" + UtilityHelper.getLong(json, "AccountNumber")+" "
-								+ "and TransactionId > "+searchMilli+" order by TransactionId asc limit "
+								"AccountNumber=" + accountNumber+ " and TransactionId > "
+								+searchMilli+" order by TransactionId asc limit "
 								+quantity+" offset "+(page-1)*quantity);
 		return bulkSelect(query);
 	}
 	
 	public int pageCount(JSONObject json,int quantity,long searchMilli) throws BankException {
+		long accountNumber= UtilityHelper.getLong(json, "AccountNumber");
 		StringBuilder countQuery = queryBuilder.selectAllCountFromWherePrep("transactionHistory",
-									"AccountNumber=" + UtilityHelper.getLong(json, "AccountNumber")+""
+									"AccountNumber=" + accountNumber
 									+ " and TransactionId > "+searchMilli);
 		float count= UtilityHelper.getInt(select(countQuery),"count(*)");
 		return (int) Math.ceil(count/quantity); 
 	}
-	
 
-	
 	public JSONObject viewProfile(JSONObject json) throws BankException {
 		long id= UtilityHelper.getLong(json,"Id");
 		StringBuilder query=builder.viewCustomerProfile(id);
@@ -75,7 +74,21 @@ public class CustomerService extends DataStorageService implements CustomerServi
 		return UtilityHelper.put(jsonResult,"AccountNumber", jsonArray);
 	}
 	
+	public JSONObject getPrimaryAccount(JSONObject json) throws BankException {
+		long id=UtilityHelper.getLong(json,"Id");
+		StringBuilder query =queryBuilder.selectFromWhere("accounts","Id = "+id+" and Priority='primary'","AccountNumber");
+		System.out.println(query);
+		return select(query);
+	}
 	
+	public void setPrimaryAccount(JSONObject json) throws BankException {
+		long accountNumber=UtilityHelper.getLong(json,"AccountNumber");
+		StringBuilder query=builder.singleSetWhere("accounts","Priority","AccountNumber",Long.toString(accountNumber));
+		update(query, UtilityHelper.put(new JSONObject(),"Priority","primary")); 
+	}
+	
+	
+
 
 	public void checkUserPresence(JSONObject json, String field) throws BankException, InputDefectException {
 		checkLongPresence(json, "users", field, field);

@@ -39,5 +39,8 @@ public interface CustomerServiceInterface {
 	
 	public JSONObject viewProfile(JSONObject json) throws BankException;
 	
-
+	public JSONObject getPrimaryAccount(JSONObject json) throws BankException;
+	
+	public void setPrimaryAccount(JSONObject json) throws BankException;	
+	
 }

@@ -20,17 +20,19 @@ public class AuthendicatorService extends DataStorageService implements Authendi
 		return UtilityHelper.getString(json,"UserType");
 	}
 
-	
+	@Override
 	public JSONObject getPassword(long userId) throws BankException {
 		StringBuilder query= builder.selectFromWhere("users", "Id=" + userId, "Password");
 		return select(query);
 	}
-
+	
+	@Override
 	public JSONObject getAttempts(long id) throws BankException {
 		StringBuilder query= builder.selectFromWhere("users", "Id=" + id, "Attempts");
 		return select(query);
 	}
 	
+	@Override
 	public boolean attemptUpdate(JSONObject json,long id) throws BankException {
 		StringBuilder query= builder.singleSetWhere("users", "Attempts", "Id", Long.toString(id));
 		return add(query,json);

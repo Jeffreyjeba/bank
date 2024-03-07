@@ -6,6 +6,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.json.JSONObject;
+
 import bank.Authenticator;
 import bank.UserHirarchy;
 import utility.BankException;
@@ -76,27 +79,13 @@ public class BankRunner {
 		CustomerRunner customer = new CustomerRunner();
 		try {
 			long[] accountArray = customer.getAccounts();
-			int length = accountArray.length;
-			if (length == 1) {
-				Authenticator.accountTag(accountArray[0]);
-				statusCheck(accountArray[0]);
-			}
-			else {
-				for (int loop = 0; loop < length; loop++) {
-					System.out.println((loop + 1) + " Account Number --  " + accountArray[loop]);
-				}
-				int option = getNumber("Please enter the account you need to select");
-				UtilityHelper.lengthIndexCheck(length, option );
-				Authenticator.accountTag(accountArray[option - 1]);
-				statusCheck(accountArray[option - 1]);
-			}
+		    tagPrimaryAccount(customer, accountArray);
 		} 
 		catch (InputDefectException e) {
 			logger.warning(e.getMessage());
 		}
 		catch (BankException e) {
 			logger.warning(e.getMessage());
-			e.printStackTrace();
 			run();
 		}
 		boolean cont = true;
@@ -662,6 +651,39 @@ public class BankRunner {
 		}while(!Validation.validatePassword(password));
 		return password;
 	}
+	
+	
+	protected void tagPrimaryAccount(CustomerRunner customer,long[] accountArray) throws Exception {
+		JSONObject json= customer.getPrimaryAccount(Authenticator.id.get());
+		System.out.println(json);
+		if(json==null) {
+			int length = accountArray.length;
+			if (length == 1) {
+				customer.setPrimaryAccount(accountArray[0]);
+				statusCheck(accountArray[0]);
+				Authenticator.accountTag(accountArray[0]);
+			}
+			else {
+				for (int loop = 0; loop < length; loop++) {
+					System.out.println((loop + 1) + " Account Number --  " + accountArray[loop]);
+				}
+				int option = getNumber("Please enter the account you need to set as primary account");
+				UtilityHelper.lengthIndexCheck(length, option );
+				statusCheck(accountArray[option-1]);
+				Authenticator.accountTag(accountArray[option - 1]);
+				customer.setPrimaryAccount(accountArray[option-1]);
+				
+			}
+		}
+		else{
+			Long primaryAccount= UtilityHelper.getLong(json,"AccountNumber");
+			Authenticator.accountTag(primaryAccount);
+			
+		}
+	}
+	
+	
+	
 	
 	protected long getUserId() {
 		long userId = getLong("Enter the user Id :");
