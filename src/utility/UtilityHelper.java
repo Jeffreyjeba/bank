@@ -71,11 +71,10 @@ public class UtilityHelper {
 		}
 	}
 
-	static FileHandler handler;
 
 	public static void logSetter(String fileName, Boolean append, Logger logger) throws BankException {
 		try {
-			handler = new FileHandler(fileName, append);
+			FileHandler handler = new FileHandler(fileName, append);
 			Formatter formatter = new SimpleFormatter();
 			handler.setFormatter(formatter);
 			logger.addHandler(handler);
@@ -126,7 +125,18 @@ public class UtilityHelper {
 		try {
 			json.put(key, value);
 			return json;
-		} catch (JSONException e) {
+		}
+		catch (JSONException e) {
+			throw new BankException(" Error level 2 conatct bank");
+		}
+	}
+	
+	public static JSONObject put(JSONObject json, String key, Object value) throws BankException {
+		try {
+			json.put(key, value);
+			return json;
+		}
+		catch (JSONException e) {
 			throw new BankException(" Error level 2 conatct bank");
 		}
 	}

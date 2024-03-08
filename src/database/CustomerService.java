@@ -3,6 +3,7 @@ package database;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import bank.Priority;
 import utility.BankException;
 import utility.InputDefectException;
 import utility.UtilityHelper;
@@ -75,20 +76,20 @@ public class CustomerService extends DataStorageService implements CustomerServi
 	}
 	
 	public JSONObject getPrimaryAccount(JSONObject json) throws BankException {
+		System.out.println(json);// remove
 		long id=UtilityHelper.getLong(json,"Id");
 		StringBuilder query =queryBuilder.selectFromWhere("accounts","Id = "+id+" and Priority='primary'","AccountNumber");
-		System.out.println(query);
 		return select(query);
 	}
 	
 	public void setPrimaryAccount(JSONObject json) throws BankException {
-		long accountNumber=UtilityHelper.getLong(json,"AccountNumber");
-		StringBuilder query=builder.singleSetWhere("accounts","Priority","AccountNumber",Long.toString(accountNumber));
-		update(query, UtilityHelper.put(new JSONObject(),"Priority","primary")); 
+		updatePriority(json, Priority.primary);
 	}
 	
+	public void removePrimaryAccount(JSONObject json) throws BankException {
+		updatePriority(json, null);
+	}
 	
-
 
 	public void checkUserPresence(JSONObject json, String field) throws BankException, InputDefectException {
 		checkLongPresence(json, "users", field, field);
@@ -112,6 +113,10 @@ public class CustomerService extends DataStorageService implements CustomerServi
 
 	public void checkAccountPrecence(JSONObject json, String field) throws BankException, InputDefectException {
 		checkLongPresence(json, "accounts", field, field);
+	}
+	
+	public void checkAccountPrimary(JSONObject json) {
+		// TODO
 	}
 	
 	
@@ -153,5 +158,16 @@ public class CustomerService extends DataStorageService implements CustomerServi
 		return select(query);
 	}
 	
+	protected void updatePriority(JSONObject json,Priority priority) throws BankException {
+		long accountNumber=UtilityHelper.getLong(json,"AccountNumber");
+		StringBuilder query=builder.singleSetWhere("accounts","Priority","AccountNumber",Long.toString(accountNumber));
+		if(priority!=null) {
+			update(query, UtilityHelper.put(new JSONObject(),"Priority",priority.toString())); 
+		}
+		else {
+			JSONObject json2=UtilityHelper.put(new JSONObject(),"Priority",JSONObject.NULL);
+			update(query,json2); //error
+		}
+	}
 
 }

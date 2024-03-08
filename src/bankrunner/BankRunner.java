@@ -22,7 +22,8 @@ public class BankRunner {
 	static {
 		try {
 			UtilityHelper.logSetter("JDBC", true, logger);
-		} catch (BankException e) {
+		}
+		catch (BankException e) {
 			logger.log(Level.WARNING, "An error occured at log setting", e);
 		}
 	}
@@ -189,13 +190,24 @@ public class BankRunner {
 				}
 				catch (BankException e) {
 					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
+				break;
+			case 10:
+				try {
+					customer.switchPrimaryAccount();;
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
 					e.printStackTrace();
 				}
 				catch (InputDefectException e) {
 					logger.warning(e.getMessage());
-					e.printStackTrace();
 				}
 				break;
+				
 			case 50:
 				customer.logout();
 				run();
@@ -382,6 +394,18 @@ public class BankRunner {
 				}
 				catch (BankException e) {
 					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
+				break;
+			case 16:
+				try {
+					employee.switchPrimaryAccount();;
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
+					e.printStackTrace();
 				}
 				catch (InputDefectException e) {
 					logger.warning(e.getMessage());
@@ -613,6 +637,18 @@ public class BankRunner {
 					logger.warning(e.getMessage());
 				}
 				break;
+			case 20:
+				try {
+					admin.switchPrimaryAccount();;
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
+					e.printStackTrace();
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
+				break;
 			case 50:
 				admin.logout();
 				run();
@@ -654,14 +690,15 @@ public class BankRunner {
 	
 	
 	protected void tagPrimaryAccount(CustomerRunner customer,long[] accountArray) throws Exception {
-		JSONObject json= customer.getPrimaryAccount(Authenticator.id.get());
+		JSONObject json= customer.getPrimaryAccount();
 		System.out.println(json);
 		if(json==null) {
 			int length = accountArray.length;
 			if (length == 1) {
-				customer.setPrimaryAccount(accountArray[0]);
-				statusCheck(accountArray[0]);
 				Authenticator.accountTag(accountArray[0]);
+				customer.setPrimaryAccount();
+				statusCheck(accountArray[0]);
+				
 			}
 			else {
 				for (int loop = 0; loop < length; loop++) {
@@ -671,7 +708,7 @@ public class BankRunner {
 				UtilityHelper.lengthIndexCheck(length, option );
 				statusCheck(accountArray[option-1]);
 				Authenticator.accountTag(accountArray[option - 1]);
-				customer.setPrimaryAccount(accountArray[option-1]);
+				customer.setPrimaryAccount();
 				
 			}
 		}

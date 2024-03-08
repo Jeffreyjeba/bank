@@ -136,6 +136,8 @@ public class Customer {
 		return (System.currentTimeMillis()-day);
 	}
 	
+	
+	
 	public void logout() {
 		Authenticator.idTag(0);
 		Authenticator.accountTag(0);
@@ -149,6 +151,23 @@ public class Customer {
 	public void setPrimaryAccount(JSONObject json) throws BankException, InputDefectException {
 		checkAccNoForPrecence(json);
 		customer.setPrimaryAccount(json);
+	}
+	
+	public void switchPrimaryAccount(JSONObject json) throws BankException, InputDefectException {
+		checkIdCustomerPresence(json);
+		checkAccNoForPrecence(json);
+		JSONObject primaryJson= getPrimaryAccount(json);
+		if(primaryJson==null) {
+			setPrimaryAccount(json);
+		}
+		else {
+			removePrivateAccount(primaryJson);
+			setPrimaryAccount(json);
+		}
+	}
+	
+	private void removePrivateAccount(JSONObject json) throws BankException {
+		customer.removePrimaryAccount(json);
 	}
 
 

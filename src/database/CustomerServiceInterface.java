@@ -43,4 +43,6 @@ public interface CustomerServiceInterface {
 	
 	public void setPrimaryAccount(JSONObject json) throws BankException;	
 	
+	public void removePrimaryAccount(JSONObject json) throws BankException;
+	
 }

@@ -1,84 +1,51 @@
-Feb 28, 2024 2:42:30 PM bankrunner.BankRunner run
+Mar 06, 2024 7:15:33 PM bankrunner.BankRunner customer
+WARNING:  Error level 2 conatct bank
+Mar 06, 2024 7:21:00 PM bankrunner.BankRunner run
 WARNING: Something went wrong
 java.util.NoSuchElementException
 	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
 	at java.base/java.util.Scanner.next(Scanner.java:1594)
 	at java.base/java.util.Scanner.nextLong(Scanner.java:2373)
 	at java.base/java.util.Scanner.nextLong(Scanner.java:2328)
-	at bank/bankrunner.BankRunner.getLong(BankRunner.java:509)
-	at bank/bankrunner.BankRunner.getLong(BankRunner.java:522)
-	at bank/bankrunner.AdminRunner.addAdmin(AdminRunner.java:38)
-	at bank/bankrunner.BankRunner.admin(BankRunner.java:415)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:58)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
+	at bank/bankrunner.BankRunner.getLong(BankRunner.java:757)
+	at bank/bankrunner.BankRunner.getLong(BankRunner.java:770)
+	at bank/bankrunner.BankRunner.getUserId(BankRunner.java:690)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:42)
+	at bank/bankrunner.BankRunner.customer(BankRunner.java:90)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:53)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:35)
 
-Feb 28, 2024 2:44:17 PM bankrunner.BankRunner run
-WARNING: Wrong combination
-Feb 28, 2024 6:27:12 PM bankrunner.BankRunner run
-WARNING: Wrong combination
-Feb 28, 2024 6:27:55 PM bankrunner.BankRunner admin
-WARNING: AccountNumber  : 3 is alreday present
-Mar 04, 2024 6:46:41 PM bankrunner.BankRunner run
-WARNING: Wrong combination
-Mar 04, 2024 6:52:37 PM bankrunner.BankRunner admin
-WARNING: Id : 9 is not available
-Mar 04, 2024 6:52:47 PM bankrunner.BankRunner run
+Mar 06, 2024 7:21:00 PM bankrunner.BankRunner run
 WARNING: Something went wrong
 java.util.NoSuchElementException
 	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
 	at java.base/java.util.Scanner.next(Scanner.java:1594)
-	at java.base/java.util.Scanner.nextLong(Scanner.java:2373)
-	at java.base/java.util.Scanner.nextLong(Scanner.java:2328)
-	at bank/bankrunner.BankRunner.getLong(BankRunner.java:561)
-	at bank/bankrunner.BankRunner.getLong(BankRunner.java:574)
-	at bank/bankrunner.BankRunner.getUserId(BankRunner.java:494)
-	at bank/bankrunner.EmployeeRunner.addCustomers(EmployeeRunner.java:33)
-	at bank/bankrunner.BankRunner.admin(BankRunner.java:382)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:58)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:67)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:743)
+	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:775)
+	at bank/bankrunner.BankRunner.customer(BankRunner.java:94)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:53)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:35)
 
-Mar 05, 2024 9:55:25 AM bankrunner.BankRunner admin
-WARNING: Id : 1 is not available
-Mar 05, 2024 9:55:42 AM bankrunner.BankRunner admin
-WARNING: Id : 2 is not available
-Mar 05, 2024 9:55:56 AM bankrunner.BankRunner admin
-WARNING: Id : 4 is not available
-Mar 05, 2024 10:01:45 AM bankrunner.BankRunner admin
-WARNING: Insuffecient balance
-Mar 05, 2024 10:02:24 AM bankrunner.BankRunner admin
-WARNING: AccountNumber : 9 is not available
-Mar 05, 2024 10:02:45 AM bankrunner.BankRunner run
+Mar 08, 2024 10:50:10 AM bankrunner.BankRunner run
+WARNING: Wrong combination
+Mar 08, 2024 10:50:19 AM bankrunner.BankRunner run
+WARNING: Wrong combination
+Mar 08, 2024 10:50:31 AM bankrunner.BankRunner run
+WARNING: Wrong combination
+Mar 08, 2024 10:50:38 AM bankrunner.BankRunner run
 WARNING: Something went wrong
 java.util.NoSuchElementException: No line found
 	at java.base/java.util.Scanner.nextLine(Scanner.java:1651)
-	at bank/bankrunner.BankRunner.getString(BankRunner.java:583)
-	at bank/bankrunner.BankRunner.getString(BankRunner.java:587)
-	at bank/bankrunner.EmployeeRunner.createUser(EmployeeRunner.java:17)
-	at bank/bankrunner.BankRunner.admin(BankRunner.java:374)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:58)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
+	at bank/bankrunner.BankRunner.getString(BankRunner.java:789)
+	at bank/bankrunner.BankRunner.getString(BankRunner.java:793)
+	at bank/bankrunner.BankRunner.getPassword(BankRunner.java:655)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:44)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:69)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:69)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:69)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:36)
 
-Mar 05, 2024 10:11:04 AM bankrunner.BankRunner run
-WARNING: Wrong combination
-Mar 05, 2024 10:35:48 AM bankrunner.BankRunner run
-WARNING: Wrong combination
-Mar 05, 2024 10:40:59 AM bankrunner.BankRunner run
-WARNING: Something went wrong
-java.util.NoSuchElementException
-	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
-	at java.base/java.util.Scanner.next(Scanner.java:1594)
-	at java.base/java.util.Scanner.nextLong(Scanner.java:2373)
-	at java.base/java.util.Scanner.nextLong(Scanner.java:2328)
-	at bank/bankrunner.BankRunner.getLong(BankRunner.java:563)
-	at bank/bankrunner.BankRunner.getLong(BankRunner.java:576)
-	at bank/bankrunner.BankRunner.getUserId(BankRunner.java:496)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:41)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:67)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
-
-Mar 05, 2024 12:15:45 PM bankrunner.CustomerRunner debit
-WARNING: Wrong pass word
-Try again
-Mar 05, 2024 12:18:40 PM bankrunner.BankRunner admin
-WARNING: AccountNumber : 7 is not available
+Mar 08, 2024 12:16:28 PM bankrunner.BankRunner customer
+WARNING: technical error accured contact bank or technical support

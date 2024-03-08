@@ -1,77 +1,21 @@
-Feb 28, 2024 2:18:22 PM bankrunner.BankRunner admin
-WARNING: AccountNumber : 3456789 is not available
-Feb 28, 2024 2:18:32 PM bankrunner.BankRunner admin
-WARNING: Id or accounts for this Id dosent exist
-Feb 28, 2024 2:26:12 PM bankrunner.BankRunner run
-WARNING: Something went wrong
-java.util.NoSuchElementException
-	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
-	at java.base/java.util.Scanner.next(Scanner.java:1594)
-	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
-	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
-	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:496)
-	at bank/bankrunner.BankRunner.getNumber(BankRunner.java:528)
-	at bank/bankrunner.BankRunner.admin(BankRunner.java:444)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:58)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
-
-Feb 28, 2024 5:00:12 PM bankrunner.BankRunner getLong
-WARNING: Please eneter an integer
-Feb 28, 2024 5:00:38 PM bankrunner.BankRunner admin
-WARNING: AccountNumber : -1 is not available
-Feb 28, 2024 5:00:50 PM bankrunner.BankRunner getLong
-WARNING: Please eneter an integer
-Feb 28, 2024 5:00:57 PM bankrunner.BankRunner getLong
-WARNING: Please eneter an integer
-Feb 28, 2024 5:01:02 PM bankrunner.BankRunner getLong
-WARNING: Please eneter an integer
-Feb 28, 2024 5:01:22 PM bankrunner.BankRunner admin
-WARNING: Id or accounts for this Id dosent exist
-Feb 28, 2024 5:01:46 PM bankrunner.BankRunner admin
-WARNING: Id or accounts for this Id dosent exist
-Feb 28, 2024 5:02:13 PM bankrunner.BankRunner admin
-WARNING: Id or accounts for this Id dosent exist
-Feb 28, 2024 6:30:34 PM bankrunner.BankRunner admin
-WARNING: your account is blocked
-Mar 05, 2024 10:16:37 AM bankrunner.BankRunner run
-WARNING: Wrong combination
-Mar 05, 2024 10:17:51 AM bankrunner.BankRunner admin
-WARNING: AccountNumber : 9 is not available
-Mar 05, 2024 10:40:56 AM bankrunner.BankRunner run
+Mar 06, 2024 7:16:51 PM bankrunner.BankRunner customer
+WARNING:  Error level 2 conatct bank
+Mar 06, 2024 7:20:58 PM bankrunner.BankRunner run
 WARNING: Something went wrong
 java.util.NoSuchElementException
 	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
 	at java.base/java.util.Scanner.next(Scanner.java:1594)
 	at java.base/java.util.Scanner.nextLong(Scanner.java:2373)
 	at java.base/java.util.Scanner.nextLong(Scanner.java:2328)
-	at bank/bankrunner.BankRunner.getLong(BankRunner.java:563)
-	at bank/bankrunner.BankRunner.getLong(BankRunner.java:576)
-	at bank/bankrunner.BankRunner.getUserId(BankRunner.java:496)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:41)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:34)
+	at bank/bankrunner.BankRunner.getLong(BankRunner.java:757)
+	at bank/bankrunner.BankRunner.getLong(BankRunner.java:770)
+	at bank/bankrunner.BankRunner.getUserId(BankRunner.java:690)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:42)
+	at bank/bankrunner.BankRunner.customer(BankRunner.java:90)
+	at bank/bankrunner.BankRunner.run(BankRunner.java:53)
+	at bank/bankrunner.BankRunner.main(BankRunner.java:35)
 
-Mar 05, 2024 11:53:27 AM bankrunner.BankRunner admin
-WARNING: Id : 4 is not available
-Mar 05, 2024 11:54:07 AM bankrunner.BankRunner run
-WARNING: Something went wrong
-java.lang.NullPointerException
-	at bank/operations.Customer.historyJson(Customer.java:141)
-	at bank/operations.Customer.debit(Customer.java:72)
-	at bank/bankrunner.CustomerRunner.debit(CustomerRunner.java:82)
-	at bank/bankrunner.BankRunner.admin(BankRunner.java:346)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:56)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:32)
-
-Mar 05, 2024 11:57:42 AM bankrunner.BankRunner run
-WARNING: Wrong combination
-Mar 05, 2024 11:58:12 AM bankrunner.BankRunner run
-WARNING: Something went wrong
-java.lang.NullPointerException
-	at bank/operations.Customer.historyJson(Customer.java:141)
-	at bank/operations.Customer.debit(Customer.java:72)
-	at bank/bankrunner.CustomerRunner.debit(CustomerRunner.java:82)
-	at bank/bankrunner.BankRunner.admin(BankRunner.java:346)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:56)
-	at bank/bankrunner.BankRunner.run(BankRunner.java:65)
-	at bank/bankrunner.BankRunner.main(BankRunner.java:32)
-
+Mar 08, 2024 10:56:04 AM bankrunner.BankRunner customer
+WARNING: The required index 5 is greater than the available index 2
+Mar 08, 2024 12:17:17 PM bankrunner.BankRunner customer
+WARNING: technical error accured contact bank or technical support

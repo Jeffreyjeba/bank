@@ -22,8 +22,12 @@ public class CustomerRunner extends BankRunner {
 	}
 
 	public long[] getAccounts() throws BankException, InputDefectException {
+		return getAccounts(getId());
+	}
+	
+	private long[] getAccounts(long id) throws BankException, InputDefectException {
 		JSONObject json = new JSONObject();
-		UtilityHelper.put(json,"Id", getId());
+		UtilityHelper.put(json,"Id", id);
 		return customer.getAccounts(json);
 	}
 
@@ -54,6 +58,7 @@ public class CustomerRunner extends BankRunner {
 			int index = getNumber("Enter the position of the account : ") - 1;
 			UtilityHelper.lengthIndexCheck(account.length, index);
 			long accountNumber = account[index];
+			customer.accountStatus(accountNumber);
 			JSONObject json = new JSONObject();
 			UtilityHelper.put(json,"AccountNumber", accountNumber);
 			customer.switchAccount(json);
@@ -149,6 +154,20 @@ public class CustomerRunner extends BankRunner {
 			}while(iterator);
 	}
 	
+	public void switchPrimaryAccount() throws BankException, InputDefectException {
+		long id=getId();
+		long[] accounts=getAccounts(id);
+		System.out.println(Arrays.toString(accounts));
+		int position=getNumber("Enter the position of the primary account : ");
+		UtilityHelper.lengthIndexCheck(accounts.length, position);
+		long accountnumber= accounts[position-1];
+		JSONObject json= new JSONObject();
+		UtilityHelper.put(json,"Id",id);
+		UtilityHelper.put(json,"AccountNumber",accountnumber);
+		customer.switchPrimaryAccount(json);
+		// to tag account
+	}
+	
 	public void logout() {
 		customer.logout();
 	}
@@ -165,13 +184,15 @@ public class CustomerRunner extends BankRunner {
 		}
 	}
 	
-	public JSONObject getPrimaryAccount(long userId) throws BankException, InputDefectException {
+	public JSONObject getPrimaryAccount() throws BankException, InputDefectException {
+		long userId=getId();
 		JSONObject json = new JSONObject();
 		UtilityHelper.put(json,"Id",userId);
 		return customer.getPrimaryAccount(json);
 	}
 	
-	public void setPrimaryAccount(long accountNumber) throws BankException, InputDefectException {
+	public void setPrimaryAccount() throws BankException, InputDefectException {
+		long accountNumber=getAccountNumber();
 		JSONObject json = new JSONObject();
 		UtilityHelper.put(json,"AccountNumber",accountNumber);
 		customer.setPrimaryAccount(json);

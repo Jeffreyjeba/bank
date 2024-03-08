@@ -36,7 +36,7 @@ abstract public class DataStorageService implements DataStorage {
 			}
 		}
 		catch (SQLException e) {
-			throw new BankException("technical error accured contact bank or technical support");
+			throw new BankException("technical error accured contact bank or technical support",e);
 		}
 	}
 
@@ -59,7 +59,7 @@ abstract public class DataStorageService implements DataStorage {
 			}
 		}
 		catch (SQLException e) {
-			throw new BankException("technical error accured contact bank or technical support");
+			throw new BankException("technical error accured contact bank or technical support",e);
 		}
 	}
 
@@ -77,7 +77,7 @@ abstract public class DataStorageService implements DataStorage {
 			}
 		}
 		catch (SQLException e) {
-			throw new BankException("technical error accured contact bank or technical support");
+			throw new BankException("technical error accured contact bank or technical support",e);
 		}
 	}
 
@@ -86,11 +86,12 @@ abstract public class DataStorageService implements DataStorage {
 		try (Connection connection = getConnection();) {
 			try (PreparedStatement preparedStatement = connection.prepareStatement(seq.toString());) {
 				setParameter(preparedStatement, json);
+				System.out.println(preparedStatement);
 				return preparedStatement.execute();
 			}
 		}
 		catch (SQLException e) {
-			throw new BankException("technical error accured contact bank or technical support");
+			throw new BankException("technical error accured contact bank or technical support",e);
 		}
 	}
 
@@ -109,7 +110,7 @@ abstract public class DataStorageService implements DataStorage {
 			}
 		}
 		catch (SQLException e) {
-			throw new BankException("technical error accured contact bank or technical support");
+			throw new BankException("technical error accured contact bank or technical support",e);
 		}
 	}
 
@@ -125,7 +126,7 @@ abstract public class DataStorageService implements DataStorage {
 			}
 			return json;
 		} catch (SQLException | JSONException e) {
-			throw new BankException("technical error accured contact bank or technical support");
+			throw new BankException("technical error accured contact bank or technical support",e);
 		}
 	}
 
@@ -134,7 +135,7 @@ abstract public class DataStorageService implements DataStorage {
 			Connection connection = DriverManager.getConnection(url, userName, password);
 			return connection;
 		} catch (SQLException e) {
-			throw new BankException("technical error accured contact bank or technical support");
+			throw new BankException("technical error accured contact bank or technical support",e);
 		}
 	}
 
@@ -146,6 +147,7 @@ abstract public class DataStorageService implements DataStorage {
 			while (keys.hasNext()) {
 				String key = keys.next();
 				Object value = json.get(key);
+				if(value instanceof String);
 				String type = value.getClass().getName();
 				switch (type) {
 				case "java.lang.String":
@@ -157,13 +159,17 @@ abstract public class DataStorageService implements DataStorage {
 				case "java.lang.Long":
 					statement.setLong(index, (Long) value);
 					break;
+				case "org.json.JSONObject$Null":
+					statement.setObject(index, null);
+					break;
 				default:
 					throw new BankException("Type bounce");
 				}
+				
 				index++;
 			}
 		} catch (SQLException | JSONException e) {
-			throw new BankException("technical error accured contact bank or technical support");
+			throw new BankException("technical error accured contact bank or technical support",e);
 		}
 
 	}
