@@ -34,7 +34,7 @@ public interface AdminServiceInterface {
 
 	public void checkAccountAbsence(JSONObject json, String field) throws BankException, InputDefectException;
 
-	public void checkAccountPrecence(JSONObject json, String field) throws BankException, InputDefectException;
+	public void checkAccountPresence(JSONObject json, String field) throws BankException, InputDefectException;
 	
 	// Employee operations
 	

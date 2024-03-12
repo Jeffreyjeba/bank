@@ -32,22 +32,34 @@ public class Employee extends Customer{
 	}
 	public void deleteAccount(JSONObject account) throws BankException,InputDefectException {
 		UtilityHelper.nullCheck(account);
-		checkAccNoForPrecence(account);
+		checkAccNoForPresence(account);
 		employee.deleteAccount(account);
 	}
 	public void deactivateAccount(JSONObject account) throws BankException,InputDefectException  {
 		UtilityHelper.nullCheck(account);
-		checkAccNoForPrecence(account);
+		checkAccNoForPresence(account);
 		employee.deactivateAccount(account);
 	}
 	public void activateAccount(JSONObject account) throws BankException,InputDefectException  {
 		UtilityHelper.nullCheck(account);
-		checkAccNoForPrecence(account);
+		checkAccNoForPresence(account);
 		employee.activateAccount(account);
 	}
 	
 	public JSONObject getBranchId(long id) throws BankException {
 		return employee.getBranch(id);
+	}
+	
+	public void activateCustomer(JSONObject customer) throws BankException, InputDefectException {
+		UtilityHelper.nullCheck(customer);
+		checkIdCustomerPresence(customer);
+		employee.activateCustomer(customer);
+	}
+	
+	public void deactivateCustomer(JSONObject customer) throws BankException, InputDefectException {
+		UtilityHelper.nullCheck(customer);
+		checkIdCustomerPresence(customer);
+		employee.deactivateCustomer(customer);
 	}
 
 }

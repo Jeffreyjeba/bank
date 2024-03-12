@@ -20,7 +20,7 @@ public interface Query {
 	// Update query builder
 	public StringBuilder singleSetWhere(String tableName, String field, String conditionField);
 	public StringBuilder singleSetWhere(String tableName, String field, String conditionField, String coditionValue);
-	public StringBuilder setAccountStatus(String tableName, JSONObject json) throws BankException;
+	public StringBuilder setStatus(String tableName, JSONObject json) throws BankException;
 	// Delete query builder
 	public StringBuilder deleteFromJson(String tableName, JSONObject json);
 	// Create query builder

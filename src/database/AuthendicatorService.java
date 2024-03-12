@@ -38,4 +38,12 @@ public class AuthendicatorService extends DataStorageService implements Authendi
 		return add(query,json);
 	}
 
+	@Override
+	public JSONObject getUserStatus(long id) throws BankException {
+		StringBuilder query= builder.selectFromWhere("users","Id=" +id,"Status");
+		return select(query);
+	}
+	
+	
+
 }

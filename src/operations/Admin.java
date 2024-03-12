@@ -43,16 +43,16 @@ public class Admin extends Employee{
 		return admin.getAllBranchId();
 	}
 	// checkers methods
-	protected void checkForBranchAbsence(JSONObject json) throws BankException,InputDefectException  {
-		admin.checkBranchAbsence(json,"BranchId");
+	protected void checkForBranchAbsence(JSONObject branch) throws BankException,InputDefectException  {
+		admin.checkBranchAbsence(branch,"BranchId");
 	}
-	protected void checkForBranchPresence(JSONObject json) throws BankException,InputDefectException  {
-		admin.checkBranchAbsence(json, "BranchId");
+	protected void checkForBranchPresence(JSONObject branch) throws BankException,InputDefectException  {
+		admin.checkBranchAbsence(branch, "BranchId");
 	}
-	protected void checkForWorkersAbsence(JSONObject json) throws BankException,InputDefectException  {
-		admin.checkEmployeeAbsence(json,"Id");
+	protected void checkForWorkersAbsence(JSONObject employee) throws BankException,InputDefectException  {
+		admin.checkEmployeeAbsence(employee,"Id");
 	}
-	protected void checkForWorkersPresence(JSONObject json) throws BankException,InputDefectException  {
-		admin.checkEmployeePrecence(json,"Id");
+	protected void checkForWorkersPresence(JSONObject employee) throws BankException,InputDefectException  {
+		admin.checkEmployeePrecence(employee,"Id");
 	}
 }

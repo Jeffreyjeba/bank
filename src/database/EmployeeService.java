@@ -27,22 +27,33 @@ public class EmployeeService extends CustomerService implements EmployeeServiceI
 	}
 
 	public void deleteAccount(JSONObject account) throws BankException, InputDefectException {
-		StringBuilder query = queryBuilder.setAccountStatus("accounts", account);
+		StringBuilder query = queryBuilder.setStatus("accounts", account);
 		update(query, account);
 	}
 
 	public void deactivateAccount(JSONObject account) throws BankException, InputDefectException {
-		StringBuilder query = queryBuilder.setAccountStatus("accounts", account);
+		StringBuilder query = queryBuilder.setStatus("accounts", account);
 		update(query, account);
 	}
 
 	public void activateAccount(JSONObject account) throws BankException,InputDefectException  {
-		StringBuilder query= queryBuilder.setAccountStatus("accounts", account);
+		StringBuilder query= queryBuilder.setStatus("accounts", account);
 		update( query,account);
 	}
 	
 	public JSONObject getBranch(long empId) throws BankException {
 		return selectWhere("employees","Id="+empId,"BranchId");
 	}
+	
+	public void activateCustomer(JSONObject customer) throws BankException {
+		StringBuilder query=queryBuilder.setStatus("users", customer);
+		update(query, customer);
+	}
+	
+	public void deactivateCustomer(JSONObject customer) throws BankException {
+		StringBuilder query=queryBuilder.setStatus("users", customer);
+		update(query, customer);
+	}
+
 
 }

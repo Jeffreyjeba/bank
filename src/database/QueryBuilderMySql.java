@@ -131,7 +131,9 @@ public class QueryBuilderMySql implements Query {
 		stringBuilder.append(" set ");
 		stringBuilder.append(target);
 		stringBuilder.append(" = ");
+		stringBuilder.append("'");
 		stringBuilder.append(value);
+		stringBuilder.append("'"); // to 
 	}
 
 	private void where(StringBuilder stringBuilder, String input, String condition) {
@@ -159,7 +161,7 @@ public class QueryBuilderMySql implements Query {
 		return stringBuilder;
 	}
 	@Override
-	public StringBuilder setAccountStatus(String tableName, JSONObject json) throws BankException {
+	public StringBuilder setStatus(String tableName, JSONObject json) throws BankException {
 		StringBuilder stringBuilder = new StringBuilder();
 		try {
 			update(stringBuilder, tableName);

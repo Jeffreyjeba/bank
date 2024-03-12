@@ -34,7 +34,7 @@ public interface EmployeeServiceInterface {
 
 	public void checkAccountAbsence(JSONObject json, String field) throws BankException, InputDefectException;
 
-	public void checkAccountPrecence(JSONObject json, String field) throws BankException, InputDefectException;
+	public void checkAccountPresence(JSONObject json, String field) throws BankException, InputDefectException;
 
 	// employee operations
 	
@@ -52,5 +52,8 @@ public interface EmployeeServiceInterface {
 
 	public JSONObject getBranch(long empId) throws BankException ;
 	
-	// public JSONObject viewProfile(JSONObject json) throws BankException;
+	public void activateCustomer(JSONObject customer) throws BankException ;
+	
+	public void deactivateCustomer(JSONObject customer) throws BankException ;
+	
 }

@@ -1,6 +1,8 @@
 package bankrunner;
 
 import org.json.JSONObject;
+
+import bank.ActiveStatus;
 import bank.Authenticator;
 import operations.Employee;
 import utility.BankException;
@@ -18,13 +20,11 @@ public class EmployeeRunner extends CustomerRunner {
 		String emailId=getMailId();
 		long phoneNumber=getPhoneNumber();
 		String type=getType();
-		String password=null;
 		UtilityHelper.put(json,"Id",id);
 		UtilityHelper.put(json,"Name",name);
 		UtilityHelper.put(json,"EmailId",emailId);
 		UtilityHelper.put(json,"PhoneNumber",phoneNumber);
 		UtilityHelper.put(json,"UserType",type);
-		UtilityHelper.put(json,"Password",password);
 		employee.addUsers(json);
 	}
 	
@@ -32,10 +32,8 @@ public class EmployeeRunner extends CustomerRunner {
 		JSONObject json=new JSONObject();
 		long id=getUserId();
 		long aadharNumber=getAadharNumber();
-		Long customerId=null;
 		String panNumber=getPanId();
 		String address=getString("Enter the address : ");
-		UtilityHelper.put(json,"CustomerId",customerId);
 		UtilityHelper.put(json,"Id",id);
 		UtilityHelper.put(json,"AadharNumber",aadharNumber);
 		UtilityHelper.put(json,"PanNumber",panNumber);
@@ -69,7 +67,7 @@ public class EmployeeRunner extends CustomerRunner {
 	public void deactivateAccount() throws BankException,InputDefectException {
 		JSONObject json=new JSONObject();
 		long accountNumber=getAccountNum();
-		UtilityHelper.put(json,"Status","'inactive'");
+		UtilityHelper.put(json,"Status",ActiveStatus.inactive.name());
 		UtilityHelper.put(json,"AccountNumber",accountNumber);
 		employee.deleteAccount(json);
 	}
@@ -77,9 +75,25 @@ public class EmployeeRunner extends CustomerRunner {
 	public void activateAccount() throws BankException,InputDefectException {
 		JSONObject json=new JSONObject();
 		long accountNumber=getAccountNum();
-		UtilityHelper.put(json,"Status","'active'");
+		UtilityHelper.put(json,"Status",ActiveStatus.active.name());
 		UtilityHelper.put(json,"AccountNumber",accountNumber);
 		employee.deleteAccount(json);
+	}
+	
+	public void deactivateCustomer() throws BankException, InputDefectException {
+		JSONObject userJson= new JSONObject();
+		long id=getId();
+		UtilityHelper.put(userJson, "Status",ActiveStatus.inactive.name());
+		UtilityHelper.put(userJson,"Id",id);
+		employee.deactivateCustomer(userJson);
+	}
+	
+	public void activateCustomer() throws BankException, InputDefectException {
+		JSONObject userJson= new JSONObject();
+		long id=getId();
+		UtilityHelper.put(userJson, "Status",ActiveStatus.active.name());
+		UtilityHelper.put(userJson,"Id",id);
+		employee.activateCustomer(userJson);
 	}
 	
 	//over ridden

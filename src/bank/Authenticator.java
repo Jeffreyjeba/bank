@@ -1,8 +1,7 @@
 package bank;
 
-import org.json.JSONObject;
 
-import database.AuthendicatorService;
+import org.json.JSONObject;
 import database.AuthendicatorServiceInterface;
 import utility.BankException;
 import utility.InputDefectException;
@@ -10,10 +9,17 @@ import utility.UtilityHelper;
 
 public class Authenticator {
 	
-	AuthendicatorServiceInterface auth=new AuthendicatorService("jdbc:mysql://localhost:3306/rey_bank", "root", "0000");
+	AuthendicatorServiceInterface auth=ServiceFactory.getAuthendicatorService();
 
 	public String getAuthority(long id) throws BankException   { // w
 		return auth.getAuthority(id);
+	}
+	
+	public void validateUser(long id) throws BankException{
+		JSONObject resultJson = auth.getUserStatus(id);
+		if(UtilityHelper.getString(resultJson, "Status").equals("inactive")) {
+			throw new BankException("user blocked contact bank");
+		}
 	}
 
 	public boolean checkPassword(long userId, String password) throws BankException,InputDefectException {

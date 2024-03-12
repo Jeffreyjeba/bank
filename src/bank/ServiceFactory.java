@@ -2,6 +2,8 @@ package bank;
 
 import database.AdminService;
 import database.AdminServiceInterface;
+import database.AuthendicatorService;
+import database.AuthendicatorServiceInterface;
 import database.CustomerService;
 import database.CustomerServiceInterface;
 import database.EmployeeService;
@@ -21,4 +23,7 @@ public class ServiceFactory {
 		return new AdminService("jdbc:mysql://localhost:3306/rey_bank", "root", "0000");
 	}
 	
+	public static AuthendicatorServiceInterface getAuthendicatorService() {
+		return new AuthendicatorService("jdbc:mysql://localhost:3306/rey_bank", "root", "0000");
+	}
 }

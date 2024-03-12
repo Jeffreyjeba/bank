@@ -6,9 +6,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.json.JSONObject;
-
 import bank.Authenticator;
 import bank.UserHirarchy;
 import utility.BankException;
@@ -41,6 +39,7 @@ public class BankRunner {
 	private void run() {
 		try {
 			long userId = getUserId();
+			auth.validateUser(userId);
 			String password = getPassword();
 			boolean access = auth.checkPassword(userId, password);
 			if (access == false) {
@@ -64,8 +63,7 @@ public class BankRunner {
 			}
 		} 
 		catch (BankException e) {
-			logger.log(Level.WARNING, "Wrong combination");
-			System.err.println("Retry");
+			logger.log(Level.WARNING, e.getMessage());
 			run();
 		}
 		catch (Exception e) {
@@ -92,7 +90,8 @@ public class BankRunner {
 		boolean cont = true;
 		while (cont) {
 			int option = getNumber(" \n 1-GetBalance\n 2-GetAccounts\n 3-SwitchAccounts\n" + " 4-debit\n"
-					+ " 5-credit\n 6-Transfer\n 7-ResetPassword \n 8-Get History\n 9-view profile \n 50-logout \n Enter your option : ");
+					+ " 5-credit\n 6-Transfer\n 7-ResetPassword \n 8-Get History\n 9-view profile\\n 10-switch Primary account"
+					+ " \n 50-logout \n Enter your option : ");
 			switch (option) {
 			case 1:
 				try {
@@ -234,7 +233,8 @@ public class BankRunner {
 			int option = getNumber(
 					" \n 1-Get Balance\n 2-Get Accounts\n 3-Switch Accounts\n 4-debit\n 5-credit\n 6-Transfer\n 7-Reset Password\n"
 							+ " 8-Create user\n 9-Add Customers\n 10-Create Account\n 11-Deactivate Account\n 12-Delete Account\n "
-							+ "13-Activate account\n 14-Transaction History\n 50-logout\n Enter any option : ");
+							+ "13-Activate account\n 14-Transaction History\n 15-view profile \n 16-switch primary account\n"
+							+ " 17-Activate Customer\n 18-Deactivate Customer\n  50-logout\n Enter any option : ");
 			switch (option) {
 			case 1:
 				try {
@@ -411,6 +411,28 @@ public class BankRunner {
 					logger.warning(e.getMessage());
 				}
 				break;
+			case 17:
+				try {
+					employee.activateCustomer();
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
+				break;
+			case 18:
+				try {
+					employee.deactivateCustomer();
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
+				break;
 			case 50:
 				employee.logout();
 				run();
@@ -435,7 +457,8 @@ public class BankRunner {
 					"\n 1-Get Balance\n 2-Get Accounts\n 3-Switch Accounts\n 4-debit\n 5-credit\n 6-Transfer\n "
 							+ "7-Reset Password\n 8-Create user\n 9-Add Customers\n 10-Create Account\n 11-Deactivate Account\n "
 							+ "12-Delete Account\n 13-Activate account\n 14-Create Branch \n 15-Add Admin \n 16-Add Employee \n "
-							+ "17-Remove Employee \n 18-Transaction History\n 50-logout\n Enter your option : ");
+							+ "17-Remove Employee \n 18-Transaction History\n 19-view profile \n 20-switch primary account \n "
+							+ "21-Activate Customer\n 22-Deactivate Customer\n  50-logout\n Enter any option :");
 
 			switch (option) {
 			case 1:
@@ -644,6 +667,29 @@ public class BankRunner {
 				catch (BankException e) {
 					logger.warning(e.getMessage());
 					e.printStackTrace();
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
+				break;
+			
+			case 21:
+				try {
+					admin.activateCustomer();
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
+				}
+				catch (InputDefectException e) {
+					logger.warning(e.getMessage());
+				}
+				break;
+			case 22:
+				try {
+					admin.deactivateCustomer();
+				}
+				catch (BankException e) {
+					logger.warning(e.getMessage());
 				}
 				catch (InputDefectException e) {
 					logger.warning(e.getMessage());

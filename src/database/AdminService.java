@@ -33,20 +33,20 @@ public class AdminService extends EmployeeService implements AdminServiceInterfa
 		return selectOne("branch","BranchId");
 	}
 
-	public void checkBranchAbsence(JSONObject json, String field) throws BankException, InputDefectException {
-		checkLongAbsence(json, "breanch", field, field);
+	public void checkBranchAbsence(JSONObject branch, String field) throws BankException, InputDefectException {
+		checkLongAbsence(branch, "breanch", field, field);
 	}
 
-	public void checkBranchPrecence(JSONObject json, String field) throws BankException, InputDefectException {
-		checkLongPresence(json, "branch", field, field);
+	public void checkBranchPrecence(JSONObject branch, String field) throws BankException, InputDefectException {
+		checkLongPresence(branch, "branch", field, field);
 	}
 	
-	public void checkEmployeeAbsence(JSONObject json, String field) throws BankException, InputDefectException {
-		checkLongAbsence(json, "employees", field, field);
+	public void checkEmployeeAbsence(JSONObject employee, String field) throws BankException, InputDefectException {
+		checkLongAbsence(employee, "employees", field, field);
 	}
 
-	public void checkEmployeePrecence(JSONObject json, String field) throws BankException, InputDefectException {
-		checkLongPresence(json, "employees", field, field);
+	public void checkEmployeePrecence(JSONObject employee, String field) throws BankException, InputDefectException {
+		checkLongPresence(employee, "employees", field, field);
 	}
 	
 	

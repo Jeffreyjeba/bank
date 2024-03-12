@@ -12,5 +12,7 @@ public interface AuthendicatorServiceInterface {
 	public JSONObject getAttempts(long id) throws BankException;
 
 	public boolean attemptUpdate(JSONObject json, long id) throws BankException;
+	
+	public JSONObject getUserStatus(long id) throws BankException; 
 
 }

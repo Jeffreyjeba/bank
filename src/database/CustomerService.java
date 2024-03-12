@@ -16,41 +16,41 @@ public class CustomerService extends DataStorageService implements CustomerServi
 
 	Query queryBuilder = new QueryBuilderMySql();
 
-	public JSONObject getBalance(JSONObject json) throws BankException {
-		StringBuilder query = queryBuilder.selectFromWhere("accounts","AccountNumber=" + UtilityHelper.getLong(json, "AccountNumber"), "Balance");
+	public JSONObject getBalance(JSONObject customerJson) throws BankException {
+		StringBuilder query = queryBuilder.selectFromWhere("accounts","AccountNumber=" + UtilityHelper.getLong(customerJson, "AccountNumber"), "Balance");
 		return select(query);
 	}
 
-	public JSONArray getAccounts(JSONObject json) throws BankException {
-		long id = UtilityHelper.getLong(json, "Id");
+	public JSONArray getAccounts(JSONObject customerJson) throws BankException {
+		long id = UtilityHelper.getLong(customerJson, "Id");
 		StringBuilder query = queryBuilder.selectFromWhere("accounts", "Id=" + id, "AccountNumber");
 		return bulkSelect(query);
 	}
 
-	public void resetPassword(JSONObject json) throws BankException {
-		long id = UtilityHelper.getLong(json, "Id");
-		json.remove("Id");
+	public void resetPassword(JSONObject customerJson) throws BankException {
+		long id = UtilityHelper.getLong(customerJson, "Id");
+		customerJson.remove("Id");
 		StringBuilder query = queryBuilder.singleSetWhere("users", "Password", "Id", Long.toString(id));
-		update(query, json);
+		update(query, customerJson);
 	}
 
-	public JSONObject accountStatus(JSONObject json) throws BankException {
-		long accountNumber = UtilityHelper.getLong(json, "AccountNumber");
+	public JSONObject accountStatus(JSONObject customerJson) throws BankException {
+		long accountNumber = UtilityHelper.getLong(customerJson, "AccountNumber");
 		return selectWhere("accounts", "AccountNumber=" + accountNumber, "Status");
 	}
 
-	public void modifyMoney(JSONObject json) throws BankException {
+	public void modifyMoney(JSONObject customerJson) throws BankException {
 		StringBuilder query = queryBuilder.singleSetWhere("accounts", "Balance", "AccountNumber");
-		update(query, json);
+		update(query, customerJson);
 	}
 
-	public void putHistory(JSONObject json) throws BankException {
-		StringBuilder query = queryBuilder.addJsonPrepStatement("transactionHistory", json);
-		add(query, json);
+	public void putHistory(JSONObject customerJson) throws BankException {
+		StringBuilder query = queryBuilder.addJsonPrepStatement("transactionHistory", customerJson);
+		add(query, customerJson);
 	}
 
-	public JSONArray getTransactionHistory(JSONObject json,int quantity ,int page,long searchMilli) throws BankException {
-		long accountNumber= UtilityHelper.getLong(json, "AccountNumber");
+	public JSONArray getTransactionHistory(JSONObject customerJson,int quantity ,int page,long searchMilli) throws BankException {
+		long accountNumber= UtilityHelper.getLong(customerJson, "AccountNumber");
 		StringBuilder query = queryBuilder.selectAllFromWherePrep("transactionHistory",
 								"AccountNumber=" + accountNumber+ " and TransactionId > "
 								+searchMilli+" order by TransactionId asc limit "
@@ -58,8 +58,8 @@ public class CustomerService extends DataStorageService implements CustomerServi
 		return bulkSelect(query);
 	}
 	
-	public int pageCount(JSONObject json,int quantity,long searchMilli) throws BankException {
-		long accountNumber= UtilityHelper.getLong(json, "AccountNumber");
+	public int pageCount(JSONObject customerJson,int quantity,long searchMilli) throws BankException {
+		long accountNumber= UtilityHelper.getLong(customerJson, "AccountNumber");
 		StringBuilder countQuery = queryBuilder.selectAllCountFromWherePrep("transactionHistory",
 									"AccountNumber=" + accountNumber
 									+ " and TransactionId > "+searchMilli);
@@ -67,77 +67,76 @@ public class CustomerService extends DataStorageService implements CustomerServi
 		return (int) Math.ceil(count/quantity); 
 	}
 
-	public JSONObject viewProfile(JSONObject json) throws BankException {
-		long id= UtilityHelper.getLong(json,"Id");
+	public JSONObject viewProfile(JSONObject customerJson) throws BankException {
+		long id= UtilityHelper.getLong(customerJson,"Id");
 		StringBuilder query=builder.viewCustomerProfile(id);
 		JSONObject jsonResult= select(query);
-		JSONArray jsonArray=getAccounts(json);
+		JSONArray jsonArray=getAccounts(customerJson);
 		return UtilityHelper.put(jsonResult,"AccountNumber", jsonArray);
 	}
 	
-	public JSONObject getPrimaryAccount(JSONObject json) throws BankException {
-		System.out.println(json);// remove
-		long id=UtilityHelper.getLong(json,"Id");
+	public JSONObject getPrimaryAccount(JSONObject customerJson) throws BankException {
+		long id=UtilityHelper.getLong(customerJson,"Id");
 		StringBuilder query =queryBuilder.selectFromWhere("accounts","Id = "+id+" and Priority='primary'","AccountNumber");
 		return select(query);
 	}
 	
-	public void setPrimaryAccount(JSONObject json) throws BankException {
-		updatePriority(json, Priority.primary);
+	public void setPrimaryAccount(JSONObject customerJson) throws BankException {
+		updatePriority(customerJson, Priority.primary);
 	}
 	
-	public void removePrimaryAccount(JSONObject json) throws BankException {
-		updatePriority(json, null);
+	public void removePrimaryAccount(JSONObject customerJson) throws BankException {
+		updatePriority(customerJson, null);
 	}
 	
 
-	public void checkUserPresence(JSONObject json, String field) throws BankException, InputDefectException {
-		checkLongPresence(json, "users", field, field);
+	public void checkUserPresence(JSONObject customerJson, String field) throws BankException, InputDefectException {
+		checkLongPresence(customerJson, "users", field, field);
 	}
 
-	public void checkUserAbsence(JSONObject json, String field) throws BankException, InputDefectException {
-		checkLongAbsence(json, "users", field, field);
+	public void checkUserAbsence(JSONObject customerJson, String field) throws BankException, InputDefectException {
+		checkLongAbsence(customerJson, "users", field, field);
 	}
 
-	public void checkCustomerAbsence(JSONObject json, String field) throws BankException, InputDefectException {
-		checkLongAbsence(json, "customers", field, field);
+	public void checkCustomerAbsence(JSONObject customerJson, String field) throws BankException, InputDefectException {
+		checkLongAbsence(customerJson, "customers", field, field);
 	}
 
-	public void checkCustomerPresence(JSONObject json, String field) throws BankException, InputDefectException {
-		checkLongPresence(json, "customers", field, field);
+	public void checkCustomerPresence(JSONObject customerJson, String field) throws BankException, InputDefectException {
+		checkLongPresence(customerJson, "customers", field, field);
 	}
 
-	public void checkAccountAbsence(JSONObject json, String field) throws BankException, InputDefectException {
-		checkLongAbsence(json, "accounts", field, field);
+	public void checkAccountAbsence(JSONObject customerJson, String field) throws BankException, InputDefectException {
+		checkLongAbsence(customerJson, "accounts", field, field);
 	}
 
-	public void checkAccountPrecence(JSONObject json, String field) throws BankException, InputDefectException {
-		checkLongPresence(json, "accounts", field, field);
+	public void checkAccountPresence(JSONObject customerJson, String field) throws BankException, InputDefectException {
+		checkLongPresence(customerJson, "accounts", field, field);
 	}
 	
-	public void checkAccountPrimary(JSONObject json) {
+	public void checkAccountPrimary(JSONObject customerJson) {
 		// TODO
 	}
 	
 	
 	
 	// support methods
-	protected void checkLongAbsence(JSONObject json, String tableName, String fieldName, String selectionField)
+	protected void checkLongAbsence(JSONObject customerJson, String tableName, String fieldName, String selectionField)
 			throws BankException, InputDefectException {
-		UtilityHelper.nullCheck(json);
-		long id = UtilityHelper.getLong(json, fieldName);
-		JSONObject json2 = selectWhere(tableName, fieldName + "=" + id, selectionField);
-		if (json2 != null) {
+		UtilityHelper.nullCheck(customerJson);
+		long id = UtilityHelper.getLong(customerJson, fieldName);
+		JSONObject resultJson = selectWhere(tableName, fieldName + "=" + id, selectionField);
+		if (resultJson != null) {
 			throw new BankException(selectionField + "  : " + id + " is alreday present");
 		}
 	}
 
-	protected void checkLongPresence(JSONObject json, String tableName, String fieldName, String selectionField)
+	protected void checkLongPresence(JSONObject customerJson, String tableName, String fieldName, String selectionField)
 			throws BankException, InputDefectException {
-		UtilityHelper.nullCheck(json);
-		long id = UtilityHelper.getLong(json, fieldName);
-		JSONObject json2 = selectWhere(tableName, fieldName + "=" + id, selectionField);
-		if (json2 == null) {
+		UtilityHelper.nullCheck(customerJson);
+		long id = UtilityHelper.getLong(customerJson, fieldName);
+		JSONObject resultJson = selectWhere(tableName, fieldName + "=" + id, selectionField);
+		if (resultJson == null) {
 			throw new BankException(selectionField + " : " + id + " is not available");
 		}
 	}
@@ -158,15 +157,15 @@ public class CustomerService extends DataStorageService implements CustomerServi
 		return select(query);
 	}
 	
-	protected void updatePriority(JSONObject json,Priority priority) throws BankException {
-		long accountNumber=UtilityHelper.getLong(json,"AccountNumber");
+	protected void updatePriority(JSONObject customerJson,Priority priority) throws BankException {
+		long accountNumber=UtilityHelper.getLong(customerJson,"AccountNumber");
 		StringBuilder query=builder.singleSetWhere("accounts","Priority","AccountNumber",Long.toString(accountNumber));
 		if(priority!=null) {
 			update(query, UtilityHelper.put(new JSONObject(),"Priority",priority.toString())); 
 		}
 		else {
-			JSONObject json2=UtilityHelper.put(new JSONObject(),"Priority",JSONObject.NULL);
-			update(query,json2); //error
+			JSONObject resultJson=UtilityHelper.put(new JSONObject(),"Priority",JSONObject.NULL);
+			update(query,resultJson);
 		}
 	}
 

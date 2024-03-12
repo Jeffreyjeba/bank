@@ -33,7 +33,7 @@ public interface CustomerServiceInterface {
 
 	public void checkAccountAbsence(JSONObject json, String field) throws BankException, InputDefectException;
 
-	public void checkAccountPrecence(JSONObject json, String field) throws BankException, InputDefectException;
+	public void checkAccountPresence(JSONObject json, String field) throws BankException, InputDefectException;
 	
 	public int pageCount(JSONObject json,int quantity,long searchMilli) throws BankException ;
 	
