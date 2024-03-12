@@ -2,27 +2,25 @@ package pojo;
 
 public class Branch {
 	int branchId;
-	String ifscCodeString;
-	String branchNameString;
-	String address;
-	
+	String ifscCode;
+	String branchName;
 	public int getBranchId() {
 		return branchId;
 	}
 	public void setBranchId(int branchId) {
 		this.branchId = branchId;
 	}
-	public String getIfscCodeString() {
-		return ifscCodeString;
+	public String getIfscCode() {
+		return ifscCode;
 	}
-	public void setIfscCodeString(String ifscCodeString) {
-		this.ifscCodeString = ifscCodeString;
+	public void setIfscCode(String ifscCode) {
+		this.ifscCode = ifscCode;
 	}
-	public String getBranchNameString() {
-		return branchNameString;
+	public String getBranchName() {
+		return branchName;
 	}
-	public void setBranchNameString(String branchNameString) {
-		this.branchNameString = branchNameString;
+	public void setBranchName(String branchName) {
+		this.branchName = branchName;
 	}
 	public String getAddress() {
 		return address;
@@ -30,5 +28,6 @@ public class Branch {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	String address;
 
 }
