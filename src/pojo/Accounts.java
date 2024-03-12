@@ -3,13 +3,13 @@ package pojo;
 import bank.AccountStatus;
 import bank.Priority;
 
-public class Accounts {
-	long accountNumber;
-	long id;
-	int branchId;
-	long balance;
-	AccountStatus status;
-	Priority priority;
+public class Accounts implements BankMarker {
+	private long accountNumber;
+	private long id;
+	private int branchId;
+	private long balance;
+	private AccountStatus status;
+	private Priority priority;
 	
 	public long getAccountNumber() {
 		return accountNumber;

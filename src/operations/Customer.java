@@ -2,7 +2,6 @@ package operations;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import bank.Authenticator;
 import bank.ServiceFactory;
 import database.CustomerServiceInterface;
@@ -10,11 +9,14 @@ import utility.BankException;
 import utility.InputDefectException;
 import utility.UtilityHelper;
 
+
 public class Customer {
 	
 	private CustomerServiceInterface customer = ServiceFactory.getCustomerService();
 
 	// operation methods
+	
+	
 	public long getBalance(JSONObject customerJson) throws BankException, InputDefectException {
 		UtilityHelper.nullCheck(customerJson);
 		checkAccNoForPresence(customerJson);
@@ -269,6 +271,7 @@ public class Customer {
 	// check methods
 
 
+	
 	protected void checkIdUserPresence(JSONObject customerJson) throws BankException, InputDefectException {
 		customer.checkUserPresence(customerJson, "Id");
 	}

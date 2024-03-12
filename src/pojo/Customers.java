@@ -1,11 +1,11 @@
 package pojo;
 
-public class Customers {
-	long customerId;
-	long id;
-	long aadharNumber;
-	String panNumber;
-	String address;
+public class Customers implements BankMarker {
+	private long customerId;
+	private long id;
+	private long aadharNumber;
+	private String panNumber;
+	private String address;
 	
 	public long getCustomerId() {
 		return customerId;

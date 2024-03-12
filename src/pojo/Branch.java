@@ -1,9 +1,11 @@
 package pojo;
 
-public class Branch {
-	int branchId;
-	String ifscCode;
-	String branchName;
+public class Branch implements BankMarker {
+	private int branchId;
+	private String ifscCode;
+	private String branchName;
+	private String address;
+	
 	public int getBranchId() {
 		return branchId;
 	}
@@ -28,6 +30,4 @@ public class Branch {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	String address;
-
 }

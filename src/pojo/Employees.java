@@ -2,10 +2,10 @@ package pojo;
 
 import bank.EmployeeType;
 
-public class Employees {
-	long id ;
-	int branchId;
-	EmployeeType type;
+public class Employees implements BankMarker {
+	private long id ;
+	private int branchId;
+	private EmployeeType type;
 	
 	public long getId() {
 		return id;

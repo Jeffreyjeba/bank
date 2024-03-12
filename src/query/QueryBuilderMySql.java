@@ -1,7 +1,13 @@
 package query;
 
+import java.io.FileDescriptor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import pojo.BankMarker;
 import utility.BankException;
 
 public class QueryBuilderMySql implements Query {
@@ -226,4 +232,30 @@ public class QueryBuilderMySql implements Query {
 		}
 		stringBuilder.deleteCharAt(stringBuilder.length() - 1);
 	}
+	
+	
+	
+	public void pojoToAddQuery(String tableName,BankMarker data) {
+		StringBuilder field=new StringBuilder();
+		StringBuilder value=new StringBuilder();
+		field.append("Insert into table ");
+		field.append(tableName);
+		value.append(") values (");
+	}
+	
+	private void setFieldName(BankMarker data,StringBuilder value) { //TODO
+		Class className=data.getClass();
+		Field[] field=className.getDeclaredFields();
+		for(Field temp:field) {
+			temp.setAccessible(true);
+			String type = temp.getType().toString();
+			if(new ArrayList<String>("int","long"))
+		}
+	}
+	
+	private String fieldToSetMethod(String fieldName) {
+		return "get"+fieldName.substring(0, 1).toUpperCase()+fieldName.substring(1);	
+	}
+	
+	
 }

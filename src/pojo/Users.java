@@ -3,14 +3,14 @@ package pojo;
 import bank.ActiveStatus;
 import bank.UserHirarchy;
 
-public class Users {
-	long id;
-	String name;
-	String emailId;
-	long phoneNumber;
-	UserHirarchy userType;
-	String password;
-	ActiveStatus status;
+public class Users implements BankMarker{
+	private long id;
+	private String name;
+	private String emailId;
+	private long phoneNumber;
+	private UserHirarchy userType;
+	private String password;
+	private ActiveStatus status;
 	
 	public long getId() {
 		return id;
