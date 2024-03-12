@@ -25,7 +25,7 @@ public class AdminService extends EmployeeService implements AdminServiceInterfa
 	}
 	
 	public void removeEmployee(JSONObject employee) throws BankException,InputDefectException  {
-		StringBuilder query= queryBuilder.deleteFromJson("employees", employee);
+		StringBuilder query= builder.deleteFromJson("employees", employee);
 		delete(query, employee);
 	}
 	

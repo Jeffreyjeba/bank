@@ -1,7 +1,6 @@
 package database;
 
 import org.json.JSONObject;
-
 import utility.BankException;
 import utility.InputDefectException;
 
@@ -27,17 +26,17 @@ public class EmployeeService extends CustomerService implements EmployeeServiceI
 	}
 
 	public void deleteAccount(JSONObject account) throws BankException, InputDefectException {
-		StringBuilder query = queryBuilder.setStatus("accounts", account);
+		StringBuilder query = builder.setStatus("accounts", account);
 		update(query, account);
 	}
 
 	public void deactivateAccount(JSONObject account) throws BankException, InputDefectException {
-		StringBuilder query = queryBuilder.setStatus("accounts", account);
+		StringBuilder query = builder.setStatus("accounts", account);
 		update(query, account);
 	}
 
 	public void activateAccount(JSONObject account) throws BankException,InputDefectException  {
-		StringBuilder query= queryBuilder.setStatus("accounts", account);
+		StringBuilder query= builder.setStatus("accounts", account);
 		update( query,account);
 	}
 	
@@ -46,12 +45,12 @@ public class EmployeeService extends CustomerService implements EmployeeServiceI
 	}
 	
 	public void activateCustomer(JSONObject customer) throws BankException {
-		StringBuilder query=queryBuilder.setStatus("users", customer);
+		StringBuilder query=builder.setStatus("users", customer);
 		update(query, customer);
 	}
 	
 	public void deactivateCustomer(JSONObject customer) throws BankException {
-		StringBuilder query=queryBuilder.setStatus("users", customer);
+		StringBuilder query=builder.setStatus("users", customer);
 		update(query, customer);
 	}
 

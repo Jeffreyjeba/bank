@@ -1,4 +1,4 @@
-package bankrunner;
+package runner;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;

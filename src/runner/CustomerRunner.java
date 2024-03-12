@@ -1,4 +1,4 @@
-package bankrunner;
+package runner;
 
 import java.util.Arrays;
 import org.json.JSONArray;

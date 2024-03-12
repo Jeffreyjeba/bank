@@ -1,4 +1,4 @@
-package bankrunner;
+package runner;
 
 import org.json.JSONArray;
 import org.json.JSONException;

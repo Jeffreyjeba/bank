@@ -1,4 +1,4 @@
-package database;
+package query;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -117,7 +117,6 @@ public class QueryBuilderMySql implements Query {
 		fields(stringBuilder, field);
 		values(stringBuilder, field.length);
 		close(stringBuilder);
-		System.out.println(stringBuilder);
 		return stringBuilder;
 	}
 
@@ -131,9 +130,16 @@ public class QueryBuilderMySql implements Query {
 		stringBuilder.append(" set ");
 		stringBuilder.append(target);
 		stringBuilder.append(" = ");
+		stringBuilder.append(value);
+	}
+	
+	private void charSet(StringBuilder stringBuilder, String target, String value) {
+		stringBuilder.append(" set ");
+		stringBuilder.append(target);
+		stringBuilder.append(" = ");
 		stringBuilder.append("'");
 		stringBuilder.append(value);
-		stringBuilder.append("'"); // to 
+		stringBuilder.append("'");
 	}
 
 	private void where(StringBuilder stringBuilder, String input, String condition) {
@@ -165,7 +171,7 @@ public class QueryBuilderMySql implements Query {
 		StringBuilder stringBuilder = new StringBuilder();
 		try {
 			update(stringBuilder, tableName);
-			set(stringBuilder, "Status", json.getString("Status"));
+			charSet(stringBuilder, "Status", json.getString("Status"));
 			json.remove("Status");
 			String[] field = JSONObject.getNames(json);
 			where(stringBuilder, field[0], "=?");

@@ -1,4 +1,4 @@
-package database;
+package query;
 
 import org.json.JSONObject;
 

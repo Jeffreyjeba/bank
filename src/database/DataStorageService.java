@@ -12,6 +12,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import utility.BankException;
+import query.Query;
+import query.QueryBuilderMySql;
 
 abstract public class DataStorageService implements DataStorage {
 
@@ -86,7 +88,6 @@ abstract public class DataStorageService implements DataStorage {
 		try (Connection connection = getConnection();) {
 			try (PreparedStatement preparedStatement = connection.prepareStatement(seq.toString());) {
 				setParameter(preparedStatement, json);
-				System.out.println(preparedStatement);
 				return preparedStatement.execute();
 			}
 		}

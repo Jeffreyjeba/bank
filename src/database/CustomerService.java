@@ -2,7 +2,6 @@ package database;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import bank.Priority;
 import utility.BankException;
 import utility.InputDefectException;
@@ -14,23 +13,22 @@ public class CustomerService extends DataStorageService implements CustomerServi
 		super(url, userName, password);
 	}
 
-	Query queryBuilder = new QueryBuilderMySql();
 
 	public JSONObject getBalance(JSONObject customerJson) throws BankException {
-		StringBuilder query = queryBuilder.selectFromWhere("accounts","AccountNumber=" + UtilityHelper.getLong(customerJson, "AccountNumber"), "Balance");
+		StringBuilder query = builder.selectFromWhere("accounts","AccountNumber=" + UtilityHelper.getLong(customerJson, "AccountNumber"), "Balance");
 		return select(query);
 	}
 
 	public JSONArray getAccounts(JSONObject customerJson) throws BankException {
 		long id = UtilityHelper.getLong(customerJson, "Id");
-		StringBuilder query = queryBuilder.selectFromWhere("accounts", "Id=" + id, "AccountNumber");
+		StringBuilder query = builder.selectFromWhere("accounts", "Id=" + id, "AccountNumber");
 		return bulkSelect(query);
 	}
 
 	public void resetPassword(JSONObject customerJson) throws BankException {
 		long id = UtilityHelper.getLong(customerJson, "Id");
 		customerJson.remove("Id");
-		StringBuilder query = queryBuilder.singleSetWhere("users", "Password", "Id", Long.toString(id));
+		StringBuilder query = builder.singleSetWhere("users", "Password", "Id", Long.toString(id));
 		update(query, customerJson);
 	}
 
@@ -40,18 +38,18 @@ public class CustomerService extends DataStorageService implements CustomerServi
 	}
 
 	public void modifyMoney(JSONObject customerJson) throws BankException {
-		StringBuilder query = queryBuilder.singleSetWhere("accounts", "Balance", "AccountNumber");
+		StringBuilder query = builder.singleSetWhere("accounts", "Balance", "AccountNumber");
 		update(query, customerJson);
 	}
 
 	public void putHistory(JSONObject customerJson) throws BankException {
-		StringBuilder query = queryBuilder.addJsonPrepStatement("transactionHistory", customerJson);
+		StringBuilder query = builder.addJsonPrepStatement("transactionHistory", customerJson);
 		add(query, customerJson);
 	}
 
 	public JSONArray getTransactionHistory(JSONObject customerJson,int quantity ,int page,long searchMilli) throws BankException {
 		long accountNumber= UtilityHelper.getLong(customerJson, "AccountNumber");
-		StringBuilder query = queryBuilder.selectAllFromWherePrep("transactionHistory",
+		StringBuilder query = builder.selectAllFromWherePrep("transactionHistory",
 								"AccountNumber=" + accountNumber+ " and TransactionId > "
 								+searchMilli+" order by TransactionId asc limit "
 								+quantity+" offset "+(page-1)*quantity);
@@ -60,7 +58,7 @@ public class CustomerService extends DataStorageService implements CustomerServi
 	
 	public int pageCount(JSONObject customerJson,int quantity,long searchMilli) throws BankException {
 		long accountNumber= UtilityHelper.getLong(customerJson, "AccountNumber");
-		StringBuilder countQuery = queryBuilder.selectAllCountFromWherePrep("transactionHistory",
+		StringBuilder countQuery = builder.selectAllCountFromWherePrep("transactionHistory",
 									"AccountNumber=" + accountNumber
 									+ " and TransactionId > "+searchMilli);
 		float count= UtilityHelper.getInt(select(countQuery),"count(*)");
@@ -77,7 +75,7 @@ public class CustomerService extends DataStorageService implements CustomerServi
 	
 	public JSONObject getPrimaryAccount(JSONObject customerJson) throws BankException {
 		long id=UtilityHelper.getLong(customerJson,"Id");
-		StringBuilder query =queryBuilder.selectFromWhere("accounts","Id = "+id+" and Priority='primary'","AccountNumber");
+		StringBuilder query =builder.selectFromWhere("accounts","Id = "+id+" and Priority='primary'","AccountNumber");
 		return select(query);
 	}
 	

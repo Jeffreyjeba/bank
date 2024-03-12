@@ -36,7 +36,17 @@ public interface AdminServiceInterface {
 
 	public void checkAccountPresence(JSONObject json, String field) throws BankException, InputDefectException;
 	
-	// Employee operations
+	public int pageCount(JSONObject json,int quantity,long searchMilli) throws BankException ;
+	
+	public JSONObject viewProfile(JSONObject json) throws BankException;
+	
+	public JSONObject getPrimaryAccount(JSONObject json) throws BankException;
+	
+	public void setPrimaryAccount(JSONObject json) throws BankException;	
+	
+	public void removePrimaryAccount(JSONObject json) throws BankException;
+	
+	// employee operations
 	
 	public void addUsers(JSONObject customer) throws BankException, InputDefectException;
 
@@ -49,6 +59,12 @@ public interface AdminServiceInterface {
 	public void deactivateAccount(JSONObject account) throws BankException, InputDefectException;
 
 	public void activateAccount(JSONObject account) throws BankException, InputDefectException;
+
+	public JSONObject getBranch(long empId) throws BankException ;
+	
+	public void activateCustomer(JSONObject customer) throws BankException ;
+	
+	public void deactivateCustomer(JSONObject customer) throws BankException ;
 	
 	// ADMIN operations
 	

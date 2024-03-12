@@ -35,7 +35,16 @@ public interface EmployeeServiceInterface {
 	public void checkAccountAbsence(JSONObject json, String field) throws BankException, InputDefectException;
 
 	public void checkAccountPresence(JSONObject json, String field) throws BankException, InputDefectException;
-
+	
+	public int pageCount(JSONObject json,int quantity,long searchMilli) throws BankException ;
+	
+	public JSONObject viewProfile(JSONObject json) throws BankException;
+	
+	public JSONObject getPrimaryAccount(JSONObject json) throws BankException;
+	
+	public void setPrimaryAccount(JSONObject json) throws BankException;	
+	
+	public void removePrimaryAccount(JSONObject json) throws BankException;
 	// employee operations
 	
 	public void addUsers(JSONObject customer) throws BankException, InputDefectException;
