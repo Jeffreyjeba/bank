@@ -47,17 +47,17 @@ public interface EmployeeServiceInterface {
 	public void removePrimaryAccount(JSONObject json) throws BankException;
 	// employee operations
 	
-	public void addUsers(JSONObject customer) throws BankException, InputDefectException;
+	public void addUsers(JSONObject customer) throws BankException;
 
-	public void addCustomers(JSONObject customer) throws BankException, InputDefectException;
+	public void addCustomers(JSONObject customer) throws BankException;
 
-	public void createAccount(JSONObject account) throws BankException, InputDefectException;
+	public void createAccount(JSONObject account) throws BankException;
 
-	public void deleteAccount(JSONObject account) throws BankException, InputDefectException;
+	public void deleteAccount(JSONObject account) throws BankException;
 
-	public void deactivateAccount(JSONObject account) throws BankException, InputDefectException;
+	public void deactivateAccount(JSONObject account) throws BankException;
 
-	public void activateAccount(JSONObject account) throws BankException, InputDefectException;
+	public void activateAccount(JSONObject account) throws BankException;
 
 	public JSONObject getBranch(long empId) throws BankException ;
 	

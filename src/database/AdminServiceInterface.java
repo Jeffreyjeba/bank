@@ -48,17 +48,17 @@ public interface AdminServiceInterface {
 	
 	// employee operations
 	
-	public void addUsers(JSONObject customer) throws BankException, InputDefectException;
+	public void addUsers(JSONObject customer) throws BankException;
 
-	public void addCustomers(JSONObject customer) throws BankException, InputDefectException;
+	public void addCustomers(JSONObject customer) throws BankException;
 
-	public void createAccount(JSONObject account) throws BankException, InputDefectException;
+	public void createAccount(JSONObject account) throws BankException;
 
-	public void deleteAccount(JSONObject account) throws BankException, InputDefectException;
+	public void deleteAccount(JSONObject account) throws BankException;
 
-	public void deactivateAccount(JSONObject account) throws BankException, InputDefectException;
+	public void deactivateAccount(JSONObject account) throws BankException;
 
-	public void activateAccount(JSONObject account) throws BankException, InputDefectException;
+	public void activateAccount(JSONObject account) throws BankException;
 
 	public JSONObject getBranch(long empId) throws BankException ;
 	
@@ -68,13 +68,13 @@ public interface AdminServiceInterface {
 	
 	// ADMIN operations
 	
-	public void createBranch(JSONObject branch) throws BankException, InputDefectException;
+	public void createBranch(JSONObject branch) throws BankException;
 
-	public void addAdmin(JSONObject admin) throws BankException, InputDefectException;
+	public void addAdmin(JSONObject admin) throws BankException;
 
-	public void addEmployee(JSONObject employee) throws BankException, InputDefectException;
+	public void addEmployee(JSONObject employee) throws BankException;
 
-	public void removeEmployee(JSONObject employee) throws BankException, InputDefectException;
+	public void removeEmployee(JSONObject employee) throws BankException;
 
 	public JSONArray getAllBranchId() throws BankException;
 	

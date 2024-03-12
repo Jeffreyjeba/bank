@@ -185,7 +185,6 @@ public class Customer {
 
 	protected JSONObject historyJson(String type, long amount, long transactionId, long accountNumber,
 			String description, long balance, Long TransactionAccountNumber) throws BankException {
-		String dateTime = null;
 		JSONObject json = new JSONObject();
 		UtilityHelper.put(json, "AccountNumber", accountNumber);
 		UtilityHelper.put(json, "TransactionAccountNumber", TransactionAccountNumber);
@@ -194,7 +193,6 @@ public class Customer {
 		UtilityHelper.put(json, "TransactionType", type);
 		UtilityHelper.put(json, "TransactionId", transactionId);
 		UtilityHelper.put(json, "Balance", balance);
-		UtilityHelper.put(json, "DateTime", dateTime);
 		return json;
 	}
 

@@ -11,7 +11,7 @@ public class Authenticator {
 	
 	AuthendicatorServiceInterface auth=ServiceFactory.getAuthendicatorService();
 
-	public String getAuthority(long id) throws BankException   { // w
+	public String getAuthority(long id) throws BankException   { 
 		return auth.getAuthority(id);
 	}
 	
@@ -51,7 +51,7 @@ public class Authenticator {
 		return UtilityHelper.getInt(json, "Attempts");
 	}
 
-	private String getPassword(long userId) throws BankException { // w
+	private String getPassword(long userId) throws BankException { 
 		JSONObject json= auth.getPassword(userId);
 		if (json == null) {
 			throw new BankException("wrong combination");

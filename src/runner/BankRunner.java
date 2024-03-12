@@ -737,7 +737,6 @@ public class BankRunner {
 	
 	protected void tagPrimaryAccount(CustomerRunner customer,long[] accountArray) throws Exception {
 		JSONObject json= customer.getPrimaryAccount();
-		System.out.println(json);
 		if(json==null) {
 			int length = accountArray.length;
 			if (length == 1) {

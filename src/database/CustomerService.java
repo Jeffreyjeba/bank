@@ -43,8 +43,7 @@ public class CustomerService extends DataStorageService implements CustomerServi
 	}
 
 	public void putHistory(JSONObject customerJson) throws BankException {
-		StringBuilder query = builder.addJsonPrepStatement("transactionHistory", customerJson);
-		add(query, customerJson);
+		generalAdd("transactionHistory", customerJson);
 	}
 
 	public JSONArray getTransactionHistory(JSONObject customerJson,int quantity ,int page,long searchMilli) throws BankException {
@@ -145,7 +144,7 @@ public class CustomerService extends DataStorageService implements CustomerServi
 		return bulkSelect(query);
 	}
 
-	protected void generalAdd(String tableName, JSONObject employee) throws BankException, InputDefectException {
+	protected void generalAdd(String tableName, JSONObject employee) throws BankException {
 		StringBuilder query = builder.addJsonPrepStatement(tableName, employee);
 		add(query, employee);
 	}

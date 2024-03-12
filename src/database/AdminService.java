@@ -12,19 +12,19 @@ public class AdminService extends EmployeeService implements AdminServiceInterfa
 		super(url, userName, password);
 	}
 
-	public void createBranch(JSONObject branch) throws BankException,InputDefectException  {
+	public void createBranch(JSONObject branch) throws BankException  {
 		generalAdd("branch", branch);
 	}
 	
-	public void addAdmin(JSONObject admin) throws BankException,InputDefectException  {
+	public void addAdmin(JSONObject admin) throws BankException  {
 		generalAdd("employees", admin);
 	}
 	
-	public void addEmployee(JSONObject employee) throws BankException,InputDefectException  {
+	public void addEmployee(JSONObject employee) throws BankException {
 		generalAdd("employees", employee);
 	}
 	
-	public void removeEmployee(JSONObject employee) throws BankException,InputDefectException  {
+	public void removeEmployee(JSONObject employee) throws BankException  {
 		StringBuilder query= builder.deleteFromJson("employees", employee);
 		delete(query, employee);
 	}
