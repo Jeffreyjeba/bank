@@ -1,0 +1,15 @@
+long[] accountArray = customer.getAccounts();
+			int length = accountArray.length;
+			if (length == 1) {
+				Authenticator.accountTag(accountArray[0]);
+				statusCheck(accountArray[0]);
+			}
+			else {
+				for (int loop = 0; loop < length; loop++) {
+					System.out.println((loop + 1) + " Account Number --  " + accountArray[loop]);
+				}
+				int option = getNumber("Please enter the account you need to select");
+				UtilityHelper.lengthIndexCheck(length, option );
+				Authenticator.accountTag(accountArray[option - 1]);
+				statusCheck(accountArray[option - 1]);
+			}

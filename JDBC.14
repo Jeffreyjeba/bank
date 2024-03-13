@@ -1,0 +1,16 @@
+Mar 13, 2024 4:19:02 PM runner.CustomerRunner debit
+WARNING: Wrong pass word
+Try again
+Mar 13, 2024 4:19:42 PM runner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException: No line found
+	at java.base/java.util.Scanner.nextLine(Scanner.java:1651)
+	at bank/runner.BankRunner.getString(BankRunner.java:860)
+	at bank/runner.BankRunner.getString(BankRunner.java:864)
+	at bank/runner.AdminRunner.createBranch(AdminRunner.java:22)
+	at bank/runner.BankRunner.admin(BankRunner.java:602)
+	at bank/runner.BankRunner.run(BankRunner.java:59)
+	at bank/runner.BankRunner.main(BankRunner.java:34)
+
+Mar 13, 2024 4:23:34 PM runner.BankRunner admin
+WARNING: BranchId  : 4 is alreday present
