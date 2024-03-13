@@ -8,15 +8,13 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Iterator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import pojo.BankMarker;
-import utility.BankException;
 import query.Query;
 import query.QueryBuilderMySql;
+import utility.BankException;
 
 abstract public class DataStorageService implements DataStorage {
 
@@ -32,11 +30,12 @@ abstract public class DataStorageService implements DataStorage {
 		this.password = password;
 	}
 
+
 	@Override
-	public boolean add(CharSequence seq, JSONObject json) throws BankException {
+	public boolean add(CharSequence seq, BankMarker input) throws BankException {
 		try (Connection connection = getConnection();) {
 			try (PreparedStatement preparedStatement = connection.prepareStatement(seq.toString());) {
-				setParameter(preparedStatement, json);
+				setParameter(preparedStatement, input);
 				return preparedStatement.execute();
 			}
 		}
@@ -45,22 +44,10 @@ abstract public class DataStorageService implements DataStorage {
 		}
 	}
 	
-	public boolean add(CharSequence seq, BankMarker input) throws BankException {
-		try (Connection connection = getConnection();) {
-			try (PreparedStatement preparedStatement = connection.prepareStatement(seq.toString());) {
-				setParameter(preparedStatement, input);
-				System.out.println(preparedStatement);
-				return preparedStatement.execute();
-			}
-		}
-		catch (SQLException e) {
-			throw new BankException("technical error accured contact bank or technical support",e);
-		}
-	}
-
 	@Override
-	public boolean bulkAdd(JSONArray json) {
-		// TODO
+	public boolean bulkAdd(CharSequence seq, BankMarker input) throws BankException{
+		
+		
 		return false;
 	}
 
@@ -98,20 +85,8 @@ abstract public class DataStorageService implements DataStorage {
 			throw new BankException("technical error accured contact bank or technical support",e);
 		}
 	}
-
-	@Override
-	public boolean update(CharSequence seq, JSONObject json) throws BankException {
-		try (Connection connection = getConnection();) {
-			try (PreparedStatement preparedStatement = connection.prepareStatement(seq.toString());) {
-				setParameter(preparedStatement, json);
-				return preparedStatement.execute();
-			}
-		}
-		catch (SQLException e) {
-			throw new BankException("technical error accured contact bank or technical support",e);
-		}
-	}
 	
+	@Override
 	public boolean update(CharSequence seq,Object...input) throws BankException {
 		try (Connection connection = getConnection();) {
 			try (PreparedStatement preparedStatement = connection.prepareStatement(seq.toString());) {
@@ -123,26 +98,8 @@ abstract public class DataStorageService implements DataStorage {
 			throw new BankException("technical error accured contact bank or technical support",e);
 		}
 	}
-
-	@Override
-	public boolean bulkUpdate(JSONArray json) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean delete(CharSequence seq, JSONObject json) throws BankException {
-		try (Connection connection = getConnection();) {
-			try (PreparedStatement preparedStatement = connection.prepareStatement(seq.toString());) {
-				setParameter(preparedStatement, json);
-				return preparedStatement.execute();
-			}
-		}
-		catch (SQLException e) {
-			throw new BankException("technical error accured contact bank or technical support",e);
-		}
-	}
 	
+	@Override
 	public boolean delete(CharSequence seq,Object...input) throws BankException {
 		try (Connection connection = getConnection();) {
 			try (PreparedStatement preparedStatement = connection.prepareStatement(seq.toString());) {
@@ -155,6 +112,10 @@ abstract public class DataStorageService implements DataStorage {
 		}
 	}
 
+	
+	// support 
+	
+	
 	private JSONObject jsonMaker(ResultSet set) throws BankException {
 		try {
 			JSONObject json = new JSONObject();
@@ -171,44 +132,12 @@ abstract public class DataStorageService implements DataStorage {
 		}
 	}
 
-	private Connection getConnection() throws BankException {
+	protected Connection getConnection() throws BankException {
 		try {
 			Connection connection = DriverManager.getConnection(url, userName, password);
 			return connection;
-		} catch (SQLException e) {
-			throw new BankException("technical error accured contact bank or technical support",e);
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	private void setParameter(PreparedStatement statement, JSONObject json) throws BankException {
-		try {
-			Iterator<String> keys = json.keys();
-			int index = 1;
-			while (keys.hasNext()) {
-				String key = keys.next();
-				Object value = json.get(key);
-				String type = value.getClass().getName();
-				switch (type) {
-				case "java.lang.String":
-					statement.setString(index, (String) value);
-					break;
-				case "java.lang.Integer":
-					statement.setInt(index, (Integer) value);
-					break;
-				case "java.lang.Long":
-					statement.setLong(index, (Long) value);
-					break;
-				case "org.json.JSONObject$Null":
-					statement.setObject(index, null);
-					break;
-				default:
-					throw new BankException("Type bounce");
-				}
-				
-				index++;
-			}
-		} catch (SQLException | JSONException e) {
+		} 
+		catch (SQLException e) {
 			throw new BankException("technical error accured contact bank or technical support",e);
 		}
 	}
@@ -245,7 +174,6 @@ abstract public class DataStorageService implements DataStorage {
 			throw new BankException("technical error accured contact bank or technical support",e);
 		}
 	}
-	
 	
 	@SuppressWarnings({ "rawtypes" })
 	private void setParameter(PreparedStatement statement,BankMarker data) throws BankException {

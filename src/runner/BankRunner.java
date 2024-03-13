@@ -90,7 +90,7 @@ public class BankRunner {
 		boolean cont = true;
 		while (cont) {
 			int option = getNumber(" \n 1-GetBalance\n 2-GetAccounts\n 3-SwitchAccounts\n" + " 4-debit\n"
-					+ " 5-credit\n 6-Transfer\n 7-ResetPassword \n 8-Get History\n 9-view profile\\n 10-switch Primary account"
+					+ " 5-credit\n 6-Transfer\n 7-ResetPassword \n 8-Get History\n 9-view profile\n 10-switch Primary account"
 					+ " \n 50-logout \n Enter your option : ");
 			switch (option) {
 			case 1:

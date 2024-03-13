@@ -44,8 +44,9 @@ public class Admin extends Employee {
 		admin.removeEmployee(id);
 	}
 
-	public JSONArray getAllBranchId() throws BankException {
+	public JSONArray getAllBranchId() throws BankException, InputDefectException {
 		return admin.getAllBranchId();
+		
 	}
 
 	// checkers methods

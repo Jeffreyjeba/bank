@@ -1,5 +1,9 @@
 package database;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import bank.Priority;
@@ -14,7 +18,6 @@ public class CustomerService extends DataStorageService implements CustomerServi
 	public CustomerService(String url, String userName, String password) {
 		super(url, userName, password);
 	}
-
 
 	public JSONObject getBalance(long accountNumber) throws BankException {
 		StringBuilder query = builder.selectFromWhere("accounts","AccountNumber=" + accountNumber, "Balance");
@@ -71,6 +74,26 @@ public class CustomerService extends DataStorageService implements CustomerServi
 		StringBuilder query =builder.selectFromWhere("accounts","Id = "+id+" and Priority='primary'","AccountNumber");
 		return select(query);
 	}
+	
+	//TOAADD
+	public void creditDebitUpdater(TransactionHistory history) throws BankException {
+		long accountNumber=history.getAccountNumber();
+		long balance=history.getBalance();
+		String string;
+		try(Connection connection=getConnection();){
+			try(PreparedStatement statement=connection.prepareStatement(string)){
+				
+			}
+			
+		}
+		catch (SQLException e) {
+			throw new BankException("technical error accured contact bank or technical support",e);
+		}
+	}
+	
+	
+	
+	
 	
 	public void setPrimaryAccount(long accountNumber) throws BankException {
 		updatePriority(accountNumber, Priority.primary);

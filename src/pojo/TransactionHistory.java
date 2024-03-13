@@ -9,7 +9,7 @@ public class TransactionHistory implements BankMarker{
 	private TransactionType transactionType;
 	private Long transactionAmount;
 	private Long balance;
-	private String Description;
+	private String description;
 	private String dateTime;
 	
 	
@@ -50,10 +50,10 @@ public class TransactionHistory implements BankMarker{
 		this.balance = balance;
 	}
 	public String getDescription() {
-		return Description;
+		return description;
 	}
 	public void setDescription(String description) {
-		Description = description;
+		this.description = description;
 	}
 	public String getDateTime() {
 		return dateTime;

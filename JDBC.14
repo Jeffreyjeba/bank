@@ -14,3 +14,16 @@ java.util.NoSuchElementException: No line found
 
 Mar 13, 2024 4:23:34 PM runner.BankRunner admin
 WARNING: BranchId  : 4 is alreday present
+Mar 13, 2024 5:07:24 PM runner.BankRunner run
+WARNING: Something went wrong
+java.util.NoSuchElementException
+	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+	at java.base/java.util.Scanner.next(Scanner.java:1594)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
+	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
+	at bank/runner.BankRunner.getNumber(BankRunner.java:824)
+	at bank/runner.BankRunner.getNumber(BankRunner.java:856)
+	at bank/runner.BankRunner.admin(BankRunner.java:706)
+	at bank/runner.BankRunner.run(BankRunner.java:59)
+	at bank/runner.BankRunner.main(BankRunner.java:34)
+

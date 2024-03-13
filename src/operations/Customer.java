@@ -18,7 +18,6 @@ public class Customer {
 
 	// operation methods
 	
-	
 	public long getBalance(JSONObject customerJson) throws BankException, InputDefectException {
 		UtilityHelper.nullCheck(customerJson);
 		long accountNumber=UtilityHelper.getLong(customerJson,"AccountNumber");
@@ -101,7 +100,7 @@ public class Customer {
 		boolean inBank = resolveTransaction(accountNumber, trasactionAccountNumber, ifscCode);
 		if (!inBank) {
 			long tId = System.currentTimeMillis();
-			modifyMoney(accountNumber, balanceAmount - amount);
+			modifyMoney(accountNumber, balanceAmount -amount);
 			TransactionHistory history = historyPojo("OBMoneyTransfer", -amount, tId, accountNumber, description,
 					balanceAmount - amount, null);
 			customer.putHistory(history);
@@ -144,8 +143,6 @@ public class Customer {
 		return (System.currentTimeMillis()-day);
 	}
 	
-	
-	
 	public void logout() {
 		Authenticator.idTag(0);
 		Authenticator.accountTag(0);
@@ -173,12 +170,12 @@ public class Customer {
 			setPrimaryAccount(customerJson);
 		}
 		else {
-			removePrivateAccount(primaryJson);
+			removePrimaryAccount(primaryJson);
 			setPrimaryAccount(customerJson);
 		}
 	}
 	
-	private void removePrivateAccount(JSONObject customerJson) throws BankException {
+	private void removePrimaryAccount(JSONObject customerJson) throws BankException {
 		long accountNumber=UtilityHelper.getLong(customerJson, "AccountNumber");
 		customer.removePrimaryAccount(accountNumber);
 	}
@@ -191,24 +188,6 @@ public class Customer {
 		}
 	}
 		
-	/*
-	 * protected void putHistory(JSONObject customerJson) throws BankException,
-	 * InputDefectException { UtilityHelper.nullCheck(customerJson);
-	 * customer.putHistory(customerJson); }
-	 */
-
-	/*
-	 * protected JSONObject historyJson(String type, long amount, long
-	 * transactionId, long accountNumber, String description, long balance, Long
-	 * TransactionAccountNumber) throws BankException { JSONObject json = new
-	 * JSONObject(); UtilityHelper.put(json, "AccountNumber", accountNumber);
-	 * UtilityHelper.put(json, "TransactionAccountNumber",
-	 * TransactionAccountNumber); UtilityHelper.put(json, "Description",
-	 * description); UtilityHelper.put(json, "TransactionAmount", amount);
-	 * UtilityHelper.put(json, "TransactionType", type); UtilityHelper.put(json,
-	 * "TransactionId", transactionId); UtilityHelper.put(json, "Balance", balance);
-	 * return json; }
-	 */
 	
 	protected TransactionHistory historyPojo(String type, long amount, long transactionId, long accountNumber,
 			String description, long balance, Long TransactionAccountNumber) {
@@ -222,15 +201,17 @@ public class Customer {
 		if(TransactionAccountNumber!=null) {
 		history.setTransactionAccountNumber(TransactionAccountNumber);
 		}
-		return history;
-		
-		
-		
-		
+		return history;	
 	}
 
 	protected void modifyMoney(long accountNumber, long closingBalance) throws BankException {
 		customer.modifyMoney(accountNumber,closingBalance);
+	}
+	
+	
+	protected void creditDebitUpdater(TransactionHistory history) {
+		
+		
 	}
 
 	private boolean checkInBank(String ifscCode) {

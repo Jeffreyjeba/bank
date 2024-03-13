@@ -1,8 +1,6 @@
 package database;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
-
 import pojo.Branch;
 import pojo.Employees;
 import utility.BankException;
