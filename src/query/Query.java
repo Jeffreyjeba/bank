@@ -2,6 +2,7 @@ package query;
 
 import org.json.JSONObject;
 
+import pojo.BankMarker;
 import utility.BankException;
 
 public interface Query {
@@ -17,12 +18,14 @@ public interface Query {
 	public StringBuilder viewCustomerProfile(long id);
 	// Add query builder
 	public StringBuilder addJsonPrepStatement(String tableName, JSONObject json);
+	
+	public StringBuilder pojoToAddQuery(String tableName,BankMarker data) throws BankException;
 	// Update query builder
 	public StringBuilder singleSetWhere(String tableName, String field, String conditionField);
 	public StringBuilder singleSetWhere(String tableName, String field, String conditionField, String coditionValue);
-	public StringBuilder setStatus(String tableName, JSONObject json) throws BankException;
+	public StringBuilder setStatus(String tableName,String Status ,String fieldname);
 	// Delete query builder
-	public StringBuilder deleteFromJson(String tableName, JSONObject json);
+	public StringBuilder deleteFrom(String tableName,String fieldName);
 	// Create query builder
 	public StringBuilder createTable(String tableName, String[] parametre);
 

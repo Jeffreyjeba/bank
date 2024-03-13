@@ -4,10 +4,10 @@ import bank.ActiveStatus;
 import bank.UserHirarchy;
 
 public class Users implements BankMarker{
-	private long id;
+	private Long id;
 	private String name;
 	private String emailId;
-	private long phoneNumber;
+	private Long phoneNumber;
 	private UserHirarchy userType;
 	private String password;
 	private ActiveStatus status;

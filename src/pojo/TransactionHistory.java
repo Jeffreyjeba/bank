@@ -3,12 +3,12 @@ package pojo;
 import bank.TransactionType;
 
 public class TransactionHistory implements BankMarker{
-	private long transactionId;
-	private long accountNumber;
-	private long transactionAccountNumber;
+	private Long transactionId;
+	private Long accountNumber;
+	private Long transactionAccountNumber;
 	private TransactionType transactionType;
-	private long transactionAmount;
-	private long balance;
+	private Long transactionAmount;
+	private Long balance;
 	private String Description;
 	private String dateTime;
 	

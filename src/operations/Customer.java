@@ -4,7 +4,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import bank.Authenticator;
 import bank.ServiceFactory;
+import bank.TransactionType;
 import database.CustomerServiceInterface;
+import pojo.TransactionHistory;
 import utility.BankException;
 import utility.InputDefectException;
 import utility.UtilityHelper;
@@ -19,20 +21,22 @@ public class Customer {
 	
 	public long getBalance(JSONObject customerJson) throws BankException, InputDefectException {
 		UtilityHelper.nullCheck(customerJson);
-		checkAccNoForPresence(customerJson);
-		return UtilityHelper.getLong(customer.getBalance(customerJson),"Balance");
+		long accountNumber=UtilityHelper.getLong(customerJson,"AccountNumber");
+		checkAccNoForPresence(accountNumber);
+		return UtilityHelper.getLong(customer.getBalance(accountNumber),"Balance");
 	}
 
 	public void switchAccount(JSONObject customerJson) throws BankException, InputDefectException {
 		UtilityHelper.nullCheck(customerJson);
-		checkAccNoForPresence(customerJson);
-		long accountNumber = UtilityHelper.getLong(customerJson, "AccountNumber");
+		long accountNumber=UtilityHelper.getLong(customerJson,"AccountNumber");
+		checkAccNoForPresence(accountNumber);
 		Authenticator.accountTag(accountNumber);
 	}
 
 	public long[] getAccounts(JSONObject customerJson) throws BankException, InputDefectException {
-		checkIdCustomerPresence(customerJson);
-		JSONArray jArray = customer.getAccounts(customerJson);
+		long id=UtilityHelper.getLong(customerJson,"Id");
+		checkIdCustomerPresence(id);
+		JSONArray jArray = customer.getAccounts(id);
 		if (jArray.length() == 0) {
 			throw new BankException("Accounts for this Id dosent exist");
 		}
@@ -41,24 +45,23 @@ public class Customer {
 
 	public void resetPassword(JSONObject customerJson) throws BankException, InputDefectException {
 		UtilityHelper.nullCheck(customerJson);
-		checkIdUserPresence(customerJson);
+		long id=UtilityHelper.getLong(customerJson,"Id");
 		String password = UtilityHelper.getString(customerJson, "Password");
+		checkIdUserPresence(id);
 		String newPasswordHash = UtilityHelper.passHasher(password);
-		UtilityHelper.put(customerJson, "Password", newPasswordHash);
-		customer.resetPassword(customerJson);
+		customer.resetPassword(id,newPasswordHash);
 	}
 
 	public String accountStatus(long accountNumber) throws BankException, InputDefectException {
-		JSONObject json=UtilityHelper.put(new JSONObject(), "AccountNumber", accountNumber);
-		checkAccNoForPresence(json);
-		JSONObject resultJson = customer.accountStatus(json);
+		checkAccNoForPresence(accountNumber);
+		JSONObject resultJson = customer.accountStatus(accountNumber);
 		return UtilityHelper.getString(resultJson, "Status");
 	}
 
 	public void debit(JSONObject customerJson) throws BankException, InputDefectException {
 		UtilityHelper.nullCheck(customerJson);
-		checkAccNoForPresence(customerJson);
 		long accountNumber = UtilityHelper.getLong(customerJson, "AccountNumber");
+		checkAccNoForPresence(accountNumber);
 		resolveAccountStatus(accountNumber);
 		long balanceAmount = getBalance(customerJson);
 		long amount = UtilityHelper.getLong(customerJson, "Amount");
@@ -66,28 +69,28 @@ public class Customer {
 		balanceCheck(balanceAmount, amount);
 		modifyMoney(accountNumber, balanceAmount - amount);
 		long tId = System.currentTimeMillis();
-		JSONObject hisJson = historyJson("debit", -amount, tId, accountNumber, description, balanceAmount - amount,null);
-		customer.putHistory(hisJson);
+		TransactionHistory history = historyPojo("debit", -amount, tId, accountNumber, description, balanceAmount - amount,null);
+		customer.putHistory(history);
 	}
 
 	public void credit(JSONObject customerJson) throws BankException, InputDefectException {
 		UtilityHelper.nullCheck(customerJson);
-		checkAccNoForPresence(customerJson);
 		long accountNumber = UtilityHelper.getLong(customerJson, "AccountNumber");
+		checkAccNoForPresence(accountNumber);
 		resolveAccountStatus(accountNumber);
 		long balanceAmount = getBalance(customerJson);
 		long amount = UtilityHelper.getLong(customerJson, "Amount");
 		String description = UtilityHelper.getString(customerJson, "Description");
 		modifyMoney(accountNumber, balanceAmount + amount);
 		long tId = System.currentTimeMillis();
-		JSONObject hisJson = historyJson("credit", amount, tId, accountNumber, description, balanceAmount + amount,null);
-		putHistory(hisJson);
+		TransactionHistory history = historyPojo("credit", amount, tId, accountNumber, description, balanceAmount + amount,null);
+		customer.putHistory(history);
 	}
 
 	public void moneyTransfer(JSONObject customerJson) throws BankException, InputDefectException {
 		UtilityHelper.nullCheck(customerJson);
-		checkAccNoForPresence(customerJson);
 		long accountNumber = UtilityHelper.getLong(customerJson, "AccountNumber");
+		checkAccNoForPresence(accountNumber);
 		resolveAccountStatus(accountNumber);
 		long balanceAmount = getBalance(customerJson);
 		long amount = UtilityHelper.getLong(customerJson, "Amount");
@@ -99,20 +102,21 @@ public class Customer {
 		if (!inBank) {
 			long tId = System.currentTimeMillis();
 			modifyMoney(accountNumber, balanceAmount - amount);
-			JSONObject hisJson = historyJson("OBMoneyTransfer", -amount, tId, accountNumber, description,
+			TransactionHistory history = historyPojo("OBMoneyTransfer", -amount, tId, accountNumber, description,
 					balanceAmount - amount, null);
-			putHistory(hisJson);
+			customer.putHistory(history);
 		} 
 		else {
-			checkAccNoForPresence(UtilityHelper.put(new JSONObject(), "AccountNumber", trasactionAccountNumber));
+			checkAccNoForPresence(trasactionAccountNumber);
 			inBankTransfer(accountNumber, trasactionAccountNumber, amount, description);
 		}
 	}	
 
 	public JSONArray transactionHistory(JSONObject customerJson,int quantity,int page,long searchMilli) throws BankException, InputDefectException {
 		UtilityHelper.nullCheck(customerJson);
-		checkAccNoForPresence(customerJson);
-		JSONArray jArray=customer.getTransactionHistory(customerJson,quantity ,page,searchMilli);
+		long accountNumber=UtilityHelper.getLong(customerJson, "AccountNumber");
+		checkAccNoForPresence(accountNumber);
+		JSONArray jArray=customer.getTransactionHistory(accountNumber,quantity ,page,searchMilli);
 		if (jArray.length() == 0) {
 			throw new BankException("NO transacations made");
 		}
@@ -121,12 +125,14 @@ public class Customer {
 	
 	public JSONObject viewProfile(JSONObject customerJson) throws BankException, InputDefectException {
 		UtilityHelper.nullCheck(customerJson);
-		checkIdCustomerPresence(customerJson);
-		return customer.viewProfile(customerJson);
+		long id = UtilityHelper.getLong(customerJson, "Id");
+		checkIdCustomerPresence(id);
+		return customer.viewProfile(id);
 	}
 	
 	public int getPages(JSONObject customerJson,int quantity,long searchMilli) throws BankException {
-		return customer.pageCount(customerJson, quantity,searchMilli);
+		long accountNumber=UtilityHelper.getLong(customerJson, "AccountNumber");
+		return customer.pageCount(accountNumber, quantity,searchMilli);
 	}
 	
 	public long daystomilly(int day) {
@@ -146,18 +152,22 @@ public class Customer {
 	}
 	
 	public JSONObject getPrimaryAccount(JSONObject customerJson) throws BankException, InputDefectException {
-		checkIdCustomerPresence(customerJson);
-		return customer.getPrimaryAccount(customerJson);
+		long id=UtilityHelper.getLong(customerJson, "Id");
+		checkIdCustomerPresence(id);
+		return customer.getPrimaryAccount(id);
 	}
 	
 	public void setPrimaryAccount(JSONObject customerJson) throws BankException, InputDefectException {
-		checkAccNoForPresence(customerJson);
-		customer.setPrimaryAccount(customerJson);
+		long accountNumber=UtilityHelper.getLong(customerJson, "AccountNumber");
+		checkAccNoForPresence(accountNumber);
+		customer.setPrimaryAccount(accountNumber);
 	}
 	
 	public void switchPrimaryAccount(JSONObject customerJson) throws BankException, InputDefectException {
-		checkIdCustomerPresence(customerJson);
-		checkAccNoForPresence(customerJson);
+		long accountNumber=UtilityHelper.getLong(customerJson, "AccountNumber");
+		long id=UtilityHelper.getLong(customerJson, "Id");
+		checkIdCustomerPresence(id);
+		checkAccNoForPresence(accountNumber);
 		JSONObject primaryJson= getPrimaryAccount(customerJson);
 		if(primaryJson==null) {
 			setPrimaryAccount(customerJson);
@@ -169,7 +179,8 @@ public class Customer {
 	}
 	
 	private void removePrivateAccount(JSONObject customerJson) throws BankException {
-		customer.removePrimaryAccount(customerJson);
+		long accountNumber=UtilityHelper.getLong(customerJson, "AccountNumber");
+		customer.removePrimaryAccount(accountNumber);
 	}
 
 
@@ -180,29 +191,46 @@ public class Customer {
 		}
 	}
 		
-	protected void putHistory(JSONObject customerJson) throws BankException, InputDefectException {
-		UtilityHelper.nullCheck(customerJson);
-		customer.putHistory(customerJson);
-	}
+	/*
+	 * protected void putHistory(JSONObject customerJson) throws BankException,
+	 * InputDefectException { UtilityHelper.nullCheck(customerJson);
+	 * customer.putHistory(customerJson); }
+	 */
 
-	protected JSONObject historyJson(String type, long amount, long transactionId, long accountNumber,
-			String description, long balance, Long TransactionAccountNumber) throws BankException {
-		JSONObject json = new JSONObject();
-		UtilityHelper.put(json, "AccountNumber", accountNumber);
-		UtilityHelper.put(json, "TransactionAccountNumber", TransactionAccountNumber);
-		UtilityHelper.put(json, "Description", description);
-		UtilityHelper.put(json, "TransactionAmount", amount);
-		UtilityHelper.put(json, "TransactionType", type);
-		UtilityHelper.put(json, "TransactionId", transactionId);
-		UtilityHelper.put(json, "Balance", balance);
-		return json;
+	/*
+	 * protected JSONObject historyJson(String type, long amount, long
+	 * transactionId, long accountNumber, String description, long balance, Long
+	 * TransactionAccountNumber) throws BankException { JSONObject json = new
+	 * JSONObject(); UtilityHelper.put(json, "AccountNumber", accountNumber);
+	 * UtilityHelper.put(json, "TransactionAccountNumber",
+	 * TransactionAccountNumber); UtilityHelper.put(json, "Description",
+	 * description); UtilityHelper.put(json, "TransactionAmount", amount);
+	 * UtilityHelper.put(json, "TransactionType", type); UtilityHelper.put(json,
+	 * "TransactionId", transactionId); UtilityHelper.put(json, "Balance", balance);
+	 * return json; }
+	 */
+	
+	protected TransactionHistory historyPojo(String type, long amount, long transactionId, long accountNumber,
+			String description, long balance, Long TransactionAccountNumber) {
+		TransactionHistory history = new TransactionHistory();
+		history.setTransactionType(TransactionType.valueOf(type));
+		history.setTransactionAmount(amount);
+		history.setTransactionId(transactionId);
+		history.setAccountNumber(accountNumber);
+		history.setDescription(description);
+		history.setBalance(balance);
+		if(TransactionAccountNumber!=null) {
+		history.setTransactionAccountNumber(TransactionAccountNumber);
+		}
+		return history;
+		
+		
+		
+		
 	}
 
 	protected void modifyMoney(long accountNumber, long closingBalance) throws BankException {
-		JSONObject json = new JSONObject();
-		UtilityHelper.put(json, "AccountNumber", accountNumber);
-		UtilityHelper.put(json, "Balance", closingBalance);
-		customer.modifyMoney(json);
+		customer.modifyMoney(accountNumber,closingBalance);
 	}
 
 	private boolean checkInBank(String ifscCode) {
@@ -254,12 +282,12 @@ public class Customer {
 			long tBalanceAmount = getBalance(trasactionAccountNumber);
 			modifyMoney(accountNumber, balanceAmount - amount);
 			modifyMoney(accountNumber, tBalanceAmount + amount);
-			JSONObject hisJson = historyJson("moneyTransfer", -amount, tId, accountNumber, description,
+			TransactionHistory historySender = historyPojo("moneyTransfer", -amount, tId, accountNumber, description,
 					balanceAmount - amount, trasactionAccountNumber);
-			putHistory(hisJson);
-			hisJson = historyJson("moneyTransfer", amount, tId, trasactionAccountNumber, description,
+			customer.putHistory(historySender);
+			TransactionHistory historyReceiver = historyPojo("moneyTransfer", amount, tId, trasactionAccountNumber, description,
 					tBalanceAmount + amount, accountNumber);
-			putHistory(hisJson);
+			customer.putHistory(historyReceiver);
 			break;
 		case "inactive":
 			throw new BankException("your reciptant account is blocked");
@@ -272,27 +300,27 @@ public class Customer {
 
 
 	
-	protected void checkIdUserPresence(JSONObject customerJson) throws BankException, InputDefectException {
-		customer.checkUserPresence(customerJson, "Id");
+	protected void checkIdUserPresence(long id) throws BankException, InputDefectException {
+		customer.checkUserPresence(id, "Id");
 	}
 
-	protected void checkIdUserAbsence(JSONObject customerJson) throws BankException, InputDefectException {
-		customer.checkUserAbsence(customerJson,"Id");
+	protected void checkIdUserAbsence(long id) throws BankException, InputDefectException {
+		customer.checkUserAbsence(id,"Id");
 	}
 
-	protected void checkIdCustomerAbsence(JSONObject customerJson) throws BankException, InputDefectException {
-		customer.checkCustomerAbsence(customerJson,"Id");
+	protected void checkIdCustomerAbsence(long id) throws BankException, InputDefectException {
+		customer.checkCustomerAbsence(id,"Id");
 	}
 
-	protected void checkIdCustomerPresence(JSONObject customerJson) throws BankException, InputDefectException {
-		customer.checkCustomerPresence(customerJson,"Id");
+	protected void checkIdCustomerPresence(long id) throws BankException, InputDefectException {
+		customer.checkCustomerPresence(id,"Id");
 	}
 
-	protected void checkAccNoForAbsence(JSONObject customerJson) throws BankException, InputDefectException {
-		customer.checkAccountAbsence(customerJson, "AccountNumber");
+	protected void checkAccNoForAbsence(long accountNumber) throws BankException, InputDefectException {
+		customer.checkAccountAbsence(accountNumber, "AccountNumber");
 	}
 
-	protected void checkAccNoForPresence(JSONObject customerJson) throws BankException, InputDefectException {
-		customer.checkAccountPresence(customerJson,"AccountNumber");
+	protected void checkAccNoForPresence(long accountNumber) throws BankException, InputDefectException {
+		customer.checkAccountPresence(accountNumber,"AccountNumber");
 	}
 }

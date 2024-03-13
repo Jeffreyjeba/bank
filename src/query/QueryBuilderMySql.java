@@ -3,6 +3,7 @@ package query;
 import java.io.FileDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -89,8 +90,8 @@ public class QueryBuilderMySql implements Query {
 	@Override
 	public StringBuilder viewCustomerProfile(long id) {
 		return new StringBuilder("select users.Id,users.Name,users.EmailId,users.PhoneNumber,"
-														+ "customers.Address from users left join c"
-														+ "ustomers on users.Id=customers.Id where users.Id="+id+";");
+														+ "customers.Address from users left join "
+														+ "customers on users.Id=customers.Id where users.Id="+id+";");
 	}
 	
 	
@@ -173,30 +174,23 @@ public class QueryBuilderMySql implements Query {
 		return stringBuilder;
 	}
 	@Override
-	public StringBuilder setStatus(String tableName, JSONObject json) throws BankException {
+	public StringBuilder setStatus(String tableName,String Status ,String fieldname) {
 		StringBuilder stringBuilder = new StringBuilder();
-		try {
 			update(stringBuilder, tableName);
-			charSet(stringBuilder, "Status", json.getString("Status"));
-			json.remove("Status");
-			String[] field = JSONObject.getNames(json);
-			where(stringBuilder, field[0], "=?");
+			charSet(stringBuilder, "Status", Status);
+			where(stringBuilder, fieldname, "=?");
 			close(stringBuilder);
 			return stringBuilder;
-		} catch (JSONException e) {
-			throw new BankException("Error 2 contact bank");
-		}
 	}
 
 	// delete
 	@Override
-	public StringBuilder deleteFromJson(String tableName, JSONObject json) {
+	public StringBuilder deleteFrom(String tableName, String fieldName) {
 		StringBuilder stringBuilder = new StringBuilder();
-		String[] field = JSONObject.getNames(json);
 		stringBuilder.append("delete from ");
 		stringBuilder.append(tableName);
 		stringBuilder.append(" where ");
-		stringBuilder.append(field[0]);
+		stringBuilder.append(fieldName);
 		stringBuilder.append(" = ?");
 		close(stringBuilder);
 		return stringBuilder;
@@ -235,26 +229,42 @@ public class QueryBuilderMySql implements Query {
 	
 	
 	
-	public void pojoToAddQuery(String tableName,BankMarker data) {
+	public StringBuilder pojoToAddQuery(String tableName,BankMarker data) throws BankException {
+		try {
 		StringBuilder field=new StringBuilder();
 		StringBuilder value=new StringBuilder();
-		field.append("Insert into table ");
+		field.append("Insert into ");
 		field.append(tableName);
+		field.append(" (");
 		value.append(") values (");
+		setFieldName(data, field, value);
+		field.append(value);
+		field.append(" );");
+		return field;
+		}
+		catch (IllegalAccessException | IllegalArgumentException  e) {
+			throw new BankException("error 4 ",e);
+		} 
 	}
 	
-	private void setFieldName(BankMarker data,StringBuilder value) { //TODO
+	private void setFieldName(BankMarker data,StringBuilder fieldString,StringBuilder valueString) throws IllegalArgumentException, IllegalAccessException { 
 		Class className=data.getClass();
 		Field[] field=className.getDeclaredFields();
 		for(Field temp:field) {
 			temp.setAccessible(true);
-			String type = temp.getType().toString();
-			if(new ArrayList<String>("int","long"))
-		}
+			Object valueObject= temp.get(data);
+			if(valueObject!=null) {
+				fieldString.append(fieldToTableName(temp.getName()));
+				fieldString.append(",");
+				valueString.append("?,");
+			}	
+		}		
+		fieldString.deleteCharAt(fieldString.length() - 1);	
+		valueString.deleteCharAt(valueString.length() - 1);	
 	}
 	
-	private String fieldToSetMethod(String fieldName) {
-		return "get"+fieldName.substring(0, 1).toUpperCase()+fieldName.substring(1);	
+	private String fieldToTableName(String fieldName) {
+		return fieldName.substring(0, 1).toUpperCase()+fieldName.substring(1);	
 	}
 	
 	

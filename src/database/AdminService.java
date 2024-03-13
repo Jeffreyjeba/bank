@@ -3,6 +3,8 @@ package database;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import pojo.Branch;
+import pojo.Employees;
 import utility.BankException;
 import utility.InputDefectException;
 
@@ -12,41 +14,41 @@ public class AdminService extends EmployeeService implements AdminServiceInterfa
 		super(url, userName, password);
 	}
 
-	public void createBranch(JSONObject branch) throws BankException  {
+	public void createBranch(Branch branch) throws BankException  {
 		generalAdd("branch", branch);
 	}
 	
-	public void addAdmin(JSONObject admin) throws BankException  {
-		generalAdd("employees", admin);
+	public void addAdmin(Employees admin) throws BankException  {
+		addEmployee(admin);
 	}
 	
-	public void addEmployee(JSONObject employee) throws BankException {
+	public void addEmployee(Employees employee) throws BankException {
 		generalAdd("employees", employee);
 	}
 	
-	public void removeEmployee(JSONObject employee) throws BankException  {
-		StringBuilder query= builder.deleteFromJson("employees", employee);
-		delete(query, employee);
+	public void removeEmployee(long id) throws BankException  {
+		StringBuilder query= builder.deleteFrom("employees","Id");
+		delete(query,id);
 	}
 	
 	public JSONArray getAllBranchId() throws BankException  {
 		return selectOne("branch","BranchId");
 	}
 
-	public void checkBranchAbsence(JSONObject branch, String field) throws BankException, InputDefectException {
-		checkLongAbsence(branch, "breanch", field, field);
+	public void checkBranchAbsence(long value , String field) throws BankException, InputDefectException {
+		checkLongAbsence(value, "branch", field, field);
 	}
 
-	public void checkBranchPrecence(JSONObject branch, String field) throws BankException, InputDefectException {
-		checkLongPresence(branch, "branch", field, field);
+	public void checkBranchPrecence(long value, String field) throws BankException, InputDefectException {
+		checkLongPresence(value, "branch", field, field);
 	}
 	
-	public void checkEmployeeAbsence(JSONObject employee, String field) throws BankException, InputDefectException {
-		checkLongAbsence(employee, "employees", field, field);
+	public void checkEmployeeAbsence(long value, String field) throws BankException, InputDefectException {
+		checkLongAbsence(value, "employees", field, field);
 	}
 
-	public void checkEmployeePrecence(JSONObject employee, String field) throws BankException, InputDefectException {
-		checkLongPresence(employee, "employees", field, field);
+	public void checkEmployeePrecence(long value, String field) throws BankException, InputDefectException {
+		checkLongPresence(value, "employees", field, field);
 	}
 	
 	

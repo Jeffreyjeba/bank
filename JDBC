@@ -41,3 +41,17 @@ Mar 12, 2024 11:59:09 AM runner.BankRunner run
 WARNING: wrong combination
 Mar 12, 2024 11:59:17 AM runner.BankRunner run
 WARNING: wrong combination
+Mar 13, 2024 3:20:26 PM runner.BankRunner run
+WARNING: wrong combination
+Mar 13, 2024 3:22:28 PM runner.BankRunner run
+WARNING: Something went wrong
+java.lang.NullPointerException
+	at bank/operations.Customer.historyPojo(Customer.java:222)
+	at bank/operations.Customer.debit(Customer.java:72)
+	at bank/runner.CustomerRunner.debit(CustomerRunner.java:83)
+	at bank/runner.BankRunner.admin(BankRunner.java:500)
+	at bank/runner.BankRunner.run(BankRunner.java:59)
+	at bank/runner.BankRunner.main(BankRunner.java:34)
+
+Mar 13, 2024 3:23:40 PM runner.BankRunner admin
+WARNING: technical error accured contact bank or technical support

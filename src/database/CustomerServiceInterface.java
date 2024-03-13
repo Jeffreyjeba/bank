@@ -3,46 +3,47 @@ package database;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import pojo.TransactionHistory;
 import utility.BankException;
 import utility.InputDefectException;
 
 
 public interface CustomerServiceInterface {
 	
-	public JSONObject getBalance(JSONObject json) throws BankException;
+	public JSONObject getBalance(long accountNumber) throws BankException;
 
-	public JSONArray getAccounts(JSONObject json) throws BankException;
+	public JSONArray getAccounts(long id) throws BankException;
 
-	public void resetPassword(JSONObject json) throws BankException;
+	public void resetPassword(long id,String password) throws BankException;
 
-	public JSONObject accountStatus(JSONObject json) throws BankException;
+	public JSONObject accountStatus(long accountNumber) throws BankException;
 
-	public void modifyMoney(JSONObject json) throws BankException;
+	public void modifyMoney(long accountNumber,long balance) throws BankException;
 
-	public void putHistory(JSONObject json) throws BankException;
+	public void putHistory(TransactionHistory history) throws BankException;
 
-	public JSONArray getTransactionHistory(JSONObject json,int quantity ,int page,long searchMilli) throws BankException;
+	public JSONArray getTransactionHistory(long accountNumber,int quantity ,int page,long searchMilli) throws BankException;
 
-	public void checkUserPresence(JSONObject json, String field) throws BankException, InputDefectException;
+	public void checkUserPresence(long value, String field) throws BankException, InputDefectException;
 
-	public void checkUserAbsence(JSONObject json, String field) throws BankException, InputDefectException;
+	public void checkUserAbsence(long value, String field) throws BankException, InputDefectException;
 
-	public void checkCustomerAbsence(JSONObject json, String field) throws BankException, InputDefectException;
+	public void checkCustomerAbsence(long value, String field) throws BankException, InputDefectException;
 
-	public void checkCustomerPresence(JSONObject json, String field) throws BankException, InputDefectException;
+	public void checkCustomerPresence(long value, String field) throws BankException, InputDefectException;
 
-	public void checkAccountAbsence(JSONObject json, String field) throws BankException, InputDefectException;
+	public void checkAccountAbsence(long value, String field) throws BankException, InputDefectException;
 
-	public void checkAccountPresence(JSONObject json, String field) throws BankException, InputDefectException;
+	public void checkAccountPresence(long value, String field) throws BankException, InputDefectException;
 	
-	public int pageCount(JSONObject json,int quantity,long searchMilli) throws BankException ;
+	public int pageCount(long accountNumber,int quantity,long searchMilli) throws BankException ;
 	
-	public JSONObject viewProfile(JSONObject json) throws BankException;
+	public JSONObject viewProfile(long id) throws BankException;
 	
-	public JSONObject getPrimaryAccount(JSONObject json) throws BankException;
+	public JSONObject getPrimaryAccount(long id) throws BankException;
 	
-	public void setPrimaryAccount(JSONObject json) throws BankException;	
+	public void setPrimaryAccount(long accountNumber) throws BankException;	
 	
-	public void removePrimaryAccount(JSONObject json) throws BankException;
+	public void removePrimaryAccount(long accountNumber) throws BankException;
 	
 }

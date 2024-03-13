@@ -34,9 +34,9 @@ public class AuthendicatorService extends DataStorageService implements Authendi
 	}
 	
 	@Override
-	public boolean attemptUpdate(JSONObject json,long id) throws BankException {
+	public boolean attemptUpdate(int attempt,long id) throws BankException {
 		StringBuilder query= builder.singleSetWhere("users", "Attempts", "Id", Long.toString(id));
-		return add(query,json);
+		return update(query,attempt);
 	}
 
 	@Override

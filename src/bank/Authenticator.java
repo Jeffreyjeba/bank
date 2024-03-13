@@ -41,9 +41,7 @@ public class Authenticator {
 	private void attemptUpdate(long id) throws BankException  {
 		int attempt = getAttempts(id);
 		attempt++;
-		JSONObject json= new JSONObject();
-		UtilityHelper.put(json, "Attempts", attempt);
-		auth.attemptUpdate(json, id);
+		auth.attemptUpdate(attempt, id);
 	}
 
 	private int getAttempts(long id) throws BankException {

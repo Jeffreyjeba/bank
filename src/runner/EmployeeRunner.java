@@ -69,7 +69,7 @@ public class EmployeeRunner extends CustomerRunner {
 		long accountNumber=getAccountNum();
 		UtilityHelper.put(json,"Status",ActiveStatus.inactive.name());
 		UtilityHelper.put(json,"AccountNumber",accountNumber);
-		employee.deleteAccount(json);
+		employee.deactivateAccount(json);
 	}
 	
 	public void activateAccount() throws BankException,InputDefectException {
@@ -77,7 +77,7 @@ public class EmployeeRunner extends CustomerRunner {
 		long accountNumber=getAccountNum();
 		UtilityHelper.put(json,"Status",ActiveStatus.active.name());
 		UtilityHelper.put(json,"AccountNumber",accountNumber);
-		employee.deleteAccount(json);
+		employee.activateAccount(json);
 	}
 	
 	public void deactivateCustomer() throws BankException, InputDefectException {

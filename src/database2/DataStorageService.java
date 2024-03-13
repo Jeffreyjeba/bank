@@ -1,5 +1,6 @@
 package database2;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -144,7 +145,6 @@ abstract public class DataStorageService implements DataStorage {
 			while (keys.hasNext()) {
 				String key = keys.next();
 				Object value = json.get(key);
-				if(value instanceof String);
 				String type = value.getClass().getName();
 				switch (type) {
 				case "java.lang.String":
@@ -171,9 +171,43 @@ abstract public class DataStorageService implements DataStorage {
 
 	}
 	
-	private void setParameter(PreparedStatement statement,BankMarker data) throws BankException {
-		
+	private void setParameter(PreparedStatement statement,BankMarker data) throws BankException, SQLException, IllegalArgumentException, IllegalAccessException {
+		try {
+			Class className=data.getClass();
+			Field[] field=className.getDeclaredFields();
+			int index=1;
+			for(Field temp:field) {
+				temp.setAccessible(true);
+				Object valueObject= temp.get(data);
+				if(valueObject!=null) {
+					String type=valueObject.getClass().getName();
+					switch (type) {
+					case "java.lang.String":
+						statement.setString(index, (String) valueObject);
+						break;
+					case "java.lang.Integer":
+						statement.setInt(index, (Integer) valueObject);
+						break;
+					case "java.lang.Long":
+						statement.setLong(index, (Long) valueObject);
+						break;
+					case "bank.AccountStatus":
+					case "bank.Priority":
+					case "bank.EmployeeType":
+					case "bank.TransactionType":
+					case "bank.UserHirarchy":
+					case "bank.ActiveStatus":
+						statement.setString(index,valueObject.toString());
+						break;
+					default:
+						throw new BankException("Type bounce");
+					}
+					index++;	
+				}	
+			}
+		}catch (SQLException | IllegalArgumentException | IllegalAccessException e) {
+			throw new BankException("technical error accured contact bank or technical support",e);
+		}
 	}
-	
 	
 }

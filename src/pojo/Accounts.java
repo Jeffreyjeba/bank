@@ -4,10 +4,10 @@ import bank.AccountStatus;
 import bank.Priority;
 
 public class Accounts implements BankMarker {
-	private long accountNumber;
-	private long id;
-	private int branchId;
-	private long balance;
+	private Long accountNumber;
+	private Long id;
+	private Integer branchId;
+	private Long balance;
 	private AccountStatus status;
 	private Priority priority;
 	

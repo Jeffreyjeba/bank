@@ -3,8 +3,8 @@ package pojo;
 import bank.EmployeeType;
 
 public class Employees implements BankMarker {
-	private long id ;
-	private int branchId;
+	private Long id ;
+	private Integer branchId;
 	private EmployeeType type;
 	
 	public long getId() {

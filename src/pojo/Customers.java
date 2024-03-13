@@ -1,9 +1,9 @@
 package pojo;
 
 public class Customers implements BankMarker {
-	private long customerId;
-	private long id;
-	private long aadharNumber;
+	private Long customerId;
+	private Long id;
+	private Long aadharNumber;
 	private String panNumber;
 	private String address;
 	
