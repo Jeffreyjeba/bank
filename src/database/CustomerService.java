@@ -38,14 +38,6 @@ public class CustomerService extends DataStorageService implements CustomerServi
 		return selectWhere("accounts", "AccountNumber=" + accountNumber, "Status");
 	}
 
-	public void modifyMoney(long accounyNumber,long balance) throws BankException {
-		StringBuilder query = builder.singleSetWhere("accounts", "Balance", "AccountNumber");
-		update(query,balance,accounyNumber);
-	}
-
-	public void putHistory(TransactionHistory history) throws BankException {
-		generalAdd("transactionHistory", history);
-	}
 
 	public JSONArray getTransactionHistory(long accountNumber,int quantity ,int page,long searchMilli) throws BankException {
 		StringBuilder query = builder.selectAllFromWherePrep("transactionHistory",
@@ -76,24 +68,68 @@ public class CustomerService extends DataStorageService implements CustomerServi
 	}
 	
 	//TOAADD
-	public void creditDebitUpdater(TransactionHistory history) throws BankException {
-		long accountNumber=history.getAccountNumber();
-		long balance=history.getBalance();
-		String string;
-		try(Connection connection=getConnection();){
-			try(PreparedStatement statement=connection.prepareStatement(string)){
-				
+	
+	
+	public void creditDebitOutBank(TransactionHistory history) throws BankException {
+		Connection connection=null;
+		try {
+			connection=getConnection();
+			connection.setAutoCommit(false);
+			updateHistory(connection,history);
+			updateMoney(connection, history);
+			connection.commit();
+		}
+		catch (BankException | SQLException e) {
+			try {
+				connection.rollback();
+				throw new BankException("technical error accured contact bank or technical support",e);
+			}catch (SQLException er) {
+				er.printStackTrace();
+				throw new BankException("rollback error accured contact bank or technical support",er);
 			}
-			
 		}
-		catch (SQLException e) {
-			throw new BankException("technical error accured contact bank or technical support",e);
-		}
+		finally {
+			try {
+				if(connection!=null) {
+					connection.close();
+				}
+			}
+			catch(Exception e) {
+				throw new BankException("cannot close resource" ,e);
+			}
+		}	
 	}
 	
-	
-	
-	
+	public void inBank(TransactionHistory historySender,TransactionHistory historyReceiver) throws BankException {
+		Connection connection=null;
+		try {
+			connection=getConnection();
+			connection.setAutoCommit(false);
+			updateHistory(connection,historySender );
+			updateMoney(connection, historySender);
+			updateHistory(connection, historyReceiver);
+			updateMoney(connection, historyReceiver);
+			connection.commit();
+		}
+		catch (BankException | SQLException e) {
+			try {
+				connection.rollback();
+				throw new BankException("technical error accured contact bank or technical support",e);
+			}catch (SQLException er) {
+				throw new BankException("rollback error accured contact bank or technical support",er);
+			}
+		}
+		finally {
+			try {
+				if(connection!=null) {
+					connection.close();
+				}
+			}
+			catch(Exception e) {
+				throw new BankException("cannot close resource" ,e);
+			}
+		}	
+	}
 	
 	public void setPrimaryAccount(long accountNumber) throws BankException {
 		updatePriority(accountNumber, Priority.primary);
@@ -128,8 +164,24 @@ public class CustomerService extends DataStorageService implements CustomerServi
 		checkLongPresence(value, "accounts", field, field);
 	}
 	
+
+	private void updateHistory(Connection connection,TransactionHistory history) throws BankException, SQLException {
+		StringBuilder historyQuery=builder.pojoToAddQuery("transactionHistory",history);
+		try(PreparedStatement historyStatement=connection.prepareStatement(historyQuery.toString())) {
+			setParameter(historyStatement, history);
+			historyStatement.execute();
+		}
+	}
 	
-	
+	private void updateMoney(Connection connection,TransactionHistory history) throws SQLException, BankException {
+		long accountNumber=history.getAccountNumber();
+		long balance=history.getBalance();
+		StringBuilder modifyMoneyQuery = builder.singleSetWhere("accounts", "Balance", "AccountNumber");
+		try(PreparedStatement updtaeStatement=connection.prepareStatement(modifyMoneyQuery.toString())){
+			setParameter(updtaeStatement,balance,accountNumber);
+			updtaeStatement.execute();	
+		}
+	}
 	
 	// support methods
 	protected void checkLongAbsence(long value, String tableName, String fieldName, String selectionField)throws BankException {
@@ -154,7 +206,6 @@ public class CustomerService extends DataStorageService implements CustomerServi
 
 	protected void generalAdd(String tableName, BankMarker data) throws BankException {
 		StringBuilder query = builder.pojoToAddQuery(tableName, data);
-		System.out.println(query);
 		add(query, data);
 	}
 	

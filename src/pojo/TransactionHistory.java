@@ -10,7 +10,6 @@ public class TransactionHistory implements BankMarker{
 	private Long transactionAmount;
 	private Long balance;
 	private String description;
-	private String dateTime;
 	
 	
 	public long getTransactionId() {
@@ -54,11 +53,5 @@ public class TransactionHistory implements BankMarker{
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public String getDateTime() {
-		return dateTime;
-	}
-	public void setDateTime(String dateTime) {
-		this.dateTime = dateTime;
 	}
 }

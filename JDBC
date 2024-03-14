@@ -55,3 +55,7 @@ java.lang.NullPointerException
 
 Mar 13, 2024 3:23:40 PM runner.BankRunner admin
 WARNING: technical error accured contact bank or technical support
+Mar 14, 2024 12:32:05 PM runner.BankRunner admin
+WARNING: rollback error accured contact bank or technical support
+Mar 14, 2024 12:33:43 PM runner.BankRunner admin
+WARNING: rollback error accured contact bank or technical support

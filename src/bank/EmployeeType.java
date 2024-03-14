@@ -1,5 +1,5 @@
 package bank;
 
 public enum EmployeeType {
-	admin,employee;
+	admin,employee;	
 }

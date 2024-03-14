@@ -66,10 +66,9 @@ public class Customer {
 		long amount = UtilityHelper.getLong(customerJson, "Amount");
 		String description = UtilityHelper.getString(customerJson, "Description");
 		balanceCheck(balanceAmount, amount);
-		modifyMoney(accountNumber, balanceAmount - amount);
 		long tId = System.currentTimeMillis();
 		TransactionHistory history = historyPojo("debit", -amount, tId, accountNumber, description, balanceAmount - amount,null);
-		customer.putHistory(history);
+		customer.creditDebitOutBank(history);
 	}
 
 	public void credit(JSONObject customerJson) throws BankException, InputDefectException {
@@ -80,10 +79,9 @@ public class Customer {
 		long balanceAmount = getBalance(customerJson);
 		long amount = UtilityHelper.getLong(customerJson, "Amount");
 		String description = UtilityHelper.getString(customerJson, "Description");
-		modifyMoney(accountNumber, balanceAmount + amount);
 		long tId = System.currentTimeMillis();
 		TransactionHistory history = historyPojo("credit", amount, tId, accountNumber, description, balanceAmount + amount,null);
-		customer.putHistory(history);
+		customer.creditDebitOutBank(history);
 	}
 
 	public void moneyTransfer(JSONObject customerJson) throws BankException, InputDefectException {
@@ -100,10 +98,9 @@ public class Customer {
 		boolean inBank = resolveTransaction(accountNumber, trasactionAccountNumber, ifscCode);
 		if (!inBank) {
 			long tId = System.currentTimeMillis();
-			modifyMoney(accountNumber, balanceAmount -amount);
 			TransactionHistory history = historyPojo("OBMoneyTransfer", -amount, tId, accountNumber, description,
 					balanceAmount - amount, null);
-			customer.putHistory(history);
+			customer.creditDebitOutBank(history);
 		} 
 		else {
 			checkAccNoForPresence(trasactionAccountNumber);
@@ -204,20 +201,9 @@ public class Customer {
 		return history;	
 	}
 
-	protected void modifyMoney(long accountNumber, long closingBalance) throws BankException {
-		customer.modifyMoney(accountNumber,closingBalance);
-	}
-	
-	
-	protected void creditDebitUpdater(TransactionHistory history) {
-		
-		
-	}
-
 	private boolean checkInBank(String ifscCode) {
 		return ifscCode.substring(0, 3).equals("rey");
 	}
-
 	
 	protected long getBalance(long accountNumber) throws BankException, InputDefectException {
 		JSONObject json = new JSONObject();
@@ -261,14 +247,11 @@ public class Customer {
 		case "active":
 			long balanceAmount = getBalance(accountNumber);
 			long tBalanceAmount = getBalance(trasactionAccountNumber);
-			modifyMoney(accountNumber, balanceAmount - amount);
-			modifyMoney(accountNumber, tBalanceAmount + amount);
 			TransactionHistory historySender = historyPojo("moneyTransfer", -amount, tId, accountNumber, description,
 					balanceAmount - amount, trasactionAccountNumber);
-			customer.putHistory(historySender);
 			TransactionHistory historyReceiver = historyPojo("moneyTransfer", amount, tId, trasactionAccountNumber, description,
 					tBalanceAmount + amount, accountNumber);
-			customer.putHistory(historyReceiver);
+			customer.inBank(historySender, historyReceiver);
 			break;
 		case "inactive":
 			throw new BankException("your reciptant account is blocked");

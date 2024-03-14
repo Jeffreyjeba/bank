@@ -8,9 +8,11 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import pojo.BankMarker;
 import query.Query;
 import query.QueryBuilderMySql;
@@ -46,7 +48,6 @@ abstract public class DataStorageService implements DataStorage {
 	
 	@Override
 	public boolean bulkAdd(CharSequence seq, BankMarker input) throws BankException{
-		
 		
 		return false;
 	}
@@ -111,7 +112,6 @@ abstract public class DataStorageService implements DataStorage {
 			throw new BankException("technical error accured contact bank or technical support",e);
 		}
 	}
-
 	
 	// support 
 	
@@ -142,7 +142,8 @@ abstract public class DataStorageService implements DataStorage {
 		}
 	}
 	
-	private void setParameter(PreparedStatement statement,Object...input) throws BankException {
+	
+	protected void setParameter(PreparedStatement statement,Object...input) throws BankException {
 		try {
 			int index=1;
 			for(Object obj:input) {
@@ -176,7 +177,7 @@ abstract public class DataStorageService implements DataStorage {
 	}
 	
 	@SuppressWarnings({ "rawtypes" })
-	private void setParameter(PreparedStatement statement,BankMarker data) throws BankException {
+	protected void setParameter(PreparedStatement statement,BankMarker data) throws BankException {
 		try {
 			Class className=data.getClass();
 			Field[] field=className.getDeclaredFields();

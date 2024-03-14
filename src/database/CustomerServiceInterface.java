@@ -18,9 +18,9 @@ public interface CustomerServiceInterface {
 
 	public JSONObject accountStatus(long accountNumber) throws BankException;
 
-	public void modifyMoney(long accountNumber,long balance) throws BankException;
+	//public void modifyMoney(long accountNumber,long balance) throws BankException;
 
-	public void putHistory(TransactionHistory history) throws BankException;
+	//public void putHistory(TransactionHistory history) throws BankException;
 
 	public JSONArray getTransactionHistory(long accountNumber,int quantity ,int page,long searchMilli) throws BankException;
 
@@ -45,5 +45,9 @@ public interface CustomerServiceInterface {
 	public void setPrimaryAccount(long accountNumber) throws BankException;	
 	
 	public void removePrimaryAccount(long accountNumber) throws BankException;
+	
+	public void inBank(TransactionHistory historySender,TransactionHistory historyReceiver) throws BankException;
+	
+	public void creditDebitOutBank(TransactionHistory history) throws BankException;
 	
 }
