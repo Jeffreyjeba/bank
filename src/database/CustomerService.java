@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import bank.Priority;
 import pojo.BankMarker;
 import pojo.TransactionHistory;
@@ -15,8 +16,16 @@ import utility.UtilityHelper;
 
 public class CustomerService extends DataStorageService implements CustomerServiceInterface {
 
-	public CustomerService(String url, String userName, String password) {
+	protected CustomerService(String url, String userName, String password) {
 		super(url, userName, password);
+	}
+	
+	private static class BillpoughCustomer{
+		private static final CustomerService customerService=new CustomerService("jdbc:mysql://localhost:3306/rey_bank", "root", "0000");
+	}
+	
+	public static CustomerService getCustomerService() {
+		return BillpoughCustomer.customerService;
 	}
 
 	public JSONObject getBalance(long accountNumber) throws BankException {

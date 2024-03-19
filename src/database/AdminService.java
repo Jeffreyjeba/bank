@@ -8,8 +8,16 @@ import utility.InputDefectException;
 
 public class AdminService extends EmployeeService implements AdminServiceInterface{
 	
-	public AdminService(String url, String userName, String password) {
+	private AdminService(String url, String userName, String password) {
 		super(url, userName, password);
+	}
+	
+	private static class BillpoughAdmin{
+		private static final AdminService adminService=new AdminService("jdbc:mysql://localhost:3306/rey_bank", "root", "0000");
+	}
+	
+	public static AdminService getAdminService() {
+		return BillpoughAdmin.adminService;
 	}
 
 	public void createBranch(Branch branch) throws BankException  {
@@ -48,6 +56,7 @@ public class AdminService extends EmployeeService implements AdminServiceInterfa
 	public void checkEmployeePrecence(long value, String field) throws BankException, InputDefectException {
 		checkLongPresence(value, "employees", field, field);
 	}
+	
 	
 	
 }

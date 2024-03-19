@@ -12,18 +12,18 @@ import database.EmployeeServiceInterface;
 public class ServiceFactory {
 	
 	public static CustomerServiceInterface getCustomerService() {
-		return new CustomerService("jdbc:mysql://localhost:3306/rey_bank", "root", "0000");
+		return CustomerService.getCustomerService();
 	}
 	
 	public static EmployeeServiceInterface getEmployeeService() {
-		return new EmployeeService("jdbc:mysql://localhost:3306/rey_bank", "root", "0000");
+		return EmployeeService.getEmployeeService();
 	}
 	
 	public static AdminServiceInterface getAdminService() {
-		return new AdminService("jdbc:mysql://localhost:3306/rey_bank", "root", "0000");
+		return AdminService.getAdminService();
 	}
 	
 	public static AuthendicatorServiceInterface getAuthendicatorService() {
-		return new AuthendicatorService("jdbc:mysql://localhost:3306/rey_bank", "root", "0000");
+		return AuthendicatorService.getAuthendicatorService();
 	}
 }

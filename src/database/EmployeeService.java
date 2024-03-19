@@ -10,8 +10,16 @@ import utility.BankException;
 
 public class EmployeeService extends CustomerService implements EmployeeServiceInterface{
 	
-	public EmployeeService(String url, String userName, String password) {
+	protected EmployeeService(String url, String userName, String password) {
 		super(url, userName, password);
+	}
+	
+	private static class BillpoughEmployee{
+		private static final EmployeeService employeeService=new EmployeeService("jdbc:mysql://localhost:3306/rey_bank", "root", "0000");
+	}
+	
+	public static EmployeeService getEmployeeService() {
+		return BillpoughEmployee.employeeService;
 	}
 
 	public void addUsers(Users user) throws BankException {
